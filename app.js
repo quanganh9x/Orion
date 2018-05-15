@@ -14,6 +14,7 @@ let botRoutes = require('./bots/global'); // đường dẫn cho bots
 // mongoose db
 mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x', (error) => {
     if (error) console.log("Cant connect to MongoDB");
+    else console.log("Connect successfully");
 });
 
 // view engine setup
@@ -40,7 +41,7 @@ bot.start(6969); // triển thôi nhỉ :D
 
 /////////////////// initialize wit.ai engine /////////////////
 const client = new Wit({accessToken: process.env.WIT_ACCESS_TOKEN});
-client.message('what is the weather in Hanoi?', {}) // test xíu
+client.message('what is the weather in Hanoi?', {}) // test
     .then((data) => {
         console.log('got Wit.ai response: ' + JSON.stringify(data));
     })

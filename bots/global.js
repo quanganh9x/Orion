@@ -5,7 +5,7 @@ let helloBot = require('./hellobot/index');
 ///////////////////////
 
 module.exports = function (bot) {
-    config(bot);
+    bot.module(config);
     bot.module(helloBot);
     //locationBot(bots);
 };
