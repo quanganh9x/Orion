@@ -9,7 +9,7 @@ module.exports = function (bot) {
                     var lat = payload.message.attachments[0].payload.coordinates.lat;
                     var long = payload.message.attachments[0].payload.coordinates.long;
 
-                    fetch(WEATHER_API + "lat=" + lat + "&lon=" + long)
+                    fetch(WEATHER_API + "lat=" + lat + "&lon=" + long + "&APPID=781a4ff410c47f5131129f221c2dcc44")
                       .then(
                         function(response) {
                             if (response.status !== 200) {
