@@ -4,7 +4,7 @@ module.exports = function (bot) {
     chat.conversation((convo) => {
       convo.question("Bạn muốn tìm phim gì", (payload, convo) => {
         var searchName = payload.messenge.text;
-        var newName = name.replace(" ", "+");
+        var newName = searchName.replace(" ", "+");
         fetch(GOOGLE_API + "xem+phim+" + newName)
           .then(res => res.json())
           .then(json => {
