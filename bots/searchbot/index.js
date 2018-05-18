@@ -8,10 +8,12 @@ module.exports = function (bot) {
         fetch(GOOGLE_API + "xem+phim+" + newName)
           .then(res => res.json())
           .then(json => {
-            chat.say({
-              title: json.items[0].title,
-              link : json.items[0].link
-            });
+            for (var i = 0; i <= 4; i++) {
+              chat.say({
+                title: json.items[i].title,
+                link: json.items[i].link
+              });
+            }
           });
         convo.say("Phim bạn tìm nè");
         convo.say(json.data[0].url);
