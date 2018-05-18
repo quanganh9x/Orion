@@ -2,7 +2,7 @@ const request = require('request');
 const GOOGLE_API = "https://www.googleapis.com/customsearch/v1?key=AIzaSyDjeakB1alo42nS2NNR9xjSK5Zyi2yMiSA&cx=010163171448574847880:qglriqbcnk4&fields=items(title,link)&hl=vi&num=5&q=";
 
 module.exports = function (bot) {
-  bot.hear(['tìm phim'], (payload, chat) => {
+  bot.hear(['tìm phim', 'kiếm phim', 'phim'], (payload, chat) => {
       chat.conversation((convo) => {
       const answer = (payload, convo) => {
           let text = payload.message.text;
