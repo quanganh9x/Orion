@@ -5,6 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const BootBot = require('bootbot');
 const {Wit, log} = require('node-wit');
+const YQL = require('yql');
 const app = express();
 
 let routes = require('./routes/global'); // đường dẫn cho trang web
