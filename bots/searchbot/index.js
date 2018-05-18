@@ -1,24 +1,28 @@
-const GOOGLE_API = "https://www.googleapis.com/customsearch/v1?key=AIzaSyDjeakB1alo42nS2NNR9xjSK5Zyi2yMiSA&cx=010163171448574847880:qglriqbcnk4&fields=items(title,link)&hl=vi&q=";
+const request = require('request');
+const GOOGLE_API = "https://www.googleapis.com/customsearch/v1?key=AIzaSyDjeakB1alo42nS2NNR9xjSK5Zyi2yMiSA&cx=010163171448574847880:qglriqbcnk4&fields=items(title,link)&hl=vi&num=5&q=";
+
 module.exports = function (bot) {
-  bot.hear(['search phim'], (payload, chat) => {
-    chat.conversation((convo) => {
-      convo.question("Bạn muốn tìm phim gì", (payload, convo) => {
-        var searchName = payload.messenge.text;
-        var newName = searchName.replace(" ", "+");
-        fetch(GOOGLE_API + "xem+phim+" + newName)
-          .then(res => res.json())
-          .then(json => {
-            for (var i = 0; i <= 4; i++) {
-              chat.say({
-                title: json.items[i].title,
-                link: json.items[i].link
+  bot.hear(['tìm phim'], (payload, chat) => {
+      chat.conversation((convo) => {
+      const answer = (payload, convo) => {
+          let text = payload.message.text;
+          convo.say("Chờ xíu để mình tìm nhen...").then(() => {
+              request(GOOGLE_API + "xem+phim+" + text.replace(" ", "+"), function (error, response, body) {
+                  if (response && response.statusCode === 200) {
+                      body = JSON.parse(body);
+                      for (let i = 0; i < body.items.length; i++) {
+                          if (body.items[i].link.includes("phimmoi.net")) {
+                              body.items[i].link.replace("phimmoi.net","phi**oi.net");
+                              chat.say("nếu có ** thì là 2 chữ m nghen. Do messenger bắt chặt quá T_T");
+                          }
+                          chat.say(body.items[i].title + "\n" + body.items[i].link);
+                      }
+                  } else chat.say(":( không có link rùi bạn ơi");
+                  convo.end();
               });
-            }
           });
-        convo.say("Phim bạn tìm nè");
-        
+      };
+      convo.ask("Bạn muốn tìm phim gì?", answer);
       });
-      convo.end(); // trả về thông tin cho người dùng xong thì end conversation
-    });
   });
-}
+};

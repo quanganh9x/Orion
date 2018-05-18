@@ -23,7 +23,8 @@ const UserSchema = new Schema({
     gender: String,
     profile_pic: String,
     locale: String,
-    timezone: String
+    timezone: String,
+    matchupsType: Number
 }, {
     timestamps: {createdAt: 'regDate', updateAt: 'modifiedDate'}
 });

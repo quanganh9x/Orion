@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 module.exports = function (bot) {
-    bot.setGreetingText("Chào bạn. Tớ là một nô lệ đáng iuuuuu của @Đặng Anh và team");
+    bot.setGreetingText("Chào bạn. Tớ là một trợ lý đáng iuuuuu của @Đặng Anh và team <3");
     bot.setGetStartedButton((payload, chat) => {
         chat.say('Xin chào! Bây giờ là: ' + Date.now() + '. Chúc bạn buổi tối vui vẻ!');
         chat.say("Có vẻ bạn đang là người mới thì phải. Hãy nhập email để bắt đầu nhé!");
@@ -14,7 +14,7 @@ module.exports = function (bot) {
                 User.findOne({"uniqueId": user.id}, (err, result1) => {
                     if (err) console.log("err data: " + err);
                     if (result1) {
-                        chat.say("Tài khoản đã đăng ký email!")
+                        chat.say("Tài khoản đã đăng ký email!");
                         /*User.findOneAndUpdate({"uniqueId": user.id}, {"email": user.email}, {new: true, fields: "email"}, (err, result2) => {
                             if (err || !result2) console.log("error saving data: " + err);
                             else chat.say("Đổi email thành công!");
@@ -32,10 +32,10 @@ module.exports = function (bot) {
     });
     if (process.env.DEBUG) {
         bot.on('message', (payload, chat) => {
-            //console.log(payload);
+            chat.sendAction('mark_seen');
+            console.log(payload);
             const text = payload.message.text;
             chat.getUserProfile().then((user) => {
-                //console.log(user);
                 console.log(`[DEBUG] Người dùng ${user.first_name} vừa nhắn: ${text}`);
             });
         });

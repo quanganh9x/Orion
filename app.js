@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const BootBot = require('bootbot');
-const {Wit, log} = require('node-wit');
 const app = express();
 
 let routes = require('./routes/global'); // đường dẫn cho trang web
@@ -37,15 +36,6 @@ const bot = new BootBot({
 });
 botRoutes(bot);
 bot.start(6969); // triển thôi nhỉ :D
-//////////////////////////////////////////////////////////////
-
-/////////////////// initialize wit.ai engine /////////////////
-const client = new Wit({accessToken: process.env.WIT_ACCESS_TOKEN});
-client.message('what is the weather in Hanoi?', {}) // test
-    .then((data) => {
-        console.log('got Wit.ai response: ' + JSON.stringify(data));
-    })
-    .catch(console.error);
 //////////////////////////////////////////////////////////////
 
 // catch 404 and forward to error handler
