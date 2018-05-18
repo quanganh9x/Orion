@@ -16,7 +16,7 @@ module.exports = function (bot) {
             }
           });
         convo.say("Phim bạn tìm nè");
-        convo.say(json.data[0].url);
+        
       });
       convo.end(); // trả về thông tin cho người dùng xong thì end conversation
     });
