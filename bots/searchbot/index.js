@@ -9,8 +9,8 @@ module.exports = function (bot) {
           .then(res => res.json())
           .then(json => {
             chat.say({
-              attachment: 'image',
-              url: json.data[0].images.fixed_height.url
+              title: json.items[0].title,
+              link : json.items[0].link
             });
           });
         convo.say("Phim bạn tìm nè");
