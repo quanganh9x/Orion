@@ -34,6 +34,7 @@ module.exports = function (bot) {
         bot.on('message', (payload, chat) => {
             chat.sendAction('mark_seen');
             console.log(payload);
+            console.log(payload.message.nlp.entities);
             const text = payload.message.text;
             chat.getUserProfile().then((user) => {
                 console.log(`[DEBUG] Người dùng ${user.first_name} vừa nhắn: ${text}`);
