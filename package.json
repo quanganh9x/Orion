@@ -1,6 +1,6 @@
 {
   "name": "fpt-hackathon-2018",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -14,11 +14,20 @@
     "express": "~4.16.0",
     "forward": "0.0.5",
     "http-errors": "~1.6.2",
+<<<<<<< HEAD
     "js-crawler": "^0.3.20",
+=======
+    "mongoose": "^5.1.0",
+    "mongoose-plugin-autoinc": "^1.1.9",
+>>>>>>> 0680f375dfc733e6e5c6c59f02078fdcf9475b40
     "node-wit": "^5.0.0",
     "npm": "^6.0.1",
     "pug": "^2.0.3",
     "request": "^2.86.0",
+<<<<<<< HEAD
     "url-parse": "^1.4.0"
+=======
+    "rss-parser": "^3.1.2"
+>>>>>>> 0680f375dfc733e6e5c6c59f02078fdcf9475b40
   }
 }

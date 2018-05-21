@@ -2,12 +2,19 @@ require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
 const BootBot = require('bootbot');
-const {Wit, log} = require('node-wit');
 const app = express();
 
-let routes = require('./routes/global')(); // đường dẫn cho trang web. web chạy trên
-let botRoutes = require('./bot/global'); // đường dẫn cho bot
+let routes = require('./routes/global'); // đường dẫn cho trang web
+let botRoutes = require('./bots/global'); // đường dẫn cho bots
+
+
+// mongoose db
+mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x', (error) => {
+    if (error) console.log("Cant connect to MongoDB");
+    else console.log("Connect successfully");
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -18,10 +25,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /// routes cho web ///
-app.use('/', routes);
+app.use('/', routes());
 //////////////////////
 
-////////////////// initialize our bot ////////////////////////
+////////////////// initialize our bots ////////////////////////
 const bot = new BootBot({
     accessToken: process.env.ACCESS_TOKEN,
     verifyToken: process.env.VERIFY_TOKEN,
@@ -29,15 +36,6 @@ const bot = new BootBot({
 });
 botRoutes(bot);
 bot.start(6969); // triển thôi nhỉ :D
-//////////////////////////////////////////////////////////////
-
-/////////////////// initialize wit.ai engine /////////////////
-const client = new Wit({accessToken: process.env.WIT_ACCESS_TOKEN});
-client.message('what is the weather in Hanoi?', {}) // test xíu
-    .then((data) => {
-        console.log('got Wit.ai response: ' + JSON.stringify(data));
-    })
-    .catch(console.error);
 //////////////////////////////////////////////////////////////
 
 // catch 404 and forward to error handler
