@@ -1,6 +1,6 @@
 const Parser = require('rss-parser');
 const parser = new Parser();
-const VNExpress_URL = 'https://vnexpress.net/rss/tin-moi-nhat.rss';
+const tinmoi_url = 'http://www.tinmoi.vn/rss/Tin-tuc.rss'
 
 module.exports = function (chat) {
 	(async () => {
@@ -11,9 +11,9 @@ module.exports = function (chat) {
 			}
 		}).then(() => {
 			chat.say({
-				text: 'Theo dõi vnexpress',
+				text: 'Theo dõi tinmoi.vn',
 				buttons: [
-				{ type: 'web_url', url:'https://vnexpress.net/', title: 'Theo dõi', payload: 'Subscribe' },
+				{ type: 'web_url', url: "http://www.tinmoi.vn/", title: 'Theo dõi', payload: 'Subscribe' },
 				{ type: 'element_share', title: 'Chia sẻ', payload: 'generic' },
 				]
 			});

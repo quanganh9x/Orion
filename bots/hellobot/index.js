@@ -2,11 +2,10 @@ const GIPHY_API = 'https://api.giphy.com/v1/gifs/search?api_key=vOJDsEvveDFS07zq
 
 module.exports = function (bot) {
     bot.hear(['hello', 'hi', /hey( there)?/i], (payload, chat) => {
-<<<<<<< HEAD:bots/hellobot/index.js
         chat.say('Hey! Có vẻ bạn đang có một ngày vui vẻ!').then(() => {
-=======
+
         chat.say('Hey! Ngày mới tốt lành!').then(() => {
->>>>>>> 0680f375dfc733e6e5c6c59f02078fdcf9475b40:bots/hellobot/index.js
+
             chat.say({
                 text: 'Hôm nay bạn thế nào?',
                 quickReplies: ['super!', 'fine tho', ':/', 'T_T']
