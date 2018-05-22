@@ -13,7 +13,6 @@ module.exports = function (bot) {
                       for (let i = 0; i < body.items.length; i++) {
                           if (body.items[i].link.includes("phimmoi.net")) {
                               body.items[i].link.replace("phimmoi.net","phi**oi.net");
-                              chat.say("nếu có ** thì là 2 chữ m nghen. Do messenger bắt chặt quá T_T");
                           }
                           chat.say(body.items[i].title + "\n" + body.items[i].link);
                       }

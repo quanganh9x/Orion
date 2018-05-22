@@ -9,7 +9,6 @@ const app = express();
 let routes = require('./routes/global'); // đường dẫn cho trang web
 let botRoutes = require('./bots/global'); // đường dẫn cho bots
 
-
 // mongoose db
 mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x', (error) => {
     if (error) console.log("Cant connect to MongoDB");

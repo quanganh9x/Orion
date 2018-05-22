@@ -24,7 +24,8 @@ const UserSchema = new Schema({
     profile_pic: String,
     locale: String,
     timezone: String,
-    matchupsType: Number
+    action: String,
+    roomId: Number
 }, {
     timestamps: {createdAt: 'regDate', updateAt: 'modifiedDate'}
 });
