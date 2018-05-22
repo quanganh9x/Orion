@@ -1,10 +1,10 @@
 const User = require('../models/user');
 
 module.exports = function (bot) {
-    bot.setGreetingText("Chào bạn. Tớ là một trợ lý đáng iuuuuu của @Đặng Anh và team <3");
+    bot.setGreetingText("Chào bạn. Tớ là một trợ lý đáng iuuuuu của @Đặng Anh và team <3 - Project Orion");
     bot.setGetStartedButton((payload, chat) => {
-        chat.say('Xin chào! Bây giờ là: ' + Date.now() + '. Chúc bạn buổi tối vui vẻ!');
-        chat.say("Có vẻ bạn đang là người mới thì phải. Hãy nhập email để bắt đầu nhé!");
+        chat.say('Xin chào! Bây giờ là: ' + new Date(Date.now()).toLocaleString());
+        chat.say("Hãy nhập email để tận hưởng tất cả các chức năng nhé!");
         chat.say("Khi sử dụng Project Orion, hãy nhớ rằng bạn đã đồng ý cung cấp thông tin cho chúng tôi. Hãy yên tâm, vì dữ liệu của bạn sẽ được bảo vệ và không được sử dụng / cung cấp trái phép cho bên thứ ba");
     });
     bot.hear([/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/], (payload, chat) => {
@@ -34,7 +34,6 @@ module.exports = function (bot) {
         bot.on('message', (payload, chat) => {
             chat.sendAction('mark_seen');
             console.log(payload);
-            console.log(payload.message.nlp.entities);
             const text = payload.message.text;
             chat.getUserProfile().then((user) => {
                 console.log(`[DEBUG] Người dùng ${user.first_name} vừa nhắn: ${text}`);
