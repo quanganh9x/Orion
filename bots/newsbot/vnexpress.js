@@ -13,7 +13,7 @@ module.exports = function (chat) {
 			chat.say({
 				text: 'Theo dõi vnexpress',
 				buttons: [
-				{ type: 'web_url', url:'https://vnexpress.net/', title: 'Theo dõi', payload: 'Subscribe' },
+				{ type: 'web_url', url:'https://www.facebook.com/congdongvnexpress', title: 'Theo dõi', payload: 'Subscribe' },
 				{ type: 'element_share', title: 'Chia sẻ', payload: 'generic' },
 				]
 			});
