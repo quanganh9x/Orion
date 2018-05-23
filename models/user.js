@@ -13,9 +13,20 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     },
+    privilege: { // 0 admin, 1 staff, 2 member
+        type: Number,
+        min: 0,
+        max: 2,
+        default: 2
+    },
     first_name: String,
     last_name: String,
     email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    tel: {
         type: String,
         required: true,
         unique: true
@@ -24,8 +35,13 @@ const UserSchema = new Schema({
     profile_pic: String,
     locale: String,
     timezone: String,
-    action: String,
-    roomId: Number
+    roomId: Number,
+    status: {
+        type: Number,
+        min: 0,
+        max: 1,
+        default: 0
+    }
 }, {
     timestamps: {createdAt: 'regDate', updateAt: 'modifiedDate'}
 });
