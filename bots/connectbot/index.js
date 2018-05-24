@@ -16,13 +16,19 @@ module.exports = (bot) => {
             }, (payload, convo) => {
                 switch (payload.message.text) {
                     case 'Random':
-                        random(convo, bot);
+                        (async () => {
+                            await random(convo, bot);
+                            convo.end();
+                        })();
                         break;
                     case 'Meetups':
                         break;
                     case 'Advisory':
                         break;
                     case 'Passthrough':
+                        break;
+                    default:
+                        convo.end();
                         break;
                 }
             })

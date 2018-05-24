@@ -4,7 +4,7 @@ module.exports = function (bot) {
     bot.setGreetingText("Chào bạn. Tớ là một trợ lý đáng iuuuuu của @Đặng Anh và team <3");
     bot.setGetStartedButton((payload, chat) => {
         (async () => {
-            await chat.say('Xin chào! Bây giờ là: ' + new Date(Date.now()).toLocaleString() + '. Xin chào mừng bạn đã đến với Project Orion!');
+            await chat.say('Xin chào! Bây giờ là: ' + new Date(Date.now()).toLocaleString('vi-VN') + '. Xin chào mừng bạn đã đến với Project Orion!');
             await chat.say("Khi sử dụng, hãy nhớ rằng bạn đã đồng ý cung cấp thông tin cho chúng tôi. Hãy yên tâm, vì dữ liệu của bạn sẽ được bảo vệ và không được sử dụng / cung cấp trái phép cho bên thứ ba");
             await chat.say('Mọi hành động phá hoại / lợi dụng vào mục đích xấu sẽ dẫn đến việc huỷ bỏ quyền truy cập. Hãy cẩn thận!');
             chat.conversation((convo) => {
@@ -16,7 +16,8 @@ module.exports = function (bot) {
                     User.findOne({id: userInfo.id}, (err, result) => {
                         if (err) console.log("err data: " + err);
                         if (result) {
-                            chat.say("Tài khoản đã đăng ký. Status: " + result.status == 2 ? "Member" : "Staff");
+                            chat.say("Tài khoản đã đăng ký. Status: " + (result.status === 2 ? "Member" : "Staff"));
+                            convo.end();
                         } else {
                                 const askTel = (convo) => {
                                     convo.ask({
@@ -61,7 +62,6 @@ module.exports = function (bot) {
                                 };
                                 askEmail(convo);
                         }
-                        convo.end();
                     });
                 })();
             });

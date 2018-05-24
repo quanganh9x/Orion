@@ -14,10 +14,10 @@ module.exports = function (bot) {
                         (async () => {
                             await convo.say('Rất vui được thấy bạn như vậy!');
                             await convo.say('Keep shining bright!');
-                            await convo.sendAttachment({
-                                type: 'image',
-                                url: 'http://dienhoathanglong.vn/sites/d/dh/dhtl/cache/images/Products/362/Hinh_dai_dien/350x350/gio-trai-tim-hoa-hong-do.jpg'
-                            });
+                            await convo.sendAttachment(
+                                'image',
+                                'http://dienhoathanglong.vn/sites/d/dh/dhtl/cache/images/Products/362/Hinh_dai_dien/350x350/gio-trai-tim-hoa-hong-do.jpg'
+                            );
                             convo.end();
                         })();
                     }
@@ -30,10 +30,10 @@ module.exports = function (bot) {
                                     .then(res => res.json())
                                     .then(json => {
                                         convo.say('1 tấm meme tặng bạn. Vui vẻ lên!').then(() => {
-                                            convo.sendAttachment({
-                                                type: 'image',
-                                                url: json.data[0].images.fixed_height.url
-                                            });
+                                            convo.sendAttachment(
+                                                'image',
+                                                json.data[0].images.fixed_height.url
+                                            );
                                         });
                                     }).catch(() => {
                                     convo.say('Vui lên nhé :D Mình luôn bên bạn'); // anh luôn bên em mà ?

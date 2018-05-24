@@ -1,5 +1,6 @@
 const Room = require('../../models/connectbot-rooms');
 const User = require('../../models/user');
+const factory = require('./randomFactory');
 let randomQueue = [1760197560714501];
 
 module.exports = (convo, bot) => {
@@ -23,32 +24,8 @@ module.exports = (convo, bot) => {
                             if (err || !result) console.log("err "+ err);
                         });
                         randomQueue.length = await 0;
-                        bot.conversation(result.uid1, (payload, convo) => {
-                                convo.on('message', (payload, chat) => {
-                                    switch (payload.message.text) {
-                                        case 'end':
-                                            convo.say("Bạn đã thoát khỏi phòng chat #" + result._id);
-                                            convo.end();
-                                            break;
-                                        default:
-                                            bot.say(result.uid2, payload.message.text);
-                                            break;
-                                    }
-                                });
-                        });
-                        bot.conversation(result.uid2, (payload, convo) => {
-                            convo.on('message', (payload) => {
-                                switch (payload.message.text) {
-                                    case 'end':
-                                        convo.say("Bạn đã thoát khỏi phòng chat #" + result._id);
-                                        convo.end();
-                                        break;
-                                    default:
-                                        bot.say(result.uid1, payload.message.text);
-                                        break;
-                                }
-                            });
-                        });
+                        await factory(result.uid1, result.uid2, bot);
+                        convo.end();
                     })();
                 }
             });
