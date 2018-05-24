@@ -1,10 +1,9 @@
-var mongoose = require('mongoose');
-var Model = require('../../models/user');
+var User = require('../../models/user');
 const pwned = require ('haveibeenpwned') ();
 
 
-export.checkEmail = function (chat) {
-	Model.findOne({id: payload.sender:id}, (err, result) =>{
+module.exports = function (chat) {
+	User.findOne({id: uid}, (err, result) =>{
 		if (err) throw err;
 		var email = result.email;
 		console.log(email);
@@ -20,6 +19,14 @@ export.checkEmail = function (chat) {
 				chat.say('%i %i x', i, data[br])
 				i++;
 			}
+			pwned.dataclasses((err, data) =>{
+				if (err) throw err;
+				for (var i = 0; i < (data).length; i++) {
+					chat.say('pastes %i', data[i]);
+				}
+				
+
+			});
 		};
 		db.close();
 	});
