@@ -3,12 +3,13 @@ const pwned = require ('haveibeenpwned') ();
 
 
 module.exports = function (chat) {
-	User.findOne({id: uid}, (err, result) =>{
+	pwned.breachedAccount (email, (err, data) =>{
+	User.findOne({id: data.entry.id}, (err, result) =>{
 		if (err) throw err;
 		var email = result.email;
 		console.log(email);
 
-		pwned.breachedAccount (email, (err, data) =>{
+		
 			if (err) throw err;
 			const count = Object.keys (data).length;
 			let i = 1;
@@ -27,7 +28,7 @@ module.exports = function (chat) {
 				
 
 			});
-		};
+		});
 		db.close();
 	});
 }
