@@ -4,8 +4,8 @@ const pwned = require ('haveibeenpwned') ();
 
 module.exports = function (chat) {
 	pwned.breachedAccount (email, (err, data) =>{
-	User.findOne({id: data.entry.id}, (err, result) =>{
 		if (err) throw err;
+	User.findOne({id: data.entry.id}, (err, result) =>{		
 		var email = result.email;
 		console.log(email);
 
