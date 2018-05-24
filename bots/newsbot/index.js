@@ -8,4 +8,8 @@ module.exports = function (bot) {
             vnexpress(chat);
             tinmoi(chat);
     });
+        bot.hear(['tin thể thao', 'thể thao', 'sport'], (payload, chat) =>{
+    	bot.say
+    		sportnews(chat);
+    })
 };
