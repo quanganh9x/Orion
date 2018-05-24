@@ -1,10 +1,7 @@
 // this is the game-changer bot that I made to dominate //
 // devours my hunger, and train me //
 // greed is only be suppressed by "liars" //
-
-const Room = require('../../models/connectbot-rooms');
-const User = require('../../models/user');
-let queue = [];
+const random = require('./random');
 
 module.exports = (bot) => {
     bot.hear(['chat', 'gặp gỡ'], (payload, chat) => {
@@ -19,10 +16,13 @@ module.exports = (bot) => {
             }, (payload, convo) => {
                 switch (payload.message.text) {
                     case 'Random':
+                        random(convo, bot);
                         break;
                     case 'Meetups':
                         break;
                     case 'Advisory':
+                        break;
+                    case 'Passthrough':
                         break;
                 }
             })

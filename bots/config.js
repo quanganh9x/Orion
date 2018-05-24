@@ -16,67 +16,63 @@ module.exports = function (bot) {
                     User.findOne({id: userInfo.id}, (err, result) => {
                         if (err) console.log("err data: " + err);
                         if (result) {
-                            chat.say("Tài khoản đã đăng ký. Status: " + result.status === 2 ? "Member" : "Staff");
+                            chat.say("Tài khoản đã đăng ký. Status: " + result.status == 2 ? "Member" : "Staff");
                         } else {
-                            const askEmail = (convo) => {
-                                convo.ask({
-                                    text: "Ban chua dang ky thi phai. Hay nhap email",
-                                    quickReplies: [{
-                                        "content_type": "user_email"
-                                    }]
-                                }, (payload, convo) => {
-                                    if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(payload.message.text)) {
-                                        userInfo['email'] = payload.message.text;
-                                        askTel(convo);
-                                    } else convo.say("Email khong hop le");
-                                });
-                            };
-                            const askTel = (convo) => {
-                                convo.ask({
-                                    text: "Cam on ban! Gio hay cung cap cho chung toi so dien thoai",
-                                    quickReplies: [{
-                                        "content_type": "user_phone_number"
-                                    }]
-                                }, (payload, convo) => {
-                                    if (/(09|01[2|6|8|9])+([0-9]{8})\b/g.test(payload.message.text)) userInfo['tel'] = payload.message.text;
-                                    else convo.say("SDT khong hop le");
-                                });
-                            };
-                            askEmail(convo);
+                                const askTel = (convo) => {
+                                    convo.ask({
+                                        text: "Cam on ban! Gio hay cung cap cho chung toi so dien thoai",
+                                        quickReplies: [{
+                                            "content_type": "user_phone_number"
+                                        }]
+                                    }, (payload, convo) => {
+                                        if (/(09|01[2|6|8|9])+([0-9]{8})\b/g.test(payload.message.text)) {
+                                            (async () => {
+                                                userInfo['tel'] = await payload.message.text;
+                                                await new User(userInfo).save((err) => {
+                                                    if (err) console.log("err saving data");
+                                                    else convo.say("Thành công!");
+                                                });
+                                                convo.end();
+                                            })();
+                                        }
+                                        else {
+                                            convo.say("SDT khong hop le").then(() => {
+                                                askTel(convo);
+                                            });
+                                        }
+                                    });
+                                };
+                                const askEmail = (convo) => {
+                                    convo.ask({
+                                        text: "Ban chua dang ky thi phai. Hay nhap email",
+                                        quickReplies: [{
+                                            "content_type": "user_email"
+                                        }]
+                                    }, (payload, convo) => {
+                                        if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(payload.message.text)) {
+                                            userInfo['email'] = payload.message.text;
+                                            askTel(convo);
+                                        } else {
+                                            convo.say("Email khong hop le").then(() => {
+                                                askEmail(convo);
+                                            });
+                                        }
+                                    });
+                                };
+                                askEmail(convo);
                         }
+                        convo.end();
                     });
                 })();
             });
         })();
     });
-    bot.hear([], (payload, chat) => {
-        chat.say('Xin cảm ơn! Hãy chờ một lát để chúng tôi xử lý yêu cầu của bạn...').then(() => {
-            chat.getUserProfile().then((user) => {
-                user['email'] = payload.message.text;
-                User.findOne({"uniqueId": user.id}, (err, result1) => {
-                    if (err) console.log("err data: " + err);
-                    if (result1) {
-                        chat.say("Tài khoản đã đăng ký email!");
-                        /*User.findOneAndUpdate({"uniqueId": user.id}, {"email": user.email}, {new: true, fields: "email"}, (err, result2) => {
-                            if (err || !result2) console.log("error saving data: " + err);
-                            else chat.say("Đổi email thành công!");
-                        });*/
-                    } else {
-                        var newUser = new User(user);
-                        newUser.save((err) => {
-                            if (err) console.log("error saving data: " + err);
-                            else chat.say("Thêm email thành công!");
-                        });
-                    }
-                });
-            });
-        });
-    });
+
     if (process.env.DEBUG) {
         bot.on('message', (payload, chat) => {
-            chat.sendAction('mark_seen');
+            //chat.sendAction('mark_seen');
             console.log(payload);
-            console.log(payload.message.nlp.entities);
+            //console.log(payload.message.nlp.entities);
             const text = payload.message.text;
             chat.getUserProfile().then((user) => {
                 console.log(`[DEBUG] Người dùng ${user.first_name} vừa nhắn: ${text}`);

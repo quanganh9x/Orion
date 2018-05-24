@@ -13,4 +13,5 @@ module.exports = function (bot) {
     bot.module(searchBot);
     bot.module(newsBot);
     bot.module(locationBot);
+    bot.module(connectBot);
 };

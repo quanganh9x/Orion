@@ -35,7 +35,10 @@ const UserSchema = new Schema({
     profile_pic: String,
     locale: String,
     timezone: String,
-    roomId: Number,
+    roomId: {
+        type: String,
+        unique: true
+    },
     status: {
         type: Number,
         min: 0,

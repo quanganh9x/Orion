@@ -1,5 +1,3 @@
-
-const request = require('request');
 const weather = require('./weather');
 
 /////////////////////////////// Thời tiết bot ////////////////////////////
@@ -22,4 +20,4 @@ module.exports = function (bot) {
             });
         });
     });
-}
+};
