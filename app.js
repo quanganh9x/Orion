@@ -7,8 +7,8 @@ const BootBot = require('bootbot');
 const app = express();
 
 let routes = require('./routes/global'); // đường dẫn cho trang web
+let botConditions = require('./bots/middleware');
 let botRoutes = require('./bots/global'); // đường dẫn cho bots
-
 
 // mongoose db
 mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x', (error) => {
@@ -33,6 +33,9 @@ const bot = new BootBot({
     accessToken: process.env.ACCESS_TOKEN,
     verifyToken: process.env.VERIFY_TOKEN,
     appSecret: process.env.APP_SECRET
+});
+bot.app.use((req, res, next) => {
+    botConditions(req, res, next);
 });
 botRoutes(bot);
 bot.start(6969); // triển thôi nhỉ :D
