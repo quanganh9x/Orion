@@ -26,17 +26,17 @@ module.exports = function (bot) {
                     callback: () => {
                         (async () => {
                             await convo.say(':( phải chăng bạn đã có 1 ngày không mấy vui vẻ nhỉ').then(() => {
-                                fetch(GIPHY_API + 'meme')
+                                fetch(GIPHY_API + 'fun')
                                     .then(res => res.json())
                                     .then(json => {
-                                        convo.say('1 tấm meme tặng bạn. Vui vẻ lên!').then(() => {
+                                        convo.say('1 tấm meme xin tặng bạn!').then(() => {
                                             convo.sendAttachment(
                                                 'image',
                                                 json.data[0].images.fixed_height.url
                                             );
                                         });
                                     }).catch(() => {
-                                    convo.say('Vui lên nhé :D Mình luôn bên bạn'); // anh luôn bên em mà ?
+                                    convo.say('Đừng quá buồn nhé :D Mình luôn bên bạn'); // anh luôn bên em mà ?
                                 });
                             });
                             convo.end();

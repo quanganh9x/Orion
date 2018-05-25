@@ -4,7 +4,7 @@ module.exports = function (bot) {
     bot.setGreetingText("Chào bạn. Tớ là một trợ lý đáng iuuuuu của @Đặng Anh và team <3");
     bot.setGetStartedButton((payload, chat) => {
         (async () => {
-            await chat.say('Xin chào! Bây giờ là: ' + new Date(Date.now()).toLocaleString('vi-VN') + '. Xin chào mừng bạn đã đến với Project Orion!');
+            await chat.say('Bây giờ là: ' + new Date(Date.now()).toLocaleString('vi-VN') + '. Xin chào mừng bạn đã đến với Project Orion!');
             await chat.say("Khi sử dụng, hãy nhớ rằng bạn đã đồng ý cung cấp thông tin cho chúng tôi. Hãy yên tâm, vì dữ liệu của bạn sẽ được bảo vệ và không được sử dụng / cung cấp trái phép cho bên thứ ba");
             await chat.say('Mọi hành động phá hoại / lợi dụng vào mục đích xấu sẽ dẫn đến việc huỷ bỏ quyền truy cập. Hãy cẩn thận!');
             chat.conversation((convo) => {
@@ -37,9 +37,7 @@ module.exports = function (bot) {
                                             })();
                                         }
                                         else {
-                                            convo.say("SDT khong hop le").then(() => {
-                                                askTel(convo);
-                                            });
+                                            convo.say("SDT khong hop le").then(() => askTel(convo));
                                         }
                                     });
                                 };
@@ -54,9 +52,7 @@ module.exports = function (bot) {
                                             userInfo['email'] = payload.message.text;
                                             askTel(convo);
                                         } else {
-                                            convo.say("Email khong hop le").then(() => {
-                                                askEmail(convo);
-                                            });
+                                            convo.say("Email khong hop le").then(() => askEmail(convo));
                                         }
                                     });
                                 };

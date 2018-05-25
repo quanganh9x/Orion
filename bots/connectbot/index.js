@@ -1,37 +1,48 @@
-// this is the game-changer bot that I made to dominate //
-// devours my hunger, and train me //
-// greed is only be suppressed by "liars" //
+// dominate the worlds //
+// devours my hunger, fill my soul //
+// the end, is near //
 const random = require('./random');
 
 module.exports = (bot) => {
-    bot.hear(['chat', 'gặp gỡ'], (payload, chat) => {
+    bot.hear(['chat', 'connect'], (payload, chat) => {
         chat.conversation((convo) => {
-            convo.ask({
-                text: 'Bạn muốn gặp gỡ những người mới ? Hãy để ConnectBOT giúp bạn nào!',
-                buttons: [
-                    { type: 'postback', title: 'Random', payload: 'CONNECT_RANDOM' },
-                    { type: 'postback', title: 'Meetups', payload: 'CONNECT_MEETUPS' },
-                    { type: 'postback', title: 'Advisory', payload: 'CONNECT_ADVISORY' }
-                ]
-            }, (payload, convo) => {
-                switch (payload.message.text) {
-                    case 'Random':
+            convo.say("[ConnectBOT] v1.0 xin chào mừng!").then(() => {
+                const connectbot = (convo) => {
+                    convo.ask({
+                        text: 'Bạn muốn gặp gỡ những người mới ? Hãy để ConnectBOT giúp bạn nào!',
+                        buttons: [
+                            { type: 'postback', title: 'Random', payload: 'CONNECT_RANDOM' },
+                            { type: 'postback', title: 'Meetups', payload: 'CONNECT_MEETUPS' },
+                            { type: 'postback', title: 'Advisory', payload: 'CONNECT_ADVISORY' }
+                        ]
+                    }, (payload, convo) => {
                         (async () => {
-                            await random(convo, bot);
-                            convo.end();
+                                switch (payload.message.text) {
+                                    case 'Random':
+                                        await random.start(convo, bot);
+                                        break;
+                                    case 'Meetups':
+                                        break;
+                                    case 'Advisory':
+                                        break;
+                                    case 'Connect':
+                                        break;
+                                    case 'end':
+                                        await random.optout(convo);
+                                        break;
+                                    case 'whereami':
+                                        convo.say("Main > ConnectBOT");
+                                        break;
+                                    default:
+                                        await convo.say("Không có tuỳ chọn này :( Ý bạn là \'Random\', \'Meetups\' hoặc \'Advisory\' ?");
+                                        break;
+                                }
+                                connectbot(convo);
                         })();
-                        break;
-                    case 'Meetups':
-                        break;
-                    case 'Advisory':
-                        break;
-                    case 'Passthrough':
-                        break;
-                    default:
-                        convo.end();
-                        break;
-                }
-            })
+                    });
+                };
+                connectbot(convo);
+            });
         });
     });
 };
