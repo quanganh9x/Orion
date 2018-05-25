@@ -1,5 +1,6 @@
 const request = require('request');
 const GOOGLE_API = "https://www.googleapis.com/customsearch/v1?key=AIzaSyDjeakB1alo42nS2NNR9xjSK5Zyi2yMiSA&cx=010163171448574847880:qglriqbcnk4&fields=items(title,link)&hl=vi&num=5&q=";
+const googleTranslate = require('google-translate')(apiKey);
 
 module.exports = function (bot) {
     bot.hear(['tìm phim', 'kiếm phim', 'phim'], (payload, chat) => {
@@ -76,6 +77,25 @@ module.exports = function (bot) {
                 });
             };
             convo.ask("Bạn muốn tìm bài gì?", answer);
+        });
+    });
+    bot.hear(['dịch', 'translate', 'từ điển', 'tra từ'], (payload, chat) => {
+        chat.conversation((convo) => {
+            const answer = (payload, convo) => {
+                let text = payload.message.text;
+                googleTranslate.detectLanguage(text, function (err, detection) {
+                    if (detection == 'en') {
+                        googleTranslate.translate(text, 'vi', function (err, translation) {
+                            chat.say(translation.translate);
+                        });
+                    } else if (detection == 'vi'){
+                        googleTranslate.translate(text, 'en', function (err, translation) {
+                            chat.say(translation.translate);
+                        });
+                    }
+                });
+            };
+            convo.ask("Bạn muốn dịch gì", answer);
         });
     });
 };
