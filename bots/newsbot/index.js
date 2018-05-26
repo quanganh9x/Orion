@@ -1,4 +1,5 @@
 const tin = require('./tin');
+const bongda = require('./sports/bongda');
 
 module.exports = function (bot) {
     bot.hear(['news'], (payload, chat) => {
@@ -25,6 +26,84 @@ module.exports = function (bot) {
                                     });
                                     break;
                                 case 'Thể thao':
+                                    await convo.ask({
+                                        text: "Môn thể thao bạn muốn biết tin tức ?",
+                                        buttons: [
+                                            { type: 'postback', title: 'Bóng đá', payload: 'SPORTS_BDA' }
+                                        ]
+                                    }, (payload, convo) => {
+                                        (async () => {
+                                            switch (payload.message.text) {
+                                                case 'Bóng đá':
+                                                    await convo.ask({
+                                                        buttons: [
+                                                            {
+                                                                type: 'postback',
+                                                                title: 'Lịch thi đấu tuần',
+                                                                payload: 'SPORTS_BDA_FIXTURES'
+                                                            },
+                                                            {
+                                                                type: 'postback',
+                                                                title: 'Kết quả theo tuần',
+                                                                payload: 'SPORTS_BDA_RESULTS'
+                                                            },
+                                                            {
+                                                                type: 'postback',
+                                                                title: 'Bảng xếp hạng (Top 5)',
+                                                                payload: 'SPORTS_BDA_STANDINGS_TOP'
+                                                            },
+                                                            {
+                                                                type: 'postback',
+                                                                title: 'Bảng xếp hạng (Full)',
+                                                                payload: 'SPORTS_BDA_STANDINGS'
+                                                            }
+                                                        ]
+                                                    }, (payload, convo) => {
+                                                        (async () => {
+                                                            const type = await payload.message.text;
+                                                            let isSimplified = await true;
+                                                            if (payload.message.event === "SPORTS_BDA_STANDINGS") isSimplified = await false;
+                                                            await convo.ask({
+                                                                buttons: [
+                                                                    {
+                                                                        type: 'postback',
+                                                                        title: 'EPL',
+                                                                        payload: 'SPORTS_BDA_EPL'
+                                                                    },
+                                                                    {
+                                                                        type: 'postback',
+                                                                        title: 'La Liga',
+                                                                        payload: 'SPORTS_BDA_LALIGA'
+                                                                    },
+                                                                    {
+                                                                        type: 'postback',
+                                                                        title: 'Bundesliga',
+                                                                        payload: 'SPORTS_BDA_BUNDESLIGA'
+                                                                    },
+                                                                    {
+                                                                        type: 'postback',
+                                                                        title: 'Serie A',
+                                                                        payload: 'SPORTS_BDA_SERIEA'
+                                                                    },
+                                                                    {
+                                                                        type: 'postback',
+                                                                        title: 'Ligue 1',
+                                                                        payload: 'SPORTS_BDA_LIGUE1'
+                                                                    }
+                                                                ]
+                                                            }, (payload, convo) => {
+                                                                const competition = payload.message.text;
+                                                                bongda(type, competition, convo, isSimplified);
+                                                            });
+                                                        })();
+                                                    });
+                                                    break;
+                                                default:
+                                                    await convo.say("???");
+                                                    break;
+                                            }
+                                        })();
+                                    });
                                     break;
                                 case 'Công nghệ':
                                     break;
