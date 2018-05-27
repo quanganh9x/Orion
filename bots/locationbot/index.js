@@ -10,8 +10,7 @@ module.exports = function (bot) {
                         (async () => {
                             switch (payload.message.text) {
                                 case 'thoi tiet':
-                                    await weather(convo.get('lat'), convo.get('long'), convo);
-                                    locationbot(convo);
+                                    await weather(convo.get('lat'), convo.get('long'), convo, locationbot);
                                     break;
                                 case 'dia diem':
                                     break;
