@@ -4,7 +4,7 @@ module.exports = function (bot) {
   bot.hear(['đổi', 'convert'], (payload, chat) => {
     chat.conversation((convo) => {
       convo.say("[ConvertBOT] v1.0 xin chào mừng!").then(() => {
-        const searchbot = (convo) => {
+        const convertbot = (convo) => {
           convo.ask(() => { }, (payload, convo) => {
 
             switch (payload.message.text) {
@@ -27,11 +27,11 @@ module.exports = function (bot) {
                 await convo.say("Không có tuỳ chọn này :( Ý bạn là \'tiền\' hoặc ?");
                 break;
 
-                searchbot(convo);
+                convertbot(convo);
             })();
         });
     };
-    searchbot(convo);
+    convertbot(convo);
   });
 });
   });
