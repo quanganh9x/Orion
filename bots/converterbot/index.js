@@ -1,5 +1,7 @@
 var convert = require('convert-units');
-var convert = require('./file-convert.js');
+// var convert = require('./file-convert.js');
+const request = require('request');
+var FILECONVERT_API = 'https://v2.convertapi.com/';
 
 module.exports = (bot) => {
   bot.hear('convert file', (payload, chat) => {
@@ -13,14 +15,28 @@ module.exports = (bot) => {
         });
         await convo.ask("Ok. Bạn gửi file lên cho mình nhé ;)", (payload, convo) => {
           if (payload.message.attachments[0].type == "file" || payload.message.attachments[0].type == "image"){
-            convert(from, to, {
-              'Secret': 'EMvJmNOJCOQ3OPyB',
-              'File': payload.message.attachments[0].payload.url.replace("://" , "%3A%2F%2F"),
-              },
-              function(err, response){
-                await convo.say("Ok file của bạn ở link này nhé: " + response.Files[0].Url);
+
+            // Hoặc là dùng request thôi không dùng code mẫu bên convertapi.com nữa?
+            await request.get({
+              url: FILECONVERT_API + to + '/to/' + from,
+              form: {
+                'secret': 'EMvJmNOJCOQ3OPyB',
+                'file': payload.message.attachments[0].payload.url.replace(/:/g , "%3A").replace(/\//g , "%2F").replace(/\?/g , "%3F").replace(/&/g , "%26").replace(/=/g , "%3D").replace(/%/g , "%25"),
+                'StoreFile': true
               }
-            );
+            }, (err, response, body) => {
+              convo.say("Ok file của bạn ở link này nhé: " + body.Files[0].Url);
+            });
+
+            // convert(from, to, {
+            //   'Secret': 'EMvJmNOJCOQ3OPyB',
+            //   'File': payload.message.attachments[0].payload.url.replace(/:/g , "%3A").replace(/\//g , "%2F").replace(/\?/g , "%3F").replace(/&/g , "%26").replace(/=/g , "%3D").replace(/%/g , "%25"),
+            //   },
+            //   function(err, response){
+            //     await convo.say("Ok file của bạn ở link này nhé: " + response.Files[0].Url);
+            //   }
+            // );
+
           }
         });
         convo.say("<3");
