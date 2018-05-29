@@ -13,10 +13,13 @@ module.exports = function (bot) {
                                 case 'crypto':
                                     await convo.ask("Hãy gửi cái bạn muốn mã hóa", (payload, convo) => {
                                         var buf = new Buffer.from(payload.message.attachments);
-                                        convo.ask("Key AES bạn muốn là gì (VD: AES", (payload, convo) => {
-                                            
+                                        convo.ask("Key AES bạn muốn là gì (VD: AES123 => 123)", (payload, convo) => {
+                                            convo.set("keyAES",payload.message.text);
+                                            convo.ask("Key HMAC bạn muốn là gì (VD: HMAC-SHA1 => SHA1)", (payload, convo) => {
+                                                convo.set("keyHMAC",payload.message.text);
+                                            })
                                         })
-                                        crypto(buf, convo);
+                                        crypto(buf, keyAES , keyHMAC ,convo);
                                     });
                                     break;
 
