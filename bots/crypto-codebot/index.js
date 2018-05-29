@@ -16,7 +16,7 @@ module.exports = function (bot) {
                                         convo.ask("", (payload, convo) => {
                                             var buf = new Buffer.from(payload.message.attachment.payload);
                                         })
-                                        crypto(buf, from, convo);
+                                        crypto(buf, convo);
                                     });
                                     break;
 
