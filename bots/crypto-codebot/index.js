@@ -12,14 +12,30 @@ module.exports = function (bot) {
                             switch (payload.message.text) {
                                 case 'crypto':
                                     await convo.ask("Hãy gửi cái bạn muốn mã hóa", (payload, convo) => {
+                                        convo.set("keyAES", payload.message.text);
                                         var buf = new Buffer.from(payload.message.attachments);
-                                        convo.ask("Key AES bạn muốn là gì (VD: AES123 => 123)", (payload, convo) => {
-                                            convo.set("keyAES",payload.message.text);
-                                            convo.ask("Key HMAC bạn muốn là gì (VD: HMAC-SHA1 => SHA1)", (payload, convo) => {
-                                                convo.set("keyHMAC",payload.message.text);
-                                            })
-                                        })
-                                        crypto(buf, keyAES , keyHMAC ,convo);
+                                        convo.ask("Bạn muốn mã hóa kiểu nào (keyless / hmac / aes)?", (payload, convo) => {
+                                            switch (payload.message.text) {
+                                                case "keyless":
+                                                    crypto.keyless(buf, convo);
+                                                    break;
+                                                case "hmac":
+                                                    convo.ask("Key HMAC bạn muốn là gì ?", (payload, convo) => {
+                                                        convo.set("keyHMAC", payload.message.text);
+                                                    })
+                                                    crypto.hmac(buf, keyHMAC, convo);
+                                                    break;
+                                                case "aes":
+                                                    convo.ask("Key AES bạn muốn là gì ?", (payload, convo) => {
+                                                        convo.set("keyAES", payload.message.text);
+                                                    })
+                                                    crypto.arguments(buf, keyAES, convo);
+                                                    break;
+                                                default:
+                                                    convo.say("Không có tuỳ chọn này :( Ý bạn là \'keyless\' hoặc \'hmac\' hoặc \'aes\'?");
+                                                    break;
+                                            }
+                                        });
                                     });
                                     break;
 
