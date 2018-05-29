@@ -9,8 +9,12 @@ module.exports = function (bot) {
                         (async () => {
                             switch (payload.message.text) {
                                 case 'crypto':
-                                    await convo.ask("Hãy tải file lên", (payload, convo) => {
-                                        phim(payload.message.text, convo);
+                                    await convo.ask("Bạn muốn mã hóa sang gì (sha1, sha224, sha256, sha384, sha512, md5, rmd160)", (payload, convo) => {
+                                        convo.set("from",payload.message.text);
+                                        convo.ask("Hãy tải file lên", (payload, convo) => {
+                                            convo.on()
+                                        })
+                                        crypto("file",from,convo);
                                     });
                                     break;
                                 
