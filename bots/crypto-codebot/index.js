@@ -1,3 +1,5 @@
+import { Buffer } from 'buffer';
+
 const crypto = require('./crypto');
 
 module.exports = function (bot) {
@@ -11,10 +13,10 @@ module.exports = function (bot) {
                                 case 'crypto':
                                     await convo.ask("Bạn muốn mã hóa sang gì (sha1, sha224, sha256, sha384, sha512, md5, rmd160)", (payload, convo) => {
                                         convo.set("from",payload.message.text);
-                                        convo.ask("Hãy tải file lên", (payload, convo) => {
-                                            convo.on()
+                                        convo.ask("Hãy gửi cái bạn muốn mã hóa", (payload, convo) => {                                                                                       
+                                            var buf = new Buffer.from(payload.message.attachment.payload);
                                         })
-                                        crypto("file",from,convo);
+                                        crypto(buf,from,convo);
                                     });
                                     break;
                                 

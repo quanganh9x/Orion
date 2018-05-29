@@ -1,6 +1,8 @@
 var cryptoBrowserify = require("crypto-browserify");
 
-module.exports = (name,from, convo) => {
-  var hash = cryptoBrowserify.createHash(from);
+module.exports = (buf,from, convo) => {
+  var hash = cryptoBrowserify.createHash(from,buf);
   hash.write();
+  hash.end()
+  hash.read();
 };
