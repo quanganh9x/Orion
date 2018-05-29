@@ -25,7 +25,7 @@ module.exports = (buf, convo) => {
           "\n SHA512 :  " + hashSHA512.toString(cryptoJS.enc.Hex) +
           "\n SHA384 :  " + hashSHA384.toString(cryptoJS.enc.Hex) +
           "\n SHA3 :  " + hashSHA3.toString(cryptoJS.enc.Hex) +
-          "\n RIPEMD160 :  " + hashRIPEMD160.toString(cryptoJS.enc.Hex) +
+          "\n RIPEMD160 :  " + hashRIPEMD160.toString(cryptoJS.enc.Hex)
           
   ); 
 };
