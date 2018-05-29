@@ -12,9 +12,9 @@ module.exports = function (bot) {
                             switch (payload.message.text) {
                                 case 'crypto':
                                     await convo.ask("Hãy gửi cái bạn muốn mã hóa", (payload, convo) => {
-                                        convo.set("from", payload.message.text);
-                                        convo.ask("", (payload, convo) => {
-                                            var buf = new Buffer.from(payload.message.attachment.payload);
+                                        var buf = new Buffer.from(payload.message.attachments);
+                                        convo.ask("Key AES bạn muốn là gì (VD: AES", (payload, convo) => {
+                                            
                                         })
                                         crypto(buf, convo);
                                     });
