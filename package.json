@@ -9,6 +9,7 @@
   "dependencies": {
     "@google/maps": "^0.4.6",
     "bootbot": "^1.0.15",
+    "crypto-js": "^3.1.9-1",
     "debug": "~2.6.9",
     "dotenv": "^5.0.1",
     "express": "~4.16.0",
