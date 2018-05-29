@@ -11,16 +11,17 @@ module.exports = (bot) => {
         await convo.ask("Và sang định dạng ...? Chú ý: chưa hỗ trợ đổi từ pdf sang doc, xlsx,...", (payload, convo) => {
           convo.set("to", payload.message.text);
         });
-        await convo.say("Ok. Bạn gửi file lên cho mình nhé ;)");
-        bot.on('attachment', (payload, chat) => {
-          convert(from, to, {
-            'Secret': 'EMvJmNOJCOQ3OPyB',
-            'File': payload.message.attachments.payload.url.replace("://" , "%3A%2F%2F"),
-            },
-            function(err, response){
-              await convo.say("Ok file của bạn ở link này nhé: " + response.Files[0].Url);
-            }
-          );
+        await convo.ask("Ok. Bạn gửi file lên cho mình nhé ;)", (payload, convo) => {
+          if (payload.message.attachments[0].type == "file" || payload.message.attachments[0].type == "image"){
+            convert(from, to, {
+              'Secret': 'EMvJmNOJCOQ3OPyB',
+              'File': payload.message.attachments[0].payload.url.replace("://" , "%3A%2F%2F"),
+              },
+              function(err, response){
+                await convo.say("Ok file của bạn ở link này nhé: " + response.Files[0].Url);
+              }
+            );
+          }
         });
         convo.say("<3");
         convo.end();
