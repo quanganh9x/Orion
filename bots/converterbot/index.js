@@ -2,6 +2,7 @@ var convert = require('convert-units');
 // var convert = require('./file-convert.js');
 const request = require('request');
 var FILECONVERT_API = 'https://v2.convertapi.com/';
+var UPLOADFILE_API = 'http://multiup.org/api/remote-upload?link=';
 
 module.exports = (bot) => {
   bot.hear('convert file', (payload, chat) => {
@@ -18,7 +19,7 @@ module.exports = (bot) => {
 
             // Hoặc là dùng request thôi không dùng code mẫu bên convertapi.com nữa?
             await request.get({
-              url: FILECONVERT_API + to + '/to/' + from + '?Secret=EMvJmNOJCOQ3OPyB&File=' + payload.message.attachments[0].payload.url.replace(/:/g , "%3A").replace(/\//g , "%2F").replace(/\?/g , "%3F").replace(/&/g , "%26").replace(/=/g , "%3D").replace(/%/g , "%25") + '&StoreFile=true',
+              url: FILECONVERT_API + to + '/to/' + from + '?Secret=EMvJmNOJCOQ3OPyB&File=' + payload.message.attachments[0].payload.url + '&StoreFile=true',
               headers: {
                 'Accept': 'application/json'
               }
@@ -35,6 +36,24 @@ module.exports = (bot) => {
             //   }
             // );
 
+          }
+        });
+        convo.say("<3");
+        convo.end();
+      });
+    });
+  });
+  bot.hear('cloud upload', (payload, chat) => {
+    chat.conversation((convo) => {
+      (async ()=>{
+        await convo.ask("Ok. Bạn gửi file để mình upload lên nhé ;)", (payload, convo) => {
+          if (payload.message.attachments[0].type == "file" || payload.message.attachments[0].type == "image"){
+            await request.post({
+              headers: {'content-type' : 'application/json'},
+              url: UPLOADFILE_API + payload.message.attachments[0].payload.url,
+            }, function(error, response, body){
+              convo.say("Ok file của bạn ở link này nhé: " + body.link.replace(/\//g, ""));
+            });
           }
         });
         convo.say("<3");
