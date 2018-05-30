@@ -18,11 +18,9 @@ module.exports = (bot) => {
 
             // Hoặc là dùng request thôi không dùng code mẫu bên convertapi.com nữa?
             await request.get({
-              url: FILECONVERT_API + to + '/to/' + from,
-              form: {
-                'secret': 'EMvJmNOJCOQ3OPyB',
-                'file': payload.message.attachments[0].payload.url.replace(/:/g , "%3A").replace(/\//g , "%2F").replace(/\?/g , "%3F").replace(/&/g , "%26").replace(/=/g , "%3D").replace(/%/g , "%25"),
-                'StoreFile': true
+              url: FILECONVERT_API + to + '/to/' + from + '?Secret=EMvJmNOJCOQ3OPyB&File=' + payload.message.attachments[0].payload.url.replace(/:/g , "%3A").replace(/\//g , "%2F").replace(/\?/g , "%3F").replace(/&/g , "%26").replace(/=/g , "%3D").replace(/%/g , "%25") + '&StoreFile=true',
+              headers: {
+                'Accept': 'application/json'
               }
             }, (err, response, body) => {
               convo.say("Ok file của bạn ở link này nhé: " + body.Files[0].Url);
