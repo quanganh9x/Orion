@@ -1,7 +1,7 @@
 import { Buffer } from 'buffer';
 
 const crypto = require('./crypto');
-
+const qrBar = require('./qr-bar');
 module.exports = function (bot) {
     bot.hear(['crypto', 'mã hóa', 'code'], (payload, chat) => {
         chat.conversation((convo) => {
@@ -29,7 +29,7 @@ module.exports = function (bot) {
                                                     convo.ask("Key AES bạn muốn là gì ?", (payload, convo) => {
                                                         convo.set("keyAES", payload.message.text);
                                                     })
-                                                    crypto.arguments(buf, keyAES, convo);
+                                                    crypto.aes(buf, keyAES, convo);
                                                     break;
                                                 default:
                                                     convo.say("Không có tuỳ chọn này :( Ý bạn là \'keyless\' hoặc \'hmac\' hoặc \'aes\'?");
@@ -38,9 +38,43 @@ module.exports = function (bot) {
                                         });
                                     });
                                     break;
+                                case 'qr-bar code':
+                                    await convo.ask("Hãy nhập lựa chọn của bạn: \n 1. Giải mã QR \n 2. Giải mã barcode \n 3. Tạo mã QR ", (payload, convo) => {
+                                        convo.ask("Bạn muốn mã hóa kiểu nào (keyless / hmac / aes)?", (payload, convo) => {
+                                            switch (payload.message.text) {
+                                                case "1":
+                                                    convo.ask("Hãy upload ảnh của bạn lên", (payload, convo) => {
+                                                        if (payload.message.attachments[0].payload.type == "image") {
+                                                            convo.set("img", payload.message.attachments[0].payload.url)
+                                                        }
+                                                    })
+                                                    qrBar.qrReader(img, convo);
 
+                                                    break;
+                                                case "2":
+                                                    convo.ask("Hãy upload ảnh của bạn lên", (payload, convo) => {
+                                                        if (payload.message.attachments[0].payload.type == "image") {
+                                                            convo.set("img", payload.message.attachments[0].payload.url)
+                                                        }
+                                                    })
+                                                    qrBar.barReader(img, convo);
+                                                    break;
+                                                    break;
+                                                case "3":
+                                                    convo.ask("Hãy gửi dòng bạn muốn tạo mã QR ", (payload, convo) => {
+                                                        convo.set("input", payload.message.text);
+                                                    })
+                                                    qrBar.codeWriter(input, convo);
+                                                    break;
+                                                default:
+                                                    convo.say("Không có tuỳ chọn này :( Ý bạn là \'1\' hoặc \'2\' hoặc \'3\'?");
+                                                    break;
+                                            }
+                                        });
+                                    });
+                                    break;
                                 default:
-                                    await convo.say("Không có tuỳ chọn này :( Ý bạn là \'crypto\' hoặc ?");
+                                    await convo.say("Không có tuỳ chọn này :( Ý bạn là \'crypto\' hoặc \'qr-bar code\' ?");
                                     break;
                             }
                             cryptocodebot(convo);
