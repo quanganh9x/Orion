@@ -21,7 +21,8 @@ const barReader = (img, convo) => {
 const codeWriter = (input, convo) => {
   const qrCodeWriter = new ZXing.BrowserQRCodeSvgWriter();
   var qrSvgElement = qrCodeWriter.write(input, 300, 300);
-  convo.sendAttachment
+  convo.say("Mã QR của bạn đây");
+  convo.sendAttachment('image', qrSvgElement);
 }
 module.exports = () => {
   qrReader,
