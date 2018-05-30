@@ -15,11 +15,11 @@ module.exports = (bot) => {
           convo.set("to", payload.message.text);
         });
         await convo.ask("Ok. Bạn gửi file lên cho mình nhé ;)", (payload, convo) => {
-          if (payload.message.attachments[0].type == "file" || payload.message.attachments[0].type == "image"){
+          if (payload.message.attachments[0].type){
 
             // Hoặc là dùng request thôi không dùng code mẫu bên convertapi.com nữa?
             await request.get({
-              url: FILECONVERT_API + to + '/to/' + from + '?Secret=EMvJmNOJCOQ3OPyB&File=' + payload.message.attachments[0].payload.url + '&StoreFile=true',
+              url: FILECONVERT_API + from + '/to/' + to + '?Secret=EMvJmNOJCOQ3OPyB&File=' + payload.message.attachments[0].payload.url + '&StoreFile=true',
               headers: {
                 'Accept': 'application/json'
               }
@@ -47,7 +47,7 @@ module.exports = (bot) => {
     chat.conversation((convo) => {
       (async ()=>{
         await convo.ask("Ok. Bạn gửi file để mình upload lên nhé ;)", (payload, convo) => {
-          if (payload.message.attachments[0].type == "file" || payload.message.attachments[0].type == "image"){
+          if (payload.message.attachments[0].type){
             await request.post({
               headers: {'content-type' : 'application/json'},
               url: UPLOADFILE_API + payload.message.attachments[0].payload.url,
