@@ -14,6 +14,15 @@ const EventSchema = new Schema({
         max: 2,
         required: true
     },
+    cron: {
+        type: String,
+        required: true
+    },
+    job: {
+        type: String,
+        required: true
+    },
+    subscribers: [String],
     description: String
 });
 

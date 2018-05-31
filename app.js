@@ -6,9 +6,12 @@ const mongoose = require('mongoose');
 const BootBot = require('bootbot');
 const app = express();
 
-let routes = require('./routes/global'); // đường dẫn cho trang web
-let botConditions = require('./bots/middleware');
-let botRoutes = require('./bots/global'); // đường dẫn cho bots
+const routes = require('./routes/global'); // đường dẫn cho trang web
+const botConditions = require('./bots/middleware');
+const botRoutes = require('./bots/global'); // đường dẫn cho bots
+const cronEvents = require('./bots/eventbot/cron'); // cronjobs
+const startupEvents = require('./bots/eventbot/startup'); // startup events
+startupEvents(); // must be call as soon as possible
 
 // mongoose db
 mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x', (error) => {
@@ -24,10 +27,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-/// routes cho web ///
-app.use('/', routes());
-//////////////////////
-
 ////////////////// initialize our bots ////////////////////////
 const bot = new BootBot({
     accessToken: process.env.ACCESS_TOKEN,
@@ -40,6 +39,11 @@ bot.app.use((req, res, next) => {
 botRoutes(bot);
 bot.start(6969); // triển thôi nhỉ :D
 //////////////////////////////////////////////////////////////
+
+/// routes cho web ///
+app.use('/', routes(bot));
+cronEvents(bot);
+//////////////////////
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

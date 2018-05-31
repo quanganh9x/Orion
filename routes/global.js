@@ -4,8 +4,8 @@ const router = express.Router();
 let coreRoute = require('./core/index');
 let apiRoutes = require('./core/apis');
 ////////////
-module.exports = function () {
+module.exports = function (bot) {
     coreRoute(router);
-    apiRoutes(router);
+    apiRoutes(router, bot);
     return router;
 };

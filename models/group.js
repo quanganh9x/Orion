@@ -8,11 +8,8 @@ const GroupSchema = new Schema({
         required: true,
         unique: true
     },
-    id: {
-        type: [String],
-        required: true
-    },
-    subscribed: [String]
+    id: [String],
+    subscribed: [Number]
 });
 
 GroupSchema.plugin(autoIncrement, {model: "Group", field: "gid", startAt: 1, incrementBy: 1});
