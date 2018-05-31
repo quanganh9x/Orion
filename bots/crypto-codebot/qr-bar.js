@@ -16,15 +16,15 @@ const qrReader = (img, convo) => {
         console.error(err);
       }
       convo.say("Mã QR của bạn đây");
-      convo.say(value.result);      
+      convo.say(value.result);
     };
-    
-    
+
+
   });
 }
 
 const qrImage = (input, convo) => {
-  var img = qr.image(input,{size : 7});
+  var img = qr.image(input, {type : "png", size: 7 });
   convo.say("Mã QR của bạn đây");
   convo.sendAttachment('image', img);
 }
