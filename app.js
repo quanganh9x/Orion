@@ -1,6 +1,8 @@
 require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const BootBot = require('bootbot');
@@ -10,8 +12,7 @@ const routes = require('./routes/global'); // đường dẫn cho trang web
 const botConditions = require('./bots/middleware');
 const botRoutes = require('./bots/global'); // đường dẫn cho bots
 const cronEvents = require('./bots/eventbot/cron'); // cronjobs
-const startupEvents = require('./bots/eventbot/startup'); // startup events
-startupEvents(); // must be call as soon as possible
+require('./bots/eventbot/startup')(); // startup events
 
 // mongoose db
 mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x', (error) => {
@@ -23,6 +24,7 @@ mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x',
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(require('helmet')());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,6 +46,7 @@ bot.start(6969); // triển thôi nhỉ :D
 app.use('/', routes(bot));
 cronEvents(bot);
 //////////////////////
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

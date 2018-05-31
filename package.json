@@ -17,6 +17,7 @@
     "express": "~4.16.0",
     "google-search": "0.0.5",
     "google-translator": "^1.0.1",
+    "helmet": "^3.12.1",
     "hibp": "^7.1.1",
     "http-errors": "~1.6.2",
     "moment": "^2.22.1",
