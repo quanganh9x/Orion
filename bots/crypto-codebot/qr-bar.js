@@ -1,28 +1,32 @@
-const ZXing = require('@zxing/library');
+var qr = require('qr-image');
+var QrCode = require('qrcode-reader');
+var qr = new QrCode();
+var Jimp = require("jimp");
+const fs = require('fs');
 
 const qrReader = (img, convo) => {
-  const qrCodeReader = new ZXing.BrowserQRCodeReader();
-  qrCodeReader.decodeFromImage(img).then((result) => {
-    convo.say("Kết quả của bạn đây : " + result.text);
-  }).catch((err) => {
-    console.error(err);
+  var buffer = fs.readFileSync(img);
+  Jimp.read(buffer, function (err, image) {
+    if (err) {
+      console.error(err);
+    }
+    var qr = new QrCode();
+    qr.callback = function (err, value) {
+      if (err) {
+        console.error(err);
+      }
+      convo.say("Mã QR của bạn đây");
+      convo.say(value.result);      
+    };
+    
+    
   });
 }
 
-const barReader = (img, convo) => {
-  const barCodeReder = new ZXing.BrowserBarcodeReader();
-  barCodeReder.decodeFromImage(img).then((result) => {
-    convo.say("Kết quả của bạn đây : " + result.text);
-  }).catch((err) => {
-    console.error(err);
-  });
-}
-
-const codeWriter = (input, convo) => {
-  const qrCodeWriter = new ZXing.BrowserQRCodeSvgWriter();
-  var qrSvgElement = qrCodeWriter.write(input, 300, 300);
+const qrImage = (input, convo) => {
+  var img = qr.image(input,{size : 7});
   convo.say("Mã QR của bạn đây");
-  convo.sendAttachment('image', qrSvgElement);
+  convo.sendAttachment('image', img);
 }
 module.exports = () => {
   qrReader,

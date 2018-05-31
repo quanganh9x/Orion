@@ -39,7 +39,7 @@ module.exports = function (bot) {
                                     });
                                     break;
                                 case 'qr-bar code':
-                                    await convo.ask("Hãy nhập lựa chọn của bạn: \n 1. Giải mã QR \n 2. Giải mã barcode \n 3. Tạo mã QR ", (payload, convo) => {
+                                    await convo.ask("Hãy nhập lựa chọn của bạn: \n 1. Giải mã QR \n 2. Tạo mã QR ", (payload, convo) => {
                                         convo.ask("Bạn muốn mã hóa kiểu nào (keyless / hmac / aes)?", (payload, convo) => {
                                             switch (payload.message.text) {
                                                 case "1":
@@ -52,19 +52,10 @@ module.exports = function (bot) {
 
                                                     break;
                                                 case "2":
-                                                    convo.ask("Hãy upload ảnh của bạn lên", (payload, convo) => {
-                                                        if (payload.message.attachments[0].payload.type == "image") {
-                                                            convo.set("img", payload.message.attachments[0].payload.url)
-                                                        }
-                                                    })
-                                                    qrBar.barReader(img, convo);
-                                                    break;
-                                                    break;
-                                                case "3":
                                                     convo.ask("Hãy gửi dòng bạn muốn tạo mã QR ", (payload, convo) => {
                                                         convo.set("input", payload.message.text);
                                                     })
-                                                    qrBar.codeWriter(input, convo);
+                                                    qrBar.qrImage(input, convo);
                                                     break;
                                                 default:
                                                     convo.say("Không có tuỳ chọn này :( Ý bạn là \'1\' hoặc \'2\' hoặc \'3\'?");
