@@ -5,9 +5,9 @@
 // });
 const language = require('@google-cloud/language');
 const API_KEY = process.env.API_GOOGLE;
-const client = new language.LanguageServiceClient(
-    keyFilename : API_KEY 
-);
+const client = new language.LanguageServiceClient({
+    keyFilename: API_KEY 
+});
 module.exports = (convo, intellibot) => {
     convo.ask('', (payload, convo) => {
         // The text to analyze
