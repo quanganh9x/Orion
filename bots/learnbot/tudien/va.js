@@ -14,7 +14,7 @@ module.exports = (convo, learnbot) => {
                     let defs;
                     for (let i = 0; i < results.data.translations.length; i++) {
                         defs += "\'" + results.data.translations[i].translatedText + "\'\n";
-                        if (i == response.source.target.synonyms.length - 1) {
+                        if (i == results.data.translations.length - 1) {
                             convo.say("Có thể sử dụng: ").then(() => {
                                 convo.say(defs).then(() => {
                                     learnbot(convo);
