@@ -8,7 +8,7 @@ module.exports = function (bot) {
             const precryptobot = (convo) => {
                 convo.say({
                     text: "[CryptoBOT] v1.0 xin chào mừng!",
-                    quickReplies: ['Encode', 'QR & Barcode', 'Base64']
+                    quickReplies: ['Encode', 'QR', 'Base64']
                 }).then(() => cryptobot(convo));
             };
             const cryptobot = (convo) => {
@@ -20,7 +20,7 @@ module.exports = function (bot) {
                         case 'QR & Barcode':
                             convo.ask({
                                 text: "Hãy lựa chọn:",
-                                quickReplies: ['Encode QR', 'Decode QR', 'Barcode Reader']
+                                quickReplies: ['Encode QR', 'Decode QR']
                             }, (payload, convo) => {
                                 switch (payload.message.text) {
                                     case "Decode QR":
@@ -33,19 +33,9 @@ module.exports = function (bot) {
                                             }
                                         });
                                         break;
-                                    case "Barcode Reader":
-                                        convo.ask("Hãy upload ảnh barcode (1 ảnh) ?", (payload, convo) => {
-                                            if (payload.message.attachments && payload.message.attachments[0].payload.type === "image") {
-                                                qrBar.barReader(payload.message.attachments[0].payload.url, convo, cryptobot);
-                                            } else {
-                                                convo.say("???");
-                                                cryptobot(convo);
-                                            }
-                                        });
-                                        break;
                                     case "Encode QR":
                                         convo.ask("Nội dung QR code ?", (payload, convo) => {
-                                            qrBar.codeWriter(payload.message.text, convo, cryptobot);
+                                            qrBar.qrGenerator(payload.message.text, convo, cryptobot);
                                         });
                                         break;
                                     default:
@@ -53,7 +43,6 @@ module.exports = function (bot) {
                                         cryptobot(convo);
                                         break;
                                 }
-
                             });
                             break;
                         case 'Base64':

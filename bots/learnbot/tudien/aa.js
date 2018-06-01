@@ -15,7 +15,7 @@ module.exports = (convo, learnbot) => {
                 convo.say("Definition: " + body.definitions[i].definition).then(() => {
                     convo.say("Word Type " + body.definitions[i].partOfSpeech);
                 });
-                if (i == body.definitions.length - 1) learnbot(convo);
+                if (i === body.definitions.length - 1) learnbot(convo);
             }
         }
     });

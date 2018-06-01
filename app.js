@@ -1,8 +1,6 @@
 require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
-const https = require('https');
-const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const BootBot = require('bootbot');

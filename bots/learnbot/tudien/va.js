@@ -1,15 +1,19 @@
-const googleTranslator = require('google-translator');
+const Translate = require('@google-cloud/translate');
+const translate = new Translate({
+    key: process.env.GOOGLE_API_KEY
+});
 
 module.exports = (convo, learnbot) => {
-    convo.ask("Nhập từ muốn tra ?", (payload, convo) => {
-        googleTranslator('vi', 'en', payload.message.text, response => {
-            convo.say("\'" + response.text + "\'").then(() => {
-                if (response.source.target.synonyms.length != 0) {
+    convo.ask("Nhập từ muốn dịch sang tiếng việt ?", (payload, convo) => {
+        translate
+            .translate(payload.message.text, 'en')
+            .then(results => {
+                if (results.data.translations.length != 0) {
                     let defs;
-                    for (let i = 0; i < response.source.target.synonyms.length; i++) {
-                        defs += "\'" + response.source.target.synonyms[i] + "\'\n";
-                        if (i == response.source.target.synonyms.length - 1) {
-                            convo.say("Có thể sử dụng: ").then(() => {
+                    for (let i = 0; i < results.data.translations.length; i++) {
+                        defs += "\'" + results.data.translations[i].translatedText + "\'\n";
+                        if (i == results.data.translations.length - 1) {
+                            convo.say("Synonyms that can be used: ").then(() => {
                                 convo.say(defs).then(() => {
                                     learnbot(convo);
                                 });
@@ -17,7 +21,12 @@ module.exports = (convo, learnbot) => {
                         }
                     }
                 }
+            })
+            .catch(err => {
+                console.log(err);
+                convo.say(":( Không dịch được").then(() => {
+                    learnbot(convo);
+                });
             });
-        });
     });
 };

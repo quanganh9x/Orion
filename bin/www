@@ -13,7 +13,7 @@ const fs = require('fs');
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '8080');
+const port = normalizePort(process.env.PORT || '8000');
 app.set('port', port);
 
 /**
@@ -21,17 +21,19 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-const options = {
-    cert: fs.readFileSync('./sslcert/fullchain.pem'),
-    key: fs.readFileSync('./sslcert/privkey.pem')
-};
-const secureServer = https.createServer(options, app);
+if (process.env.DEPLOY_SECURESERVER) {
+    const options = {
+        cert: fs.readFileSync(''),
+        key: fs.readFileSync('')
+    };
+    const secureServer = https.createServer(options, app);
+    secureServer.listen(8001);
+}
 /**
  * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port);
-secureServer.listen(8443);
 
 /**
  * Normalize a port into a number, string, or false.

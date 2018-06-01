@@ -1,29 +1,78 @@
+const googleMapsClient = require('@google/maps').createClient({
+    key: process.env.GOOGLE_MAPS_KEY
+});
 
-module.exports = (convo) => {
+const custom = (lat, long, convo, locationbot) => {
+        convo.ask("Hãy nhập thông tin về địa điểm ?", (payload, convo) => {
+            googleMapsClient.places({
+                query: payload.message.text,
+                language: 'vi',
+                location: lat + ',' + long,
+                radius: 2000
+            }, function(err, response) {
+                if (err) {
+                    convo.say(":( Mình chưa tìm được").then(() => locationbot(convo));
+                } else {
+                    let i = 0;
+                    while (i < response.json.results.length) {
+                        (async () => {
+                            await convo.say("Tên: " + response.json.results[i].name + ", địa chỉ: " + response.json.results[i].formatted_address + " (được đánh giá " + response.json.results[i].rating + "/5 sao)");
+                            if (response.json.results[i].photos && response.json.results[i].photos[0].photo_reference) {
+                                await googleMapsClient.placesPhoto({
+                                    photoreference: response.json.results[i].photos[0].photo_reference,
+                                    maxwidth: response.json.results[i].photos[0].width,
+                                    maxheight: response.json.results[i].photos[0].height,
+                                }, (err, res) => {
+                                    convo.sendAttachment('image', res.requestUrl);
+                                });
+                            }
+                            i++;
+                            if (i === response.json.results.length) locationbot(convo);
+                        })();
+                    }
+                }
+            });
+        });
+};
+
+const nearby = (lat, long, convo, locationbot) => {
     convo.ask({
-        text: 'Bạn muốn làm gì nè?',
-        quickReplies: ['Quẩyyyyy','Thăm quan', 'Cà phê', 'Chơi ngoài trời', 'Xem phim']
-    }, (payload, convo) {
-        convo.set('answer', payload.message.text);
+        text: "Bạn muốn tìm địa điểm gì ?",
+        quickReplies: [ 'bank', 'bar', 'cafe', 'doctor', 'gym', 'hospital', 'library', 'park', 'restaurant', 'shopping_mall', 'spa']
+    }, (payload, convo) => {
+        googleMapsClient.placesNearby({
+            type: payload.message.text,
+            language: 'vi',
+            location: lat + ',' + long,
+            radius: 1000,
+            rankby: 'prominence'
+        }, function(err, response) {
+            if (err) {
+                convo.say(":( Mình chưa tìm được").then(() => locationbot(convo));
+            } else {
+                let i = 0;
+                while (i < response.json.results.length) {
+                    (async () => {
+                        await convo.say("Tên: " + response.json.results[i].name + ", địa chỉ: " + response.json.results[i].formatted_address + " (được đánh giá " + response.json.results[i].rating + "/5 sao)");
+                        if (response.json.results[i].photos && response.json.results[i].photos[0].photo_reference) {
+                            await googleMapsClient.placesPhoto({
+                                photoreference: response.json.results[i].photos[0].photo_reference,
+                                maxwidth: response.json.results[i].photos[0].width,
+                                maxheight: response.json.results[i].photos[0].height,
+                            }, (err, res) => {
+                                convo.sendAttachment('image', res.requestUrl);
+                            });
+                        }
+                        i++;
+                        if (i === response.json.results.length) locationbot(convo);
+                    })();
+                }
+            }
+        });
     });
-    switch (convo.get('answer')) {
-        case 'Quẩyyyyy':
-            search(lat, long, 'night_club', convo);
-            break;
-        case 'Thăm quan':
-            search(lat, long, 'museum', convo);
-            break;
-        case 'Cà phê':
-            search(lat, long, 'cafe', convo);
-            break;
-        case 'Chơi ngoài trời':
-            search(lat, long, 'amusement_park', convo);
-            break;
-        case 'Xem phim':
-            search(lat, long, 'movie_theater', convo);
-            break;
-        case default:
-        convo.say("Huhhhhhhhhhhhhhhhhhh???");
-        break;
-    }
+};
+
+module.exports = {
+    custom,
+    nearby
 };

@@ -1,24 +1,43 @@
 const weather = require('./weather');
+const search = require('./search');
 
 module.exports = function (bot) {
     bot.hear(['location'], (payload, chat) => {
         chat.conversation((convo) => {
             (async () => {
-                await convo.say("[LocationBOT] v1.0 xin chào mừng");
+                await convo.say({
+                    text: "[LocationBOT] v1.0 xin chào mừng",
+                    quickReplies: ['Thời tiết', 'Thông tin về địa điểm']
+                });
                 const locationbot = (convo) => {
                     convo.ask(() => {}, (payload, convo) => {
-                        (async () => {
                             switch (payload.message.text) {
-                                case 'thoi tiet':
-                                    await weather(convo.get('lat'), convo.get('long'), convo, locationbot);
+                                case 'Thời tiết':
+                                    weather(convo.get('lat'), convo.get('long'), convo, locationbot);
                                     break;
-                                case 'dia diem':
+                                case 'Thông tin về địa điểm':
+                                    convo.ask({
+                                        text: "Lựa chọn kiểu tìm kiếm",
+                                        buttons: [
+                                            {type: 'postback', title: 'Địa điểm chỉ định', payload: 'SB_FIXED'},
+                                            {type: 'postback', title: 'Địa điểm tùy chỉnh', payload: 'SB_CUSTOM'}
+                                        ]
+                                    }, (payload, convo) => {
+                                        switch (payload.message.event) {
+                                            case 'SB_FIXED':
+                                                search.nearby(convo.get('lat'), convo.get('long'), convo, locationbot);
+                                                break;
+                                            case 'SB_CUSTOM':
+                                                search.custom(convo.get('lat'), convo.get('long'), convo, locationbot);
+                                                break;
+                                        }
+                                    });
                                     break;
-                                case 'doi':
+                                case 'Đổi':
                                     askLocation(convo);
                                     break;
                                 case 'whereami':
-                                    await convo.say("Main > LocationBOT");
+                                    convo.say("Main > LocationBOT");
                                     locationbot(convo);
                                     break;
                                 case 'end':
@@ -29,7 +48,6 @@ module.exports = function (bot) {
                                     locationbot(convo);
                                     break;
                             }
-                        })();
                     })
                 };
                 const askLocation = (convo) => {
