@@ -16,12 +16,12 @@ module.exports = function (bot) {
             const searchbot = (convo) => {
                 convo.ask(() => {}, (payload, convo) => {
                     switch (payload.message.text) {
-                        case 'phim':
+                        case 'Phim':
                             convo.ask("Bạn muốn tìm phim gì ?", (payload, convo) => {
                                 phim(payload.message.text, convo, searchbot);
                             });
                             break;
-                        case 'nhạc':
+                        case 'Nhạc':
                             convo.ask("Bạn muốn tìm nhạc gì ?", (payload, convo) => {
                                 nhac(payload.message.text, convo, searchbot);
                             });
