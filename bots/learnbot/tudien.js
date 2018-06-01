@@ -1,3 +1,7 @@
+const aa = require('./tudien/aa');
+const av = require('./tudien/av');
+const va = require('./tudien/va');
+
 module.exports = (convo, learnbot) => {
     convo.ask({
         text: 'Chọn loại từ điển muốn tra ?',

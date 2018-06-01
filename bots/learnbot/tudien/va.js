@@ -1,8 +1,8 @@
 const googleTranslator = require('google-translator');
 const Translate = require('@google-cloud/translate');
-const projectId = process.env.API_KEY;
+const API_KEY = process.env.API_KEY;
 const translate = new Translate({
-    projectId: projectId,
+    key: API_KEY
 });
 
 module.exports = (convo, learnbot) => {
