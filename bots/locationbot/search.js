@@ -1,29 +1,28 @@
-var googleMapsClient = require('@google/maps').createClient({
-    key: AIzaSyA42-BdG6xhKl6dbERzohN4UJAkHTmio9c //process.env.API_KEY,
-});
-
-module.exports = (lat, long, convo) => {
-	(async () => {
-        await convo.ask("Bạn muốn tìm địa điểm gì?", (payload, convo) => {
-            await googleMapsClient.places({
-                query: payload.message.text,
-                location: lat + ',' + long,
-                radius: 7000,
-                opennow: true
-            }, function(err, response) {
-                if (err) {
-                    convo.say(":( Mình chưa tìm được địa điểm nào rồi");
-                    convo.end();
-                } else {
-                    for (let i = 0; i < response.json.results.length; i++) {
-                        var name = response.json.results[i].name;
-                        var address = response.json.results[i].formatted_address;
-                        convo.say(name + " ở " + address);
-                    }
-                    convo.end();
-                }
-            });
-        });
-    })
+module.exports = (convo) => {
+    convo.ask({
+        text: 'Bạn muốn làm gì nè?',
+        quickReplies: ['Quẩyyyyy','Thăm quan', 'Cà phê', 'Chơi ngoài trời', 'Xem phim']
+    }, (payload, convo) {
+        convo.set('answer', payload.message.text);
+    });
+    switch (convo.get('answer')) {
+        case 'Quẩyyyyy':
+            search(lat, long, 'night_club', convo);
+            break;
+        case 'Thăm quan':
+            search(lat, long, 'museum', convo);
+            break;
+        case 'Cà phê':
+            search(lat, long, 'cafe', convo);
+            break;
+        case 'Chơi ngoài trời':
+            search(lat, long, 'amusement_park', convo);
+            break;
+        case 'Xem phim':
+            search(lat, long, 'movie_theater', convo);
+            break;
+        case default:
+        convo.say("Huhhhhhhhhhhhhhhhhhh???");
+        break;
+    }
 };
-

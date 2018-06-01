@@ -16,12 +16,13 @@ module.exports = function (bot) {
                     User.findOne({id: userInfo.id}, (err, result) => {
                         if (err) console.log("err data: " + err);
                         if (result) {
-                            chat.say("Tài khoản đã đăng ký. Status: " + (result.status === 2 ? "Member" : "Staff"));
-                            convo.end();
+                            chat.say("Tài khoản đã đăng ký. Status: " + (result.status === 2 ? "Member" : "Staff")).then(() => {
+                                convo.end();
+                            });
                         } else {
                                 const askTel = (convo) => {
                                     convo.ask({
-                                        text: "Cam on ban! Gio hay cung cap cho chung toi so dien thoai",
+                                        text: "Cám ơn bạn. Giờ hãy cung cấp cho chúng tôi số ĐT :)",
                                         quickReplies: [{
                                             "content_type": "user_phone_number"
                                         }]
@@ -43,7 +44,7 @@ module.exports = function (bot) {
                                 };
                                 const askEmail = (convo) => {
                                     convo.ask({
-                                        text: "Ban chua dang ky thi phai. Hay nhap email",
+                                        text: "Bạn chưa đăng ký thì phải ~~ Hãy bắt đầu với email nha",
                                         quickReplies: [{
                                             "content_type": "user_email"
                                         }]
@@ -66,10 +67,8 @@ module.exports = function (bot) {
 
     if (process.env.DEBUG) {
         bot.on('message', (payload, chat) => {
-            //chat.sendAction('mark_seen');
-            console.log(payload);
-            //console.log(payload.message.nlp.entities);
-            const text = payload.message.text;
+            console.log(JSON.stringify(payload.message.nlp));
+            let text = payload.message.text;
             chat.getUserProfile().then((user) => {
                 console.log(`[DEBUG] Người dùng ${user.first_name} vừa nhắn: ${text}`);
             });
