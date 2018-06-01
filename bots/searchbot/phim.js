@@ -16,7 +16,6 @@ module.exports = (name, convo, searchbot) => {
             searchbot(convo);
         }
         if (response) {
-            response = JSON.parse(response);
             for (let i = 0; i < response.items.length; i++) {
                 (async () => {
                     if (response.items[i].link.includes("phimmoi.net")) await response.items[i].link.replace("phimmoi.net" , "phi**oi.net");
