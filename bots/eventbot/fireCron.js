@@ -1,4 +1,5 @@
 const schedule = require('node-schedule');
+const findRemoveSync = require('find-remove');
 const moneybase = require('../converterbot/money/money-base');
 
 const scheduledCrons = [];
@@ -11,6 +12,7 @@ const prepare = (bot) => {
 const fire = (event) => {
     if (event.subscribers.length !== 0) scheduledCrons.push(schedule.scheduleJob(event.cron, () => functions[event.job](event.subscribers)));
     else scheduledCrons.push(schedule.scheduleJob(event.cron, () => functions[event.job]()));
+    console.log("[schedule] scheduled event: " + event.job);
 };
 
 const destroyJob = (item, isNumber) => {
@@ -38,3 +40,6 @@ Handler.prototype.updateMoneyBase = () => {
     moneybase.setRates();
 };
 
+Handler.prototype.removeTempQRFiles = () => {
+    findRemoveSync(process.env.HOME_DIR + "/public/uploads/images/qr", {age: {seconds: 3600}});
+};
