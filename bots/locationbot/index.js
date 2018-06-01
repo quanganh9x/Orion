@@ -1,4 +1,5 @@
 const weather = require('./weather');
+const search = require('./search')
 
 /////////////////////////////// Thời tiết bot ////////////////////////////
 module.exports = function (bot) {
@@ -32,6 +33,7 @@ module.exports = function (bot) {
                                     await weather(convo.get('lat'), convo.get('long'), convo);
                                     break;
                                 case 'dia diem':
+                                    await search(convo.get('lat'), convo.get('long'), convo);
                                     break;
                                 case 'doi':
                                     await askLocation(convo);
