@@ -1,5 +1,5 @@
 var googleMapsClient = require('@google/maps').createClient({
-    key: AIzaSyA42-BdG6xhKl6dbERzohN4UJAkHTmio9c //process.env.API_KEY,
+    key:  process.env.GOOGLE_API_KEY,
 });
 
 module.exports = (lat, long, convo) => {
