@@ -1,6 +1,7 @@
 const request = require('request');
-
+ 
 module.exports = (convo, learnbot) => {
+    
     request.get({
         url: "https://www.wordsapi.com/mashape/words/" + name + "/definitions?when=2018-05-25T10:05:15.606Z&encrypted=8cfdb282e722969be89407beef58bebcaeb1280936ff91b8",
         headers: {
