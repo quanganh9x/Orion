@@ -1,7 +1,7 @@
 const request = require('request');
 const NCT_API = 'https://graph.nhaccuatui.com/v4/';
 
-module.exports = (name, convo) => {
+module.exports = (name, convo, searchbot) => {
     (async () => {
         await request.post({
             url: NCT_API + 'searchs/search',
@@ -36,6 +36,7 @@ module.exports = (name, convo) => {
             }, (err, response, body) => {
                 convo.say(body.data.lstSong[i].songTitle + "\n" + body.data.lstSong[i].linkShare);
             });
+            if (i === 3) searchbot(convo);
         }
     })();
 };

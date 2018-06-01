@@ -27,6 +27,7 @@ module.exports = function (bot) {
                                             "content_type": "user_phone_number"
                                         }]
                                     }, (payload, convo) => {
+                                        if (payload.message.text.includes('+84')) payload.message.text.replace('+84','0');
                                         if (/(09|01[2|6|8|9])+([0-9]{8})\b/g.test(payload.message.text)) {
                                             (async () => {
                                                 userInfo['tel'] = await payload.message.text;
