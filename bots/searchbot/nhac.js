@@ -17,6 +17,7 @@ module.exports = (name, convo, searchbot) => {
                 'typeSearch': 0
             }
         }, (err, response, body) => {
+            body = JSON.parse(body);
                 let songKey = [];
                 for (let i = 0; i < 3; i++) {
                     songKey.push(body.data.lstSong[i].songKey);
@@ -34,6 +35,7 @@ module.exports = (name, convo, searchbot) => {
                     'x-nct-version': '6.1.5'
                 }
             }, (err, response, body) => {
+                body = JSON.parse(body);
                 convo.say(body.data.lstSong[i].songTitle + "\n" + body.data.lstSong[i].linkShare);
             });
             if (i === 3) searchbot(convo);
