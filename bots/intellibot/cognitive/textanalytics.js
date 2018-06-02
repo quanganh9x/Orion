@@ -17,9 +17,16 @@ module.exports = (convo, intellibot) => {
     client
       .analyzeSentiment(request)
       .then(responses => {
-        responses.forEach(element => {
-          console.log('element: ', JSON.stringify(element))
-        });
+        const sentiment = responses[0].documentSentiment;
+        var value;
+        if (sentiment.score > 0.2) {
+          value = 'Tích cực'
+        } else {
+          value = 'Tiêu cực'
+        }
+        convo.say("Đánh giá bài viết : " + value);
+        convo.say("Điểm magnitude" + sentiment.magnitude)
+
       })
       .catch(err => {
         console.error('ERROR:', err);
