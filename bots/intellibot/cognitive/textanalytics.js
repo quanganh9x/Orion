@@ -27,8 +27,9 @@ module.exports = (convo, intellibot) => {
         var response = responses[0];
         //entities
         convo.say("Các từ khóa chính");
+        var keyWord;
         for (var i = 0; i < response.entities.length; i++) {
-          var keyWord = (i + 1) + ". " + response.entities[i].name + "\n Độ ảnh hưởng " + response.entities[i].salience;
+          keyWord += (i + 1) + ". " + response.entities[i].name + "\n Độ ảnh hưởng " + response.entities[i].salience + "\n";
 
         }
         convo.say(keyWord);
@@ -43,9 +44,10 @@ module.exports = (convo, intellibot) => {
         convo.say("Đánh giá bài viết : " + value);
         convo.say("Độ giàu cảm xúc : " + sentiment.magnitude)
         //categories
+        var topic;
         for (var i = 0; i < response.categories.length; i++) {
           if (response.categories[i].confidence > 0.4) {
-            var topic = (i + 1) + response.categories[i].name + "\n";
+            topic += (i + 1) + response.categories[i].name + "\n";
           }
         }
         convo.say("Chú đề của bài \n" + topic);
