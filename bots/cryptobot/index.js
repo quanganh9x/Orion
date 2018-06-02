@@ -17,7 +17,7 @@ module.exports = function (bot) {
                         case 'Encode':
                             encode(convo, cryptobot);
                             break;
-                        case 'QR & Barcode':
+                        case 'QR':
                             convo.ask({
                                 text: "Hãy lựa chọn:",
                                 quickReplies: ['Encode QR', 'Decode QR']
@@ -57,9 +57,16 @@ module.exports = function (bot) {
                                 });
                             });
                             break;
-                        default:
-                            convo.say("Không có tuỳ chọn này :( Ý bạn là \'crypto\' hoặc \'qr-bar code\' ?");
+                        case 'end':
+                            convo.end();
+                            break;
+                        case 'whereami':
+                            convo.say("Main > CryptoBOT");
                             cryptobot(convo);
+                            break;
+                        default:
+                            convo.say("Không có tuỳ chọn này :( Ý bạn là \'Encode\', \'QR\' hoặc \'Base64\' ?");
+                            precryptobot(convo);
                             break;
                     }
                 });

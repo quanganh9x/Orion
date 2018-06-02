@@ -31,7 +31,7 @@ module.exports = function (bot) {
                             convo.end();
                             break;
                         case 'whereami':
-                            convo.say("Main > SecBOT");
+                            convo.say("Main > ConverterBOT");
                             converterbot(convo);
                             break;
                         default:

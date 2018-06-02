@@ -43,14 +43,14 @@ const hmac = (data, key, base64, convo, cryptobot) => {
 
 const aes = (data, key, convo) => {
     (async () => {
-        const hashAES = await crypto.AES.encrypt(data, key).toString();
+        const hashAES = await cryptoJS.AES.encrypt(data, key).toString();
         convo.say("AES: " + hashAES).then(() => cryptobot(convo));
     })();
 };
 
 const base64 = (data, mode, convo, cryptobot) => {
-    if (mode === "decrypt") convo.say("UTF-8: " + CryptoJS.enc.Base64.parse(data)).then(() => cryptobot(convo));
-    else convo.say("Base64: " + CryptoJS.enc.Base64.stringify(data)).then(() => cryptobot(convo));
+    if (mode === "decrypt") convo.say("UTF-8: " + cryptoJS.enc.Base64.parse(data)).then(() => cryptobot(convo));
+    else convo.say("Base64: " + cryptoJS.enc.Base64.stringify(data)).then(() => cryptobot(convo));
 };
 
 module.exports = {
