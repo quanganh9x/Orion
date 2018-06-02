@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 const language = require('@google-cloud/language');
 const client = new language.LanguageServiceClient({
@@ -39,10 +38,3 @@ module.exports = (convo, intellibot) => {
 
 
 
-=======
-const cognitiveServices = require('cognitive-services');
-const face = new cognitiveServices.textAnalytics({
-    apiKey: "1c0c07e444a3447ba57a600fecd5633b",
-    endpoint: "westcentralus.api.cognitive.microsoft.com"
-});
->>>>>>> parent of bdf5a4d... huhu
