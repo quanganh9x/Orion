@@ -28,8 +28,10 @@ module.exports = (convo, intellibot) => {
         //entities
         convo.say("Các từ khóa chính");
         for (var i = 0; i < response.entities.length; i++) {
-          convo.say((i + 1) + ". " + response.entities[i].name + "\n Độ ảnh hưởng " + response.entities[i].salience);          
+          var keyWord = (i + 1) + ". " + response.entities[i].name + "\n Độ ảnh hưởng " + response.entities[i].salience;
+
         }
+        convo.say(keyWord);
         //sentiment
         const sentiment = responses[0].documentSentiment;
         var value;
@@ -43,10 +45,11 @@ module.exports = (convo, intellibot) => {
         //categories
         for (var i = 0; i < response.categories.length; i++) {
           if (response.categories[i].confidence > 0.4) {
-            convo.say("Chú đề của bài ");
-            convo.say((i+1) + response.categories[i].name);
+            var topic = (i + 1) + response.categories[i].name + "\n";
           }
         }
+        convo.say("Chú đề của bài \n" + topic);
+
       })
       .catch(err => {
         console.error('ERROR:', err);
