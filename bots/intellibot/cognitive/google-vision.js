@@ -1,6 +1,10 @@
 const request = require('request');
 const base64img = require('base64-img');
-const googleTranslator = require('google-translator');
+const Translate = require('@google-cloud/translate');
+const translate = new Translate({
+    key: process.env.GOOGLE_API_KEY
+});
+
 const FACE_PERCENT = 0.6;
 const LABEL_PERCENT = 0.4;
 
@@ -32,9 +36,12 @@ module.exports = (convo, intellibot) => {
                                 }
                                 let labelAnnotations = "Mô tả về chi tiết:\n";
                                 for (let i = 0; i < body.labelAnnotations.length; i++) {
-                                    googleTranslator('en', 'vi', body.labelAnnotations[i].description, response => {
+                                    translate.translate(body.labelAnnotations[i].description, 'vi').then(response => {
                                         if (body.labelAnnotations[i].score > LABEL_PERCENT)
                                         labelAnnotations += response + " - " + body.labelAnnotations[i].score + "\n"
+                                    }).catch(err => {
+                                        console.log(err);
+                                        labelAnnotations += body.labelAnnotations[i].description + " - " + body.labelAnnotations[i].score + "\n";
                                     });
                                     if (i == body.labelAnnotations.length - 1) await convo.say(labelAnnotations);
                                 }
