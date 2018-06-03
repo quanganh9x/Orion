@@ -14,7 +14,7 @@ const setRates = () => {
             body = JSON.parse(body);
             info.base = body.base;
             info.rates = body.rates;
-            console.log("setRates successfully: " + new Date(Date.now()).toLocaleString('vi-VN'));
+            console.log("updateMoneyBase exec-ed successfully: " + new Date(Date.now()).toISOString());
         }
     });
 };

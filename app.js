@@ -37,7 +37,7 @@ bot.app.use((req, res, next) => {
     botConditions(req, res, next);
 });
 botRoutes(bot);
-bot.start(6969); // triển thôi nhỉ :D
+bot.start(9000); // triển thôi nhỉ :D
 //////////////////////////////////////////////////////////////
 
 /// routes cho web ///

@@ -21,14 +21,14 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-if (process.env.DEPLOY_SECURESERVER) {
-    const options = {
-        cert: fs.readFileSync(''),
-        key: fs.readFileSync('')
-    };
-    const secureServer = https.createServer(options, app);
-    secureServer.listen(8001);
-}
+// if (process.env.DEPLOY_SECURESERVER) {
+//     const options = {
+//         cert: fs.readFileSync(''),
+//         key: fs.readFileSync('')
+//     };
+//     const secureServer = https.createServer(options, app);
+//     secureServer.listen(8001);
+// }
 /**
  * Listen on provided port, on all network interfaces.
  */

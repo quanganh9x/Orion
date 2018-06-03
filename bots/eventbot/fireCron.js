@@ -16,7 +16,8 @@ const fire = (event) => {
 };
 
 const destroyJob = (item, isNumber) => {
-    scheduledCrons[item].cancel();
+    if (isNumber) scheduledCrons[item].cancel();
+    else scheduledCrons[scheduledCrons.indexOf(item)].cancel();
 };
 
 module.exports = {
@@ -41,5 +42,5 @@ Handler.prototype.updateMoneyBase = () => {
 };
 
 Handler.prototype.removeTempQRFiles = () => {
-    findRemoveSync(process.env.HOME_DIR + "/public/uploads/images/qr", {age: {seconds: 3600}});
+    if (findRemoveSync(process.env.HOME_DIR + "/public/uploads/images/qr", {age: {seconds: 3600}})) console.log("removeTempQRs exec-ed successfully: " + new Date(Date.now()).toISOString());
 };
