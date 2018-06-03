@@ -3,36 +3,36 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 const custom = (lat, long, convo, locationbot) => {
-        convo.ask("Hãy nhập thông tin về địa điểm ?", (payload, convo) => {
-            googleMapsClient.places({
-                query: payload.message.text,
-                language: 'vi',
-                location: lat + ',' + long,
-                radius: 2000
-            }, function(err, response) {
-                if (err) {
-                    convo.say(":( Mình chưa tìm được").then(() => locationbot(convo));
-                } else {
-                    let i = 0;
-                    while (i < response.json.results.length) {
-                        (async () => {
-                            await convo.say("Tên: " + response.json.results[i].name + ", địa chỉ: " + response.json.results[i].formatted_address + " (được đánh giá " + response.json.results[i].rating + "/5 sao)");
-                            if (response.json.results[i].photos && response.json.results[i].photos[0].photo_reference) {
-                                await googleMapsClient.placesPhoto({
-                                    photoreference: response.json.results[i].photos[0].photo_reference,
-                                    maxwidth: response.json.results[i].photos[0].width,
-                                    maxheight: response.json.results[i].photos[0].height,
-                                }, (err, res) => {
-                                    convo.sendAttachment('image', res.requestUrl);
-                                });
-                            }
-                            i++;
-                            if (i === response.json.results.length) locationbot(convo);
-                        })();
+    convo.ask("Hãy nhập thông tin về địa điểm ?", (payload, convo) => {
+        googleMapsClient.places({
+            query: payload.message.text,
+            language: 'vi',
+            location: lat + ',' + long,
+            radius: 2000
+        }, function(err, response) {
+            if (err) {
+                console.log(err);
+                convo.say(":( Mình chưa tìm được").then(() => locationbot(convo));
+            } else {
+                if (response.json.results && response.json.results.length !== 0) {
+                    let elements = [];
+                    const len = (response.json.results.length > 4 ? 4 : response.json.results.length);
+                    for (let i = 0; i < len; i++) {
+                        const name = response.json.results[i].name;
+                        const address = response.json.results[i].formatted_address === undefined ? response.json.results[i].vicinity : response.json.results[i].formatted_address;
+                        if (response.json.results[i].photos) {
+                            const image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=" + response.json.results[i].photos[0].width + "&maxheight=" + response.json.results[i].photos[0].height + "&photoreference=" + response.json.results[i].photos[0].photo_reference + "&key=" + process.env.GOOGLE_MAPS_KEY;
+                            elements.push({title: name, subtitle: address, image_url: image});
+                        } else elements.push({title: name, subtitle: address});
+                        if (i === len - 1) {
+                            convo.sendListTemplate(elements, undefined);
+                            locationbot(convo);
+                        }
                     }
-                }
-            });
+                } else convo.say(":( không tìm thấy").then(() => locationbot(convo));
+            }
         });
+    });
 };
 
 const nearby = (lat, long, convo, locationbot) => {
@@ -44,29 +44,28 @@ const nearby = (lat, long, convo, locationbot) => {
             type: payload.message.text,
             language: 'vi',
             location: lat + ',' + long,
-            radius: 1000,
-            rankby: 'prominence'
+            radius: 500
         }, function(err, response) {
             if (err) {
+                console.log(err);
                 convo.say(":( Mình chưa tìm được").then(() => locationbot(convo));
             } else {
-                let i = 0;
-                while (i < response.json.results.length) {
-                    (async () => {
-                        await convo.say("Tên: " + response.json.results[i].name + ", địa chỉ: " + response.json.results[i].formatted_address + " (được đánh giá " + response.json.results[i].rating + "/5 sao)");
-                        if (response.json.results[i].photos && response.json.results[i].photos[0].photo_reference) {
-                            await googleMapsClient.placesPhoto({
-                                photoreference: response.json.results[i].photos[0].photo_reference,
-                                maxwidth: response.json.results[i].photos[0].width,
-                                maxheight: response.json.results[i].photos[0].height,
-                            }, (err, res) => {
-                                convo.sendAttachment('image', res.requestUrl);
-                            });
+                if (response.json.results && response.json.results.length !== 0) {
+                    let elements = [];
+                    const len = (response.json.results.length > 4 ? 4 : response.json.results.length);
+                    for (let i = 0; i < len; i++) {
+                        const name = response.json.results[i].name;
+                        const address = response.json.results[i].formatted_address === undefined ? response.json.results[i].vicinity : response.json.results[i].formatted_address;
+                        if (response.json.results[i].photos) {
+                            const image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=" + response.json.results[i].photos[0].width + "&maxheight=" + response.json.results[i].photos[0].height + "&photoreference=" + response.json.results[i].photos[0].photo_reference + "&key=" + process.env.GOOGLE_MAPS_KEY;
+                            elements.push({title: name, subtitle: address, image_url: image});
+                        } else elements.push({title: name, subtitle: address});
+                        if (i === len - 1) {
+                            convo.sendListTemplate(elements, undefined);
+                            locationbot(convo);
                         }
-                        i++;
-                        if (i === response.json.results.length) locationbot(convo);
-                    })();
-                }
+                    }
+                } else convo.say(":( không tìm thấy").then(() => locationbot(convo));
             }
         });
     });

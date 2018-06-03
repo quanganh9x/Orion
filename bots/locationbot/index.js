@@ -7,7 +7,7 @@ module.exports = function (bot) {
             const prelocationbot = (convo) => {
                 convo.say({
                     text: "[LocationBOT] v1.0 xin chào mừng",
-                    quickReplies: ['Thời tiết', 'Thông tin về địa điểm']
+                    quickReplies: ['Thời tiết', 'Địa điểm']
                 }).then(() => locationbot(convo));
             };
             const locationbot = (convo) => {
@@ -16,7 +16,7 @@ module.exports = function (bot) {
                         case 'Thời tiết':
                             weather(convo.get('lat'), convo.get('long'), convo, locationbot);
                             break;
-                        case 'Thông tin về địa điểm':
+                        case 'Địa điểm':
                             convo.ask({
                                 text: "Lựa chọn kiểu tìm kiếm",
                                 buttons: [

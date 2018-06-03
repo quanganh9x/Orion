@@ -6,10 +6,12 @@ const translate = new Translate({
 
 module.exports = (convo, learnbot) => {
     convo.ask("Nhập câu hỏi bạn muốn ?", (payload, convo) => {
-        translate.translate(text, 'en').then(results => {
+        translate.translate(payload.message.text, 'en').then(results => {
+            results = results[1];
             if (results.data.translations && results.data.translations[0].translatedText) {
                 wolfram.query(results.data.translations[0].translatedText, function (err, result) {
                     if (err) {
+                        console.log(err);
                         convo.say("???").then(() => {
                             learnbot(convo);
                         });

@@ -4,29 +4,23 @@ const translate = new Translate({
 });
 
 module.exports = (convo, learnbot) => {
-    convo.ask("Nhập từ muốn dịch sang tiếng việt ?", (payload, convo) => {
+    convo.ask("Nhập từ muốn dịch sang tiếng Anh ?", (payload, convo) => {
         translate
             .translate(payload.message.text, 'en')
             .then(results => {
-                if (results.data.translations.length != 0) {
-                    let defs;
+                if (results.data.translations.length !== 0) {
+                    let answer = "Có thể dịch thành: \n";
                     for (let i = 0; i < results.data.translations.length; i++) {
-                        defs += "\'" + results.data.translations[i].translatedText + "\'\n";
-                        if (i == results.data.translations.length - 1) {
-                            convo.say("Synonyms that can be used: ").then(() => {
-                                convo.say(defs).then(() => {
-                                    learnbot(convo);
-                                });
-                            });
+                        answer += "\'" + results.data.translations[i].translatedText + "\'\n";
+                        if (i === results.data.translations.length - 1) {
+                            convo.say(answer).then(() => learnbot(convo));
                         }
                     }
-                }
+                } else convo.say(":( Không dịch được").then(() => learnbot(convo));
             })
             .catch(err => {
                 console.log(err);
-                convo.say(":( Không dịch được").then(() => {
-                    learnbot(convo);
-                });
+                convo.say(":( Không dịch được").then(() => learnbot(convo));
             });
     });
 };

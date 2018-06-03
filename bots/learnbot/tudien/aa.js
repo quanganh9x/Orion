@@ -10,13 +10,11 @@ module.exports = (convo, learnbot) => {
             'Accept': 'application/json'
         }
     }, (err, response, body) => {
-        if (body.definitions.length != 0) {
+        if (body.definitions.length !== 0) {
             for (let i = 0; i <= body.definitions.length; i++) {
-                convo.say("Definition: " + body.definitions[i].definition).then(() => {
-                    convo.say("Word Type " + body.definitions[i].partOfSpeech);
-                });
+                convo.say("Definition: " + body.definitions[i].definition + "(" + body.definitions[i].partOfSpeech + ")");
                 if (i === body.definitions.length - 1) learnbot(convo);
             }
-        }
+        } else convo.say(":( Không dịch được").then(() => learnbot(convo));
     });
 };
