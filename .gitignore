@@ -4,3 +4,5 @@ Thumbs.db
 .env
 node_modules/
 bin/ngrok
+bin/www
+app.js

@@ -1,3 +1,4 @@
+const aa = require('./aa');
 const Translate = require('@google-cloud/translate');
 const translate = new Translate({
     key: process.env.GOOGLE_API_KEY
@@ -8,14 +9,13 @@ module.exports = (convo, learnbot) => {
         translate
             .translate(payload.message.text, 'en')
             .then(results => {
-                if (results.data.translations.length !== 0) {
-                    let answer = "Có thể dịch thành: \n";
-                    for (let i = 0; i < results.data.translations.length; i++) {
-                        answer += "\'" + results.data.translations[i].translatedText + "\'\n";
-                        if (i === results.data.translations.length - 1) {
-                            convo.say(answer).then(() => learnbot(convo));
-                        }
-                    }
+                results = results[1];
+                if (results.data.translations && results.data.translations[0].translatedText) {
+                    const answer = results.data.translations[0].translatedText;
+                    convo.say("Có thể dịch thành: \'" + answer + "\'").then(() => {
+                        if (!answer.includes(' ')) aa(answer, convo, learnbot);
+                        else learnbot(convo);
+                    });
                 } else convo.say(":( Không dịch được").then(() => learnbot(convo));
             })
             .catch(err => {

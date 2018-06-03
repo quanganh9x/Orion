@@ -1,4 +1,6 @@
 const schedule = require('node-schedule');
+const path = require('path');
+const homeDir = (process.platform == 'win32') ? path.join(__dirname, '..', '..', 'public') : process.env.HOME_DIR;
 const findRemoveSync = require('find-remove');
 const moneybase = require('../converterbot/money/money-base');
 
@@ -42,5 +44,5 @@ Handler.prototype.updateMoneyBase = () => {
 };
 
 Handler.prototype.removeTempQRFiles = () => {
-    if (findRemoveSync(process.env.HOME_DIR + "/public/uploads/images/qr", {age: {seconds: 3600}})) console.log("removeTempQRs exec-ed successfully: " + new Date(Date.now()).toISOString());
+    if (findRemoveSync(path.join(homeDir, "/uploads/images/qr", {age: {seconds: 3600}})) console.log("removeTempQRs exec-ed successfully: " + new Date(Date.now()).toISOString());
 };

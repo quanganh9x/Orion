@@ -4,7 +4,7 @@ const translate = new Translate({
 });
 
 module.exports = (convo, learnbot) => {
-    convo.ask("Nhập từ muốn dịch sang tiếng Việt ?", (payload, convo) => {
+    convo.ask("Nhập từ / đoạn muốn dịch sang tiếng Việt ?", (payload, convo) => {
         translate
             .translate(payload.message.text, 'vi')
             .then(results => {

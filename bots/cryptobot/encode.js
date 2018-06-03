@@ -9,7 +9,7 @@ module.exports = (convo, cryptobot) => {
         }, (payload, convo) => {
             switch (payload.message.text) {
                 case "normal":
-                    crypto.keyless(convo.get("data"), convo, cryptobot);
+                    crypto.normal(convo.get("data"), convo, cryptobot);
                     break;
                 case "HMAC":
                     convo.ask("HMAC key ?", (payload, convo) => {

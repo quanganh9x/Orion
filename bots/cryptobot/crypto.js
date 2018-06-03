@@ -10,14 +10,15 @@ const normal = (data, convo, cryptobot) => {
         const hashSHA384 = await cryptoJS.SHA384(data).toString();
         const hashSHA3 = await cryptoJS.SHA3(data).toString();
         const hashRIPEMD160 = await cryptoJS.RIPEMD160(data).toString();
-        convo.say("MD5: " + hashMD5 +
-            "\nSHA1: " + hashSHA1 +
-            "\nSHA256: " + hashSHA256 +
-            "\nSHA224: " + hashSHA224 +
-            "\nSHA512: " + hashSHA512 +
-            "\nSHA384: " + hashSHA384 +
-            "\nSHA3: " + hashSHA3 +
-            "\nRIPEMD160: " + hashRIPEMD160).then(() => cryptobot(convo));
+        await convo.say("MD5: " + hashMD5);
+        await convo.say("SHA1: " + hashSHA1);
+        await convo.say("SHA256: " + hashSHA256);
+        await convo.say("SHA224: " + hashSHA224);
+        await convo.say("SHA512: " + hashSHA512);
+        await convo.say("SHA384: " + hashSHA384);
+        await convo.say("SHA3: " + hashSHA3);
+        await convo.say("RIPEMD160: " + hashRIPEMD160);
+        cryptobot(convo);
     })();
 };
 
@@ -35,9 +36,10 @@ const hmac = (data, key, base64, convo, cryptobot) => {
             hashHmacSHA1 = await hashHmacSHA1.toString();
             hashHmacSHA256 = await hashHmacSHA256.toString();
         }
-        convo.say("HMAC-MD5: " + hashHmacMD5 +
-            "\nHMAC-SHA1: " + hashHmacSHA1+
-            "\nHMAC-SHA256: " + hashHmacSHA256).then(() => cryptobot(convo));
+        await convo.say("HMAC-MD5: " + hashHmacMD5);
+        await convo.say("HMAC-SHA1: " + hashHmacSHA1);
+        await convo.say("HMAC-SHA256: " + hashHmacSHA256);
+        cryptobot(convo);
     })();
 };
 
