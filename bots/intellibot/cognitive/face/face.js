@@ -8,7 +8,6 @@ module.exports = (convo, intellibot) => {
     }, (payload, convo) => {
         switch (payload.message.text) {
             case 'Detect':
-                const det = (convo) => {
                     convo.ask("Detect age, gender & smile of the pic. Input 1 img with 1 person only (not yet supported multiple people)", (payload, convo) => {
                         if (payload.message.attachments && payload.message.attachments.length === 1) {
                             (async () => {
@@ -19,11 +18,8 @@ module.exports = (convo, intellibot) => {
                             intellibot(convo);
                         }
                     });
-                };
-                det(convo);
                 break;
             case 'Verify':
-                const verify = (convo) => {
                     convo.ask("Detect whether 2 pics are identical. Input 2 imgs with 1 person only (not yet supported multiple people)", (payload, convo) => {
                         if (payload.message.attachments && payload.message.attachments.length === 2) {
                             verify(detect(payload.message.attachments, true), convo, intellibot);
@@ -32,8 +28,6 @@ module.exports = (convo, intellibot) => {
                             intellibot(convo);
                         }
                     });
-                };
-                verify(convo);
                 break;
         }
     })

@@ -18,6 +18,7 @@
     "dotenv": "^5.0.1",
     "express": "~4.16.0",
     "find-remove": "^1.2.0",
+    "gm": "^1.23.1",
     "google-search": "0.0.5",
     "helmet": "^3.12.1",
     "hibp": "^7.1.1",
