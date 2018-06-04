@@ -39,9 +39,9 @@ module.exports = (convo, intellibot) => {
                                 if (body.faceAnnotations && body.faceAnnotations.length !== 0) {
                                     await convo.say("Ảnh có mặt người!");
                                     const img = await gm(request(payload.message.attachments[0].payload.url));
-                                    await img.size((err, value) => {
-                                        if (err) convo.set('format', 'png');
-                                        else convo.set('format', value.format);
+                                    await img.format((err, value) => {
+                                        if (err) convo.set('format', 'jpg');
+                                        else convo.set('format', value);
                                     });
                                     for (let i = 0; i < body.faceAnnotations.length; i++) {
                                         if (body.faceAnnotations[i].detectionConfidence >= FACE_PERCENT) {
@@ -63,7 +63,7 @@ module.exports = (convo, intellibot) => {
                                                 if (fdVertices.y1 !== body.faceAnnotations[i].fdBoundingPoly.vertices[k].y) fdVertices.y2 = await body.faceAnnotations[i].fdBoundingPoly.vertices[k].y;
                                             }
                                             img
-                                                .stroke("#8CEF25", 1)
+                                                .stroke("#8CEF25", 0).fill("rgba( 255, 255, 255 , 0 )")
                                                 .drawRectangle(vertices.x1, vertices.y1, vertices.x2, vertices.y2)
                                                 .drawRectangle(fdVertices.x1, fdVertices.y1, fdVertices.x2, fdVertices.y2)
                                                 .fontSize(12)
@@ -72,7 +72,7 @@ module.exports = (convo, intellibot) => {
                                     }
                                     const generated = await uniqueFilename('', 'generatedFace');
                                     const imgPath = await path.join(homeDir, "/uploads/images/face", generated + "." + convo.get('format'));
-                                    const imgURL = await homeURL + "/uploads/images/qr/" + generated + ".png";
+                                    const imgURL = await homeURL + "/uploads/images/face/" + generated + "." + convo.get('format');
                                     await img.write(imgPath, (err) => {
                                         if (err) {
                                             console.log(err);
