@@ -9,7 +9,7 @@ module.exports = (word, convo, learnbot) => {
     }, (err, response, body) => {
         body = JSON.parse(body);
         if (body.definitions.length !== 0) {
-            let answer = "Definitions in English: \n";
+            let answer = "Definitions of \'" + word + "\' in English: \n";
             for (let i = 0; i < body.definitions.length; i++) {
                 answer += "- " + body.definitions[i].definition + " (" + body.definitions[i].partOfSpeech + ")\n";
                 if (i === body.definitions.length - 1) {

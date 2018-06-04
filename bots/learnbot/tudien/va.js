@@ -11,9 +11,10 @@ module.exports = (convo, learnbot) => {
             .then(results => {
                 results = results[1];
                 if (results.data.translations && results.data.translations[0].translatedText) {
-                    const answer = results.data.translations[0].translatedText;
+                    let answer = results.data.translations[0].translatedText;
+                    if (results.data.translations[1] && results.data.translations[1].translatedText) answer = answer + ", " + results.data.translations[1].translatedText;
                     convo.say("Có thể dịch thành: \'" + answer + "\'").then(() => {
-                        if (!answer.includes(' ')) aa(answer, convo, learnbot);
+                        if (!results.data.translations[0].translatedText.includes(' ')) aa(results.data.translations[0].translatedText, convo, learnbot);
                         else learnbot(convo);
                     });
                 } else convo.say(":( Không dịch được").then(() => learnbot(convo));

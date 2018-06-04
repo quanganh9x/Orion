@@ -4,7 +4,7 @@ const verify = require('./verify');
 module.exports = (convo, intellibot) => {
     convo.ask({
         text: "Face - Cognitive services by Microsoft\n",
-        quickReplies: ['Find similar', 'Group', 'Verify']
+        quickReplies: ['Detect', 'Verify']
     }, (payload, convo) => {
         switch (payload.message.text) {
             case 'Detect':
@@ -12,9 +12,7 @@ module.exports = (convo, intellibot) => {
                     convo.ask("Detect age, gender & smile of the pic. Input 1 img with 1 person only (not yet supported multiple people)", (payload, convo) => {
                         if (payload.message.attachments && payload.message.attachments.length === 1) {
                             (async () => {
-                                let answer = await detect(payload.message.attachments, true);
-                                await convo.say("Tuoi: " + answer.age + ", Gioi tinh: " + answer.gender + ", Nu cuoi: ", + answer.smile + "%");
-                                intellibot(convo);
+                                detect(payload.message.attachments, true, convo, intellibot);
                             })();
                         } else {
                             convo.say("???");

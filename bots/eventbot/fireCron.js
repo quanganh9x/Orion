@@ -35,14 +35,10 @@ Handler.prototype.set = (bot) => {
     this.bot = bot;
 };
 
-Handler.prototype.test = (subscribers) => {
-    this.bot.say(subscribers[0], "Schedule");
-};
-
 Handler.prototype.updateMoneyBase = () => {
     moneybase.setRates();
 };
 
 Handler.prototype.removeTempQRFiles = () => {
-    if (findRemoveSync(path.join(homeDir, "/uploads/images/qr", {age: {seconds: 3600}}))) console.log("removeTempQRs exec-ed successfully: " + new Date(Date.now()).toISOString());
+    if (findRemoveSync(path.join(homeDir, "/uploads/images/qr"), {age: {seconds: 3600}})) console.log("removeTempQRs exec-ed successfully: " + new Date(Date.now()).toISOString());
 };
