@@ -20,41 +20,59 @@ module.exports = (convo, intellibot, profileId) => {
 			}, (error, response, body) => {
 				convo.set('profileId', JSON.parse(body).verificationProfileId);
 			});
-			await convo.say("Ok, giờ bạn nói 3 lần câu này nhé, gửi lên qua 3 file khác nhau")
+			var enrollLinks = [];
+			await convo.say("Ok, giờ bạn nói 3 lần câu này nhé, gửi lần lượt lên qua 3 file khác nhau");
 			await convo.ask("'apple juice tastes funny after toothpaste'", (payload, convo) => {
-		        for (var i = 0; i < 3 /*hoặc payload.message.attachments.length idk*/ ; i++) {
-		        	if (payload.message.attachments[i].type === 'audio') {
-			        	xhr({
-						  	uri: payload.message.attachments[i].payload.url,
-						  	responseType: 'arraybuffer'
-						}, function (err, body, resp) {
-						  	if (err) throw err
-						  	context.decodeAudioData(resp, function (buffer) {
-							    var wav = toWav(buffer);
-							    await request.post({
-									url: SPEAKER_RECOGNITION_API + 'verificationProfiles/' + profileId + '/enroll',
-									parameters: {
-										'verificationProfileId': profileId
-									},
-									headers: {
-										'Content-type': 'application/octet-stream',
-										'Ocp-Apim-Subscription-Key': 'f37cf47fdc0e4bbabf22a7d3b4bec2d2'
-									},
-									encoding: null,
-									body: wav
-								}, (error, response, body) => {
-									body = JSON.parse(body);
-									convo.say('Còn ' + body.remainingEnrollments + ' lượt gửi lên.');
-									if(body.remainingEnrollments == 0){
-										convo.say('Đăng kí thành công! Bạn vui lòng thoát ra để xác minh giọng nói nhé');
-										intellibot(convo);
-									}
-								});
-						  	})
-						})
-			        }
-		        }
+		        if (payload.message.attachments[0].type === 'audio') {
+		        	convo.set('link1', payload.message.attachments[0].payload.url);
+		        	enrollLinks.push(link1);
+	        	}
 		    });
+		    await convo.ask("Gửi tiếp nè: 'apple juice tastes funny after toothpaste'", (payload, convo) => {
+		        if (payload.message.attachments[0].type === 'audio') {
+		        	convo.set('link2', payload.message.attachments[0].payload.url);
+		        	enrollLinks.push(link2);
+	        	}
+		    });
+		    await convo.ask("Lần cuối cùng: 'apple juice tastes funny after toothpaste'", (payload, convo) => {
+		        if (payload.message.attachments[0].type === 'audio') {
+		        	convo.set('link3', payload.message.attachments[0].payload.url);
+		        	enrollLinks.push(link3);
+	        	}
+		    });
+
+		    for (var i = enrollLinks.length - 1; i >= 0; i--) {
+		    	xhr({
+				  	uri: enrollLinks[i],
+				  	responseType: 'arraybuffer'
+				}, function (err, body, resp) {
+				  	if (err) throw err
+				  	context.decodeAudioData(resp, function (buffer) {
+					    var wav = toWav(buffer);
+					    await request.post({
+							url: SPEAKER_RECOGNITION_API + 'verificationProfiles/' + profileId + '/enroll',
+							parameters: {
+								'verificationProfileId': profileId
+							},
+							headers: {
+								'Content-type': 'application/octet-stream',
+								'Ocp-Apim-Subscription-Key': 'f37cf47fdc0e4bbabf22a7d3b4bec2d2'
+							},
+							encoding: null,
+							body: wav
+						}, (error, response, body) => {
+							body = JSON.parse(body);
+							convo.say('Còn ' + body.remainingEnrollments + ' lượt gửi lên.');
+							if(body.remainingEnrollments == 0){
+								convo.say('Đăng kí thành công! Bạn vui lòng thoát ra để xác minh giọng nói nhé');
+								intellibot(convo);
+							}
+						});
+				  	})
+				})
+		    }
+
+
 		} else {
 			await convo.say("Bạn có tài khoản rồi, giờ xác minh giọng nói nèo");
 			await convo.say("Nói lại câu này giúp mình nhé")
@@ -95,10 +113,6 @@ module.exports = (convo, intellibot, profileId) => {
 		}
 	})();
 };
-
-
-
-
- 
-
-
+// function enroll(profileId, link){
+	
+// };
