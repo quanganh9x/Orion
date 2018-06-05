@@ -54,10 +54,13 @@ module.exports = (convo, intellibot) => {
                                                 if (fdVertices.x1 !== body.faceAnnotations[i].fdBoundingPoly.vertices[k].x) fdVertices.x2 = await body.faceAnnotations[i].fdBoundingPoly.vertices[k].x;
                                                 if (fdVertices.y1 !== body.faceAnnotations[i].fdBoundingPoly.vertices[k].y) fdVertices.y2 = await body.faceAnnotations[i].fdBoundingPoly.vertices[k].y;
                                             }
-                                            await draw.drawVisionImg(img, vertices, fdVertices);
+                                            await draw.drawImg(img, vertices);
+                                            await draw.drawImg(img, fdVertices);
                                             await draw.drawVisionText(img, vertices, fdVertices, 20, i+1);
                                         }
-                                        if (i === body.faceAnnotations.length - 1) await draw.writeVisionImg(img, convo);
+                                        if (i === body.faceAnnotations.length - 1) {
+                                            await draw.writeVisionImg(img, convo);
+                                        }
                                     }
                                 }
                                 let labelAnnotations = "Mô tả chi tiết: ";
