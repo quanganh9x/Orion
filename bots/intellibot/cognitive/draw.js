@@ -1,6 +1,6 @@
 const uniqueFilename = require('unique-filename');
 const path = require('path');
-const gm = require('gm');
+const jimp = require('jimp');
 const homeDir = (process.platform == 'win32') ? path.join(__dirname, '..', '..', '..', 'public') : process.env.HOME_DIR;
 const homeURL = process.env.HOME_URL;
 
@@ -24,27 +24,34 @@ const drawFaceText = (img, vertices, separateRect, separateText, font, text) => 
         .drawText(vertices.x1, vertices.y2 + separateRect + separateText, text);
 };
 
-const writeVisionImg = (img, convo) => {
-    img.format((err, value) => {
-        if (err) value = "jpg";
-        (async () => {
-            const generated = await uniqueFilename('', 'generatedPic');
-            const imgPath = await path.join(homeDir, "/uploads/images/face", generated + "." + value);
-            const imgURL = await homeURL + "/uploads/images/face/" + generated + "." + value;
-            img.write(imgPath, (err) => {
-                if (err) {
-                    console.log(err);
-                    convo.say("Không tạo được ảnh :(");
-                }
-                else convo.sendAttachment('image', imgURL);
-            });
-        })();
+const getFormat = (imgUrl) => {
+    return new Promise((resolve) => {
+        jimp.read(imgUrl).then(image => {
+            resolve(image.getExtension());
+        });
     });
+};
+
+const writeVisionImg = (img, value, convo) => {
+    (async () => {
+        const generated = await uniqueFilename('', 'generatedPic');
+        const imgPath = await path.join(homeDir, "/uploads/images/face", generated + "." + value);
+        const imgURL = await homeURL + "/uploads/images/face/" + generated + "." + value;
+        console.log(img.sourceStream.readable);
+        img.write(imgPath, (err) => {
+            if (err) {
+                console.log(err);
+                convo.say("Không tạo được ảnh :(");
+            }
+            else convo.sendAttachment('image', imgURL);
+        });
+    })();
 };
 
 module.exports = {
     drawImg,
     drawVisionText,
     drawFaceText,
-    writeVisionImg
+    writeVisionImg,
+    getFormat
 };

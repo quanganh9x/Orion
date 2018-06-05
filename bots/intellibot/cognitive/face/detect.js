@@ -1,6 +1,6 @@
 const cognitive = require('cognitive-services');
 const API_KEY = "6afc4a0071c245d6a098daaf1cd47984";
-const request = require('request');
+const https = require('https');
 const gm = require('gm');
 const draw = require('../draw');
 const face = new cognitive.face({
@@ -20,11 +20,16 @@ module.exports = (obj, onlyDetect, convo, intellibot) => {
     };
     for (let i = 0; i < obj.length; i++) {
         if (obj[i].type !== "image") continue;
-        (async () => {
-            let body = await {
-                url: obj[i].payload.url
-            };
-            let img = gm(request(obj[i].payload.url));
+        let body = {
+            url: obj[i].payload.url
+        };
+        const imgProcess = new Promise((resolve) => {
+            https.get(obj[i].payload.url, (res) => {
+                resolve(res);
+            });
+        });
+        imgProcess.then(res => {
+            const img = gm(res);
             face.detect({
                 parameters,
                 headers,
@@ -40,15 +45,15 @@ module.exports = (obj, onlyDetect, convo, intellibot) => {
                         };
                         draw.drawImg(img, vertices);
                         draw.drawFaceText(img, vertices, 20, 5, 20, (k+1) + ": " + response[k].faceAttributes.age + " tuổi, " + (response[k].faceAttributes.gender === "male" ? "Nam" : "Nữ") + ", " + Math.ceil(response[k].faceAttributes.smile * 100) + "%")
-                        if (k === response.length - 1 && onlyDetect) draw.writeVisionImg(img, convo);
-                        else authorizedIds.push(response[k].faceId);
+                        authorizedIds.push(response[k].faceId);
                     })();
                 }
+                if (onlyDetect) draw.getFormat(obj[i].payload.url).then((type) => draw.writeVisionImg(img, type, convo));
             }).catch((err) => {
                 console.error(err);
                 convo.say("Không định dạng được ảnh :(").then(() => intellibot(convo));
             });
-        })();
+        });
     }
     if (onlyDetect) return intellibot(convo);
     return authorizedIds;
