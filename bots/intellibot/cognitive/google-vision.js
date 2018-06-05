@@ -62,7 +62,7 @@ module.exports = (convo, intellibot) => {
                                             }
                                             draw.drawImg(img, vertices);
                                             draw.drawImg(img, fdVertices);
-                                            draw.drawVisionText(img, vertices, fdVertices, 20, i + 1);
+                                            draw.drawVisionText(img, vertices, fdVertices, 30, i + 1);
                                         }
                                     }
                                     draw.getFormat(payload.message.attachments[0].payload.url).then((type) => draw.writeVisionImg(img, type, convo));

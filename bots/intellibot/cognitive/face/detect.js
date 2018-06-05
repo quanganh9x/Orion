@@ -44,7 +44,7 @@ module.exports = (obj, onlyDetect, convo, intellibot) => {
                             x2: response[k].faceRectangle.left + response[0].faceRectangle.width
                         };
                         draw.drawImg(img, vertices);
-                        draw.drawFaceText(img, vertices, 20, 5, 20, (k+1) + ": " + response[k].faceAttributes.age + " tuổi, " + (response[k].faceAttributes.gender === "male" ? "Nam" : "Nữ") + ", " + Math.ceil(response[k].faceAttributes.smile * 100) + "%")
+                        draw.drawFaceText(img, vertices, 20, 10, 30, (k+1) + ": " + response[k].faceAttributes.age + " tuổi, " + (response[k].faceAttributes.gender === "male" ? "Nam" : "Nữ") + ", " + Math.ceil(response[k].faceAttributes.smile * 100) + "%")
                         authorizedIds.push(response[k].faceId);
                     })();
                 }

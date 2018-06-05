@@ -18,10 +18,8 @@ const drawVisionText = (img, vertices, fdVertices, font, text) => {
 
 const drawFaceText = (img, vertices, separateRect, separateText, font, text) => {
     img
-        .stroke("none").fill("#8CEF25")
-        .drawRectangle(vertices.x1 - separateRect, vertices.y2 + separateRect, vertices.x2 + separateRect, vertices.y2 + font*2)
         .fontSize(font)
-        .drawText(vertices.x1, vertices.y2 + separateRect + separateText, text);
+        .drawText(vertices.x1 - separateRect, vertices.y2 + separateRect + separateText, text);
 };
 
 const getFormat = (imgUrl) => {
@@ -37,7 +35,6 @@ const writeVisionImg = (img, value, convo) => {
         const generated = await uniqueFilename('', 'generatedPic');
         const imgPath = await path.join(homeDir, "/uploads/images/face", generated + "." + value);
         const imgURL = await homeURL + "/uploads/images/face/" + generated + "." + value;
-        console.log(img.sourceStream.readable);
         img.write(imgPath, (err) => {
             if (err) {
                 console.log(err);
