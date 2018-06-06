@@ -30,13 +30,13 @@ module.exports = (convo, intellibot) => {
                                 if (response.flaggedTokens[i].suggestions.length > 1) {
                                     let orText = '...hoặc thay bằng: ';
                                     for (let y = 1; y < response.flaggedTokens[i].suggestions.length; y++) {
-                                        if (y == response.flaggedTokens[i].suggestions.length - 1 && y > 1) {
+                                        if (y === response.flaggedTokens[i].suggestions.length - 1 && y > 1) {
                                             orText += ' hoặc ';
                                         }
                                         orText += '"';
                                         orText += response.flaggedTokens[i].suggestions[y].suggestion;
                                         orText += '"';
-                                        if (y == response.flaggedTokens[i].suggestions.length - 1) {
+                                        if (y === response.flaggedTokens[i].suggestions.length - 1) {
                                             orText += '.';
                                         } else orText += ',';
                                     }

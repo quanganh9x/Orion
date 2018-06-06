@@ -19,7 +19,10 @@ module.exports = (obj, onlyDetect, convo, intellibot) => {
         'Content-Type': 'application/json'
     };
     for (let i = 0; i < obj.length; i++) {
-        if (obj[i].type !== "image") continue;
+        if (obj[i].type !== "image") {
+            if (i === obj.length - 1) convo.say("Không phải ảnh :(");
+            continue;
+        }
         let body = {
             url: obj[i].payload.url
         };

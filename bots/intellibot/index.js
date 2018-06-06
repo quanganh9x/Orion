@@ -10,7 +10,7 @@ module.exports = function (bot) {
             const preintellibot = (convo) => {
                 convo.say({
                     text: "[IntelliBOT] v1.0. Your own AI accessing system",
-                    quickReplies: ['Vision', 'Face', 'TextAnalytics', 'SpellChecking', 'SpeechRecognition']
+                    quickReplies: ['Vision', 'Face', 'TextAnalytics', 'SpellChecking']
                 });
                 intellibot(convo);
             };
@@ -29,8 +29,8 @@ module.exports = function (bot) {
                         case 'SpellChecking':
                             spellcheck(convo, intellibot);
                             break;
-                        case 'SpeechRecognition':
-                            speech(convo, intellibot);
+                        case 'Speech':
+                            speech.enroll(convo, intellibot);
                             break;
                         case 'end':
                             convo.end();
@@ -40,8 +40,7 @@ module.exports = function (bot) {
                             intellibot(convo);
                             break;
                         default:
-                            convo.say("????");
-                            preintellibot(convo);
+                            convo.say("????").then(() => preintellibot(convo));
                             break;
                     }
                 });
