@@ -45,7 +45,7 @@ Handler.prototype.removeTempFiles = () => {
 ////////////////////
 
 Handler.prototype.sendNewsDaily = (subscribers) => {
-    if (subscribers.length !== undefined)
+    if (subscribers !== undefined)
     for (let i = 0; i < subscribers.length; i++) {
         dailyNews(subscribers[i], this.bot);
     }
