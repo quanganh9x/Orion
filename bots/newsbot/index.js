@@ -60,10 +60,13 @@ module.exports = function (bot) {
                             sub(convo, newsbot);
                             break;
                         case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
                             convo.say("Main > NewsBOT");
                             newsbot(convo);
                             break;
                         case 'end':
+                        case 'End':
                             convo.end();
                             break;
                         default:

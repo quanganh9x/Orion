@@ -27,18 +27,18 @@ module.exports = function (bot) {
                             });
                             break;
                         case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
                             convo.say("Main > SearchBOT");
                             searchbot(convo);
                             break;
-                        case 'help':
-                            presearchbot(convo);
-                            break;
                         case 'end':
+                        case 'End':
                             convo.end();
                             break;
                         default:
                             convo.say("Không có tuỳ chọn này :( Ý bạn là \'phim\' hoặc \'nhạc\' ?");
-                            searchbot(convo);
+                            presearchbot(convo);
                             break;
                     }
                 });

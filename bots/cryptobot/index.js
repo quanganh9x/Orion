@@ -58,9 +58,12 @@ module.exports = function (bot) {
                             });
                             break;
                         case 'end':
+                        case 'End':
                             convo.end();
                             break;
                         case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
                             convo.say("Main > CryptoBOT");
                             cryptobot(convo);
                             break;

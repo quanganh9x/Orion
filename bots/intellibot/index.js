@@ -28,10 +28,13 @@ module.exports = function (bot) {
                         case 'SpellChecking':
                             spellcheck(convo, intellibot);
                             break;
+                        case 'End':
                         case 'end':
                             convo.end();
                             break;
                         case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
                             convo.say("Main > IntelliBOT");
                             intellibot(convo);
                             break;

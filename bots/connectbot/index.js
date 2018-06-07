@@ -29,12 +29,15 @@ module.exports = (bot) => {
                             break;
                         case 'Connect':
                             break;
+                        case 'End':
                         case 'end':
                             random.optout(convo);
                             meetups.optout(convo);
                             connectbot(convo);
                             break;
                         case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
                             convo.say("Main > ConnectBOT").then(() => preconnectbot(convo));
                             break;
                         default:

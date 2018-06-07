@@ -38,18 +38,18 @@ module.exports = function (bot) {
                             askLocation(convo);
                             break;
                         case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
                             convo.say("Main > LocationBOT");
                             locationbot(convo);
                             break;
-                        case 'help':
-                            prelocationbot(convo);
-                            break;
                         case 'end':
+                        case 'End':
                             convo.end();
                             break;
                         default:
                             convo.say("Không có tuỳ chọn này :( Ý bạn là \\'thoi tiet\\' hoặc \\'dia diem\\' ?\"");
-                            locationbot(convo);
+                            prelocationbot(convo);
                             break;
                     }
                 })

@@ -21,9 +21,12 @@ module.exports = function (bot) {
                             ask(convo, learnbot);
                             break;
                         case 'end':
+                        case 'End':
                             convo.end();
                             break;
                         case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
                             convo.say("Main > LearnBOT");
                             learnbot(convo);
                             break;

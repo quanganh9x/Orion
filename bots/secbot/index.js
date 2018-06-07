@@ -21,9 +21,12 @@ module.exports = function (bot) {
                             router(convo, secbot);
                             break;
                         case 'end':
+                        case 'End':
                             convo.end();
                             break;
                         case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
                             convo.say("Main > SecBOT");
                             secbot(convo);
                             break;
