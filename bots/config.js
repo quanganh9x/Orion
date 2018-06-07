@@ -15,7 +15,10 @@ module.exports = function (bot) {
                     });
                     let userInfo = await convo.get('profile');
                     User.findOne({id: userInfo.id}, (err, result) => {
-                        if (err) console.log("err data: " + err);
+                        if (err) {
+                            console.log("err data: " + err);
+                            convo.end();
+                        }
                         if (result) {
                             chat.say("Tài khoản đã đăng ký. Quyền truy cập: " + (result.privilege === 2 ? "Member" : "Staff")).then(() => {
                                 convo.end();
@@ -33,7 +36,11 @@ module.exports = function (bot) {
                                             (async () => {
                                                 userInfo['tel'] = await payload.message.text;
                                                 await new User(userInfo).save((err) => {
-                                                    if (err) console.log("err saving data: " + err);
+                                                    if (err) {
+                                                        console.log("err saving data: " + err);
+                                                        convo.say("Có lỗi trong quá trình đăng ký. Có thể là do trùng email / SĐT. Xóa đoạn chat và bắt đầu lại");
+                                                        convo.end();
+                                                    }
                                                     else convo.say("Thành công!");
                                                 });
                                                 convo.end();
