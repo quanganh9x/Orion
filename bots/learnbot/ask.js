@@ -15,18 +15,20 @@ module.exports = (convo, learnbot) => {
                         convo.say("???").then(() => learnbot(convo));
                     } else {
                         body = JSON.parse(body);
-                        if (body && body.queryresult.pods.length === 1 && body.queryresult.pods[0].title === "Result" && body.queryresult.pods[0].subpods.length === 1) {
-                            translate.translate(body.queryresult.pods[0].subpods[0].plaintext, 'vi').then(response => {
-                                (async () => {
-                                    response = response[1];
-                                    const answer = await response.data.translations[0].translatedText;
-                                    convo.say("Trả lời: " + answer).then(() => learnbot(convo));
-                                })();
-                            }).catch(err => {
-                                console.log(err);
-                                convo.say("???").then(() => learnbot(convo));
-                            });
-                        } else convo.say("???").then(() => learnbot(convo));
+                        if (body && body.queryresult && body.queryresult.pods) {
+                            if (body.queryresult.pods.length === 1 && body.queryresult.pods[0].title === "Result" && body.queryresult.pods[0].subpods.length === 1) {
+                                translate.translate(body.queryresult.pods[0].subpods[0].plaintext, 'vi').then(response => {
+                                    (async () => {
+                                        response = response[1];
+                                        const answer = await response.data.translations[0].translatedText;
+                                        convo.say("Trả lời: " + answer).then(() => learnbot(convo));
+                                    })();
+                                }).catch(err => {
+                                    console.log(err);
+                                    convo.say("???").then(() => learnbot(convo));
+                                });
+                            } else convo.say("???").then(() => learnbot(convo));
+                        }
                     }
                 });
             } else convo.say("???").then(() => learnbot(convo));
