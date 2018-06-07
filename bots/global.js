@@ -15,7 +15,7 @@ let helpBot = require('./helpbot/index');
 
 module.exports = (bot) => {
     bot.module(config);
-    bot.module(helpBot)
+    bot.module(helpBot);
     bot.module(helloBot);
     bot.module(searchBot);
     bot.module(newsBot);

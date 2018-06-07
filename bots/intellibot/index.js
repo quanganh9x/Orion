@@ -15,7 +15,6 @@ module.exports = function (bot) {
             };
             const intellibot = (convo) => {
                 convo.ask(() => {}, (payload, convo) => {
-                    console.log(JSON.stringify(payload.message.attachments));
                     switch (payload.message.text) {
                         case 'Vision':
                             vision(convo, intellibot);
