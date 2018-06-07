@@ -1,7 +1,7 @@
 const uniqueFilename = require('unique-filename');
 const path = require('path');
 const jimp = require('jimp');
-const homeDir = (process.platform == 'win32') ? path.join(__dirname, '..', '..', '..', 'public') : process.env.HOME_DIR;
+const homeDir = (process.platform == 'win32') ? path.join(process.env.USERPROFILE, 'public') : process.env.HOME_DIR;
 const homeURL = process.env.HOME_URL;
 
 const drawImg = (img, vertices) => {

@@ -1,6 +1,6 @@
-const Room = require('../../models/connectbot-rooms');
+const Room = require('../../models/room');
 const User = require('../../models/user');
-const factory = require('./randomFactory');
+const factory = require('./Factory');
 let randomQueue = [];
 
 exports.start = (convo, bot) => {
@@ -12,6 +12,7 @@ exports.start = (convo, bot) => {
     } else if (randomQueue.length === 1) {
         convo.getUserProfile().then((user) => {
             new Room({
+                type: 'random',
                 uid1: user.id,
                 uid2: randomQueue[0]
             }).save((err, result) => {

@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { autoIncrement } = require('mongoose-plugin-autoinc');
 
 const EventSchema = new Schema({
     id: {
-        type: String,
+        type: Number,
         required: true,
         unique: true
     },
@@ -25,7 +24,5 @@ const EventSchema = new Schema({
     subscribers: [String],
     description: String
 });
-
-EventSchema.plugin(autoIncrement, {model: "Event", field: "id", startAt: 1, incrementBy: 1});
 
 module.exports = mongoose.model('Event', EventSchema);

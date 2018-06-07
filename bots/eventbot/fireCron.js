@@ -1,8 +1,8 @@
 const schedule = require('node-schedule');
-const path = require('path');
-const homeDir = (process.platform == 'win32') ? path.join(__dirname, '..', '..', 'public') : process.env.HOME_DIR;
-const findRemoveSync = require('find-remove');
+
 const moneybase = require('../converterbot/money/money-base');
+const dailyNews = require('./jobs/news');
+const remove = require('./jobs/core/removeTemp');
 
 const scheduledCrons = [];
 const functions = new Handler();
@@ -34,11 +34,20 @@ function Handler() {
 Handler.prototype.set = (bot) => {
     this.bot = bot;
 };
-
+// core daemons ////
 Handler.prototype.updateMoneyBase = () => {
     moneybase.setRates();
 };
 
-Handler.prototype.removeTempQRFiles = () => {
-    if (findRemoveSync(path.join(homeDir, "/uploads/images/qr"), {age: {seconds: 3600}})) console.log("removeTempQRs exec-ed successfully: " + new Date(Date.now()).toISOString());
+Handler.prototype.removeTempFiles = () => {
+    remove();
+};
+////////////////////
+
+Handler.prototype.sendNewsDaily = (subscribers) => {
+    if (subscribers.length !== undefined)
+    for (let i = 0; i < subscribers.length; i++) {
+        dailyNews(subscribers[i], this.bot);
+    }
+    else console.log("0 subscribers. Ignored event");
 };

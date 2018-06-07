@@ -14,7 +14,7 @@ module.exports = function (source, convo, newsbot, isPin) {
         } else {
             let url;
             switch (source) {
-                case '24h':
+                case '24H':
                     url = 'https://www.24h.com.vn/upload/rss/tintuctrongngay.rss';
                     break;
                 case 'TinMoi':

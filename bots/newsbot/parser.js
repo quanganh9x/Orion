@@ -28,7 +28,7 @@ function getElements(feed, first, last, convo) {
         if (feed.items[i].title !== undefined && feed.items[i].title !== "" && feed.items[i].link !== "") {
             let action = {
                 "type": "web_url",
-                "url": feed.items[i].link.replace('http', 'https'),
+                "url": feed.items[i].link.replace('http://', 'https://'),
                 "messenger_extensions": true,
                 "webview_height_ratio": "FULL"
             };

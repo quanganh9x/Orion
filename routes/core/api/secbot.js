@@ -2,9 +2,9 @@ module.exports = (router, bot) => {
     router.get('/api/secbot/router', (req, res) => {
         res.render('router', {id: req.query.id});
     });
-    router.post('/api/secbot/router', (req, res) => {
+    router.post('/api/secbot/router/:id', (req, res) => {
         (async () => {
-            const id = await req.query.id;
+            const id = await req.params.id;
             const data = await req.body;
             if (data) {
                 res.json({status: 0});

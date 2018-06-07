@@ -1,7 +1,6 @@
 const vision = require('./cognitive/google-vision');
 const textanalytics = require('./cognitive/textanalytics');
 const spellcheck = require('./cognitive/spellcheck');
-const speech = require('./cognitive/speech');
 const face = require('./cognitive/face/face');
 
 module.exports = function (bot) {
@@ -16,6 +15,7 @@ module.exports = function (bot) {
             };
             const intellibot = (convo) => {
                 convo.ask(() => {}, (payload, convo) => {
+                    console.log(JSON.stringify(payload.message.attachments));
                     switch (payload.message.text) {
                         case 'Vision':
                             vision(convo, intellibot);
@@ -28,9 +28,6 @@ module.exports = function (bot) {
                             break;
                         case 'SpellChecking':
                             spellcheck(convo, intellibot);
-                            break;
-                        case 'Speech':
-                            speech.enroll(convo, intellibot);
                             break;
                         case 'end':
                             convo.end();

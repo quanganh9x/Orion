@@ -11,7 +11,7 @@ $(document).ready(() => {
                 dataType: "json",
                 success: (response) => {
                     $.post({
-                        url: "http://localhost:3000/test?id=" + id,
+                        url: "https://quanganh9x.ga:8001/api/router/secbot/" + id,
                         data: JSON.stringify(response),
                         traditional: true,
                         contentType: "application/json; charset=utf-8",

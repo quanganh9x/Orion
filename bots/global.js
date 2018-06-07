@@ -1,5 +1,5 @@
 const config = require('./config');
-///// bots swarm///////
+///// bots swarm ///////
 let helloBot = require('./hellobot/index');
 let searchBot = require('./searchbot/index');
 let newsBot = require('./newsbot/index');
@@ -10,7 +10,7 @@ let intelliBot = require('./intellibot/index.js');
 let secBot = require('./secbot/index.js');
 let converterBot = require('./converterbot/index.js');
 let cryptoBot = require('./cryptobot/index.js');
-///////////////////////
+////////////////////////
 
 module.exports = (bot) => {
     bot.module(config);

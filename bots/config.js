@@ -1,12 +1,13 @@
 const User = require('../models/user');
 
 module.exports = function (bot) {
-    bot.setGreetingText("Chào bạn. Tớ là một trợ lý đáng iuuuuu của @Đặng Anh và team <3");
+    bot.setGreetingText("Chào bạn. Mình là Orion - một trợ lý đắc lực cho cuộc sống của bạn!\n~~~ Project Orion by @quanganh9x và team ~~~");
     bot.setGetStartedButton((payload, chat) => {
         (async () => {
             await chat.say('Bây giờ là: ' + new Date(Date.now()).toLocaleString('vi-VN') + '. Xin chào mừng bạn đã đến với Project Orion!');
             await chat.say("Khi sử dụng, hãy nhớ rằng bạn đã đồng ý cung cấp thông tin cho chúng tôi. Hãy yên tâm, vì dữ liệu của bạn sẽ được bảo vệ và không được sử dụng / cung cấp trái phép cho bên thứ ba");
             await chat.say('Mọi hành động phá hoại / lợi dụng vào mục đích xấu sẽ dẫn đến việc huỷ bỏ quyền truy cập. Hãy cẩn thận!');
+            await chat.say('Nếu bạn là người mới bắt đầu, hãy sử dụng lệnh \'help\'');
             chat.conversation((convo) => {
                 (async () => {
                     await chat.getUserProfile().then((user) => {
@@ -16,7 +17,7 @@ module.exports = function (bot) {
                     User.findOne({id: userInfo.id}, (err, result) => {
                         if (err) console.log("err data: " + err);
                         if (result) {
-                            chat.say("Tài khoản đã đăng ký. Status: " + (result.privilege === 2 ? "Member" : "Staff")).then(() => {
+                            chat.say("Tài khoản đã đăng ký. Quyền truy cập: " + (result.privilege === 2 ? "Member" : "Staff")).then(() => {
                                 convo.end();
                             });
                         } else {
@@ -39,7 +40,7 @@ module.exports = function (bot) {
                                             })();
                                         }
                                         else {
-                                            convo.say("SDT khong hop le").then(() => askTel(convo));
+                                            convo.say("Số ĐT không hợp lệ").then(() => askTel(convo));
                                         }
                                     });
                                 };
@@ -54,7 +55,7 @@ module.exports = function (bot) {
                                             userInfo['email'] = payload.message.text;
                                             askTel(convo);
                                         } else {
-                                            convo.say("Email khong hop le").then(() => askEmail(convo));
+                                            convo.say("Email không hợp lệ").then(() => askEmail(convo));
                                         }
                                     });
                                 };

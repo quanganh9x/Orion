@@ -10,6 +10,7 @@ module.exports = function (req, res, next) {
                     await delete req.body.entry[0].messaging[0].postback;
                 }
             } // postback converter
+            // fuck the jailbreak shit
         }
         next();
     })();

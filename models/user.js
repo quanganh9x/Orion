@@ -13,7 +13,6 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     },
-    sid: String,
     privilege: { // 0 admin, 1 staff, 2 member
         type: Number,
         min: 0,

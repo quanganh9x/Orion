@@ -1,4 +1,5 @@
 const tin = require('./tin');
+const sub = require('./subscribe');
 const bongda = require('./sports/bongda');
 
 module.exports = function (bot) {
@@ -56,6 +57,7 @@ module.exports = function (bot) {
                         case 'Gaming':
                             break;
                         case 'Đăng ký bản tin':
+                            sub(convo, newsbot);
                             break;
                         case 'whereami':
                             convo.say("Main > NewsBOT");

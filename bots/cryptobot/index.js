@@ -1,6 +1,6 @@
 const crypto = require('./crypto');
 const encode = require('./encode');
-const qrBar = require('./qr-bar');
+const qrBar = require('./qr');
 
 module.exports = function (bot) {
     bot.hear(['crypto'], (payload, chat) => {
