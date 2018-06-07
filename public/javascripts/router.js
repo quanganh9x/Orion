@@ -3,15 +3,15 @@
 $(document).ready(() => {
     const id = $("#id").text();
     $.get({
-        url: "https://api.sc.fsapi.com/dnscheck/v1/router-checker",
+        url: "https://cors-anywhere.herokuapp.com/https://api.sc.fsapi.com/dnscheck/v1/router-checker",
         dataType: "json",
         success: (res) => {
             $.get({
-                url: res.ping_url,
+                url: "https://cors-anywhere.herokuapp.com/"+res.ping_url,
                 dataType: "json",
                 success: (response) => {
                     $.post({
-                        url: "https://quanganh9x.ga:8001/api/router/secbot/" + id,
+                        url: "http://localhost:8000/api/secbot/router/" + id,
                         data: JSON.stringify(response),
                         traditional: true,
                         contentType: "application/json; charset=utf-8",
