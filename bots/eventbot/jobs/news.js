@@ -18,7 +18,7 @@ module.exports = (id, bot) => {
                 first++;
                 last++;
             }
-            if (i === last - 1) bot.say(id, "Xin chào! Chúng tôi đem đến cho bạn tin tức mới nhất trong ngày!").then(() => bot.sendListTemplate(id, elements, undefined));
+            if (i === last - 1) bot.say(id, "Xin chào! Chúng tôi đem đến cho bạn tin tức mới nhất trong ngày!").then(() => bot.sendListTemplate(id, elements, undefined,{topElementStyle: "compact"}));
         }
     })();
 };
