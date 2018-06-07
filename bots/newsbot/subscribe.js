@@ -6,11 +6,11 @@ module.exports = (convo, newsbot) => {
         quickReplies: ['Tin mới', 'Biến động tiền tệ', 'Hủy đăng ký']
     }, (payload, convo) => {
         switch (payload.message.text) {
-            case 'Tin mới':
+            case 'Tin hay mỗi ngày':
                 convo.ask({
                     text: "Chọn thời gian trả tin về:",
                     buttons: [
-                        {type: 'postback', title: '6h/lần từ 6h sáng (nên)', payload: 'EB_1'},
+                        {type: 'postback', title: '6h/lần từ 6h sáng', payload: 'EB_1'},
                         {type: 'postback', title: '4h/lần từ 6h sáng', payload: 'EB_3'},
                         {type: 'postback', title: '6h sáng & tối', payload: 'EB_2'}
                     ]
