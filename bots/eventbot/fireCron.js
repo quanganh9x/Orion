@@ -12,9 +12,11 @@ const prepare = (bot) => {
 };
 
 const fire = (event) => {
-    if (event.subscribers.length !== 0) scheduledCrons.push(schedule.scheduleJob(event.cron, () => functions[event.job](event.subscribers)));
-    else scheduledCrons.push(schedule.scheduleJob(event.cron, () => functions[event.job]()));
-    console.log("[schedule] scheduled event: " + event.job);
+    if (functions[event.job]) if (typeof functions[event.job] === 'function') {
+        if (event.subscribers.length !== 0) scheduledCrons.push(schedule.scheduleJob(event.cron, () => functions[event.job](event.subscribers)));
+        else scheduledCrons.push(schedule.scheduleJob(event.cron, () => functions[event.job]()));
+        console.log("[schedule] scheduled event: " + event.job);
+    } else console.log("Unknown function: " + event.job);
 };
 
 const destroyJob = (item, isNumber) => {
