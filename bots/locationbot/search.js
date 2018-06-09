@@ -1,35 +1,81 @@
-const NEARBYSEARCH_API = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyA42-BdG6xhKl6dbERzohN4UJAkHTmio9c&rankby=distance';
-const TEXTSEARCH_API = 'https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyA42-BdG6xhKl6dbERzohN4UJAkHTmio9c';
-const GEOCODING_API = 'http://maps.googleapis.com/maps/api/geocode/json?location_type=ROOFTOP&result_type=street_address&sensor=true&key=AIzaSyA42-BdG6xhKl6dbERzohN4UJAkHTmio9c';
+const googleMapsClient = require('@google/maps').createClient({
+    key: process.env.GOOGLE_MAPS_KEY
+});
 
-
-module.exports = (lat, long, type, convo) => {
-	(async () => {
-        await request(NEARBYSEARCH_API + '&location=' + lat + ',' + long + '&type=' + type, function (error, response, body) {
-            if (JSON.parse(body).status !== "OK") {
-                console.log('Không lấy được danh sách địa điểm??? ' + response.status);
-                return;
+const custom = (lat, long, convo, locationbot) => {
+    convo.ask("Hãy nhập thông tin về địa điểm ?", (payload, convo) => {
+        googleMapsClient.places({
+            query: payload.message.text,
+            language: 'vi',
+            location: lat + ',' + long,
+            radius: 2000
+        }, function(err, response) {
+            if (err) {
+                console.log(err);
+                convo.say(":( Mình chưa tìm được").then(() => locationbot(convo));
             } else {
-                body = JSON.parse(body);
-                for (let i = 0; i < body.results.length; i++) {
-                    if (body.results[i].opening_hours.open_now && !permanently_closed) {
-                        var name = body.results[i].name;
-                        var latPlace = body.results[i].geometry.location.lat;
-                        var lngPlace = body.results[i].geometry.location.lng;
-                        await request(GEOCODING_API + '&latlng' + latPlace + ',' + lngPlace, function(error, response, body){
-                            if (JSON.parse(body).status !== "OK") {
-                            console.log('Không tìm được địa chỉ từ tọa độ??? ' + response.status);
-                            return;
-                            } else {
-                                body = JSON.parse(body);
-                                var address = body.results[0].formatted_address;
+                if (response.json.results && response.json.results.length !== 0) {
+                    let elements = [];
+                    const len = (response.json.results.length > 4 ? 4 : response.json.results.length);
+                    if (len > 2) {
+                        for (let i = 0; i < len; i++) {
+                            const name = response.json.results[i].name;
+                            const address = response.json.results[i].formatted_address === undefined ? response.json.results[i].vicinity : response.json.results[i].formatted_address;
+                            if (response.json.results[i].photos) {
+                                const image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=" + response.json.results[i].photos[0].width + "&maxheight=" + response.json.results[i].photos[0].height + "&photoreference=" + response.json.results[i].photos[0].photo_reference + "&key=" + process.env.GOOGLE_MAPS_KEY;
+                                elements.push({title: name, subtitle: address, image_url: image});
+                            } else elements.push({title: name, subtitle: address});
+                            if (i === len - 1) {
+                                convo.sendListTemplate(elements, undefined, {topElementStyle: "compact"});
+                                locationbot(convo);
                             }
-                        });
-                    }
-                    convo.say(name + " ở " + address);
-                }
-                convo.end();
+                        }
+                    } else convo.say(":( Không thấy địa điểm nào").then(() => locationbot(convo));
+                } else convo.say(":( không tìm thấy").then(() => locationbot(convo));
             }
         });
-    })
+    });
+};
+
+const nearby = (lat, long, convo, locationbot) => {
+    convo.ask({
+        text: "Bạn muốn tìm địa điểm gì ?",
+        quickReplies: [ 'bank', 'bar', 'cafe', 'doctor', 'gym', 'hospital', 'library', 'park', 'restaurant', 'shopping_mall']
+    }, (payload, convo) => {
+        googleMapsClient.placesNearby({
+            type: payload.message.text,
+            language: 'vi',
+            location: lat + ',' + long,
+            radius: 1500
+        }, function(err, response) {
+            if (err) {
+                console.log(err);
+                convo.say(":( Mình chưa tìm được").then(() => locationbot(convo));
+            } else {
+                if (response.json.results && response.json.results.length !== 0) {
+                    let elements = [];
+                    const len = (response.json.results.length > 4 ? 4 : response.json.results.length);
+                    if (len >= 2) {
+                        for (let i = 0; i < len; i++) {
+                            const name = response.json.results[i].name;
+                            const address = response.json.results[i].formatted_address === undefined ? response.json.results[i].vicinity : response.json.results[i].formatted_address;
+                            if (response.json.results[i].photos) {
+                                const image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=" + response.json.results[i].photos[0].width + "&maxheight=" + response.json.results[i].photos[0].height + "&photoreference=" + response.json.results[i].photos[0].photo_reference + "&key=" + process.env.GOOGLE_MAPS_KEY;
+                                elements.push({title: name, subtitle: address, image_url: image});
+                            } else elements.push({title: name, subtitle: address});
+                            if (i === len - 1) {
+                                convo.sendListTemplate(elements, undefined, {topElementStyle: "compact"});
+                                locationbot(convo);
+                            }
+                        }
+                    } else convo.say(":( Không thấy địa điểm nào").then(() => locationbot(convo));
+                } else convo.say(":( không tìm thấy").then(() => locationbot(convo));
+            }
+        });
+    });
+};
+
+module.exports = {
+    custom,
+    nearby
 };

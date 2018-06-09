@@ -2,17 +2,27 @@ require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const BootBot = require('bootbot');
 const app = express();
 
-let routes = require('./routes/global'); // đường dẫn cho trang web
-let botConditions = require('./bots/middleware');
-let botRoutes = require('./bots/global'); // đường dẫn cho bots
+const routes = require('./routes/global'); // đường dẫn cho trang web
+const botConditions = require('./bots/middleware');
+const botRoutes = require('./bots/global'); // đường dẫn cho bots
+const cronEvents = require('./bots/eventbot/cron'); // cronjobs
+require('./bots/eventbot/startup')(); // startup events
 
-// mongoose db
-mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x', (error) => {
-    if (error) console.log("Cant connect to MongoDB");
+// mongodb
+const options = {
+    ssl: true,
+    sslCert: fs.readFileSync('/Users/quanganh9x/quanganh9x/mongo.pem'),
+    sslCA: fs.readFileSync('/Users/quanganh9x/quanganh9x/ca.pem'),
+    user: process.env.MONGODB_AUTHORIZATION,
+    pass: process.env.MONGODB_AUTHORIZATION
+};
+mongoose.connect('mongodb://quanganh9x.ga:10001/quanganh9x', options, (error) => {
+    if (error) console.log("Cant connect to MongoDB: " + error);
     else console.log("Connect successfully");
 });
 
@@ -20,13 +30,10 @@ mongoose.connect('mongodb://fpt2018:fpt2018@ds014658.mlab.com:14658/quanganh9x',
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(require('helmet')());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-/// routes cho web ///
-app.use('/', routes());
-//////////////////////
 
 ////////////////// initialize our bots ////////////////////////
 const bot = new BootBot({
@@ -38,8 +45,14 @@ bot.app.use((req, res, next) => {
     botConditions(req, res, next);
 });
 botRoutes(bot);
-bot.start(6969); // triển thôi nhỉ :D
+bot.start(9000); // triển thôi nhỉ :D
 //////////////////////////////////////////////////////////////
+
+/// routes cho web ///
+app.use('/', routes(bot));
+cronEvents(bot);
+//////////////////////
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

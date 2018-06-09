@@ -3,4 +3,6 @@ Thumbs.db
 .DS_Store
 .env
 node_modules/
-bin/ngrok
+bin/
+app.js
+public/uploads/images/

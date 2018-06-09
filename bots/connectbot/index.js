@@ -1,48 +1,55 @@
-// dominate the worlds //
-// devours my hunger, fill my soul //
-// the end, is near //
 const random = require('./random');
+const meetups = require('./meetups');
 
 module.exports = (bot) => {
     bot.hear(['chat', 'connect'], (payload, chat) => {
         chat.conversation((convo) => {
-            convo.say("[ConnectBOT] v1.0 xin chào mừng!").then(() => {
-                const connectbot = (convo) => {
-                    convo.ask({
-                        text: 'Bạn muốn gặp gỡ những người mới ? Hãy để ConnectBOT giúp bạn nào!',
-                        buttons: [
-                            { type: 'postback', title: 'Random', payload: 'CONNECT_RANDOM' },
-                            { type: 'postback', title: 'Meetups', payload: 'CONNECT_MEETUPS' },
-                            { type: 'postback', title: 'Advisory', payload: 'CONNECT_ADVISORY' }
-                        ]
-                    }, (payload, convo) => {
-                        (async () => {
-                                switch (payload.message.text) {
-                                    case 'Random':
-                                        await random.start(convo, bot);
-                                        break;
-                                    case 'Meetups':
-                                        break;
-                                    case 'Advisory':
-                                        break;
-                                    case 'Connect':
-                                        break;
-                                    case 'end':
-                                        await random.optout(convo);
-                                        break;
-                                    case 'whereami':
-                                        convo.say("Main > ConnectBOT");
-                                        break;
-                                    default:
-                                        await convo.say("Không có tuỳ chọn này :( Ý bạn là \'Random\', \'Meetups\' hoặc \'Advisory\' ?");
-                                        break;
-                                }
-                                connectbot(convo);
-                        })();
-                    });
-                };
-                connectbot(convo);
-            });
+            const preconnectbot = (convo) => {
+                convo.say({
+                    text: 'Bạn muốn gặp gỡ những người mới ? Hãy để ConnectBOT giúp bạn nào!',
+                    buttons: [
+                        { type: 'postback', title: 'Random', payload: 'CONNECT_RANDOM' },
+                        { type: 'postback', title: 'Meetups', payload: 'CONNECT_MEETUPS' },
+                        { type: 'postback', title: 'Advisory', payload: 'CONNECT_ADVISORY' }
+                    ]
+                }).then(() => connectbot(convo));
+            };
+            const connectbot = (convo) => {
+                convo.ask(() => { }, (payload, convo) => {
+                    switch (payload.message.text) {
+                        case 'Random':
+                            random.start(convo, bot);
+                            // 1 di khong tro lai
+                            break;
+                        case 'Meetups':
+                            meetups.start(convo, bot);
+                            // 1 di khong tro lai
+                            break;
+                        case 'Advisory':
+                            connectbot(convo);
+                            break;
+                        case 'Connect':
+                            break;
+                        case 'End':
+                        case 'end':
+                            convo.say("Bạn đã thoát khỏi tính năng");
+                            connectbot(convo);
+                            break;
+                        case 'Stop':
+                            random.optout(convo);
+                            meetups.optout(convo);
+                            break;
+                        case 'whereami':
+                        case 'Whereami':
+                        case 'Wai':
+                            convo.say("Main > ConnectBOT").then(() => preconnectbot(convo));
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            };
+            preconnectbot(convo);
         });
     });
 };

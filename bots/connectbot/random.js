@@ -1,6 +1,6 @@
-const Room = require('../../models/connectbot-rooms');
+const Room = require('../../models/room');
 const User = require('../../models/user');
-const factory = require('./randomFactory');
+const factory = require('./Factory');
 let randomQueue = [];
 
 exports.start = (convo, bot) => {
@@ -12,6 +12,7 @@ exports.start = (convo, bot) => {
     } else if (randomQueue.length === 1) {
         convo.getUserProfile().then((user) => {
             new Room({
+                type: 'random',
                 uid1: user.id,
                 uid2: randomQueue[0]
             }).save((err, result) => {
@@ -26,6 +27,7 @@ exports.start = (convo, bot) => {
                         });
                         randomQueue.length = await 0;
                         factory(result.uid1, result.uid2, bot);
+                        convo.end();
                     })();
                 }
             });
@@ -41,9 +43,6 @@ exports.optout = (convo) => {
                 if (result.roomId) convo.say("Bạn đã tham gia chat! Hãy dùng lệnh thoát phòng trước");
                 else {
                     if (randomQueue.includes(result.id)) randomQueue.length = 0;
-                    convo.say("Bạn đã thoát khỏi hàng chờ").then(() => {
-                        convo.end();
-                    });
                 }
             }
         });
