@@ -7,7 +7,7 @@ module.exports = (id1, id2, bot) => {
                 switch (payload.message.text) {
                     case 'end':
                         convo1.say("Exiting...").then(() => {
-                            bot.say(id2, "Người chat" + id1 + "đã thoát phòng").then(() => {
+                            bot.say(id2, "Người chat " + id1 + " đã thoát phòng").then(() => {
                                 User.findOneAndUpdate({id: id1}, {$set: {roomId: null}}, {"new": true}, (err, result) => {
                                     if (err || !result) console.log("err "+ err);
                                 });
@@ -31,7 +31,6 @@ module.exports = (id1, id2, bot) => {
         intro(convo1);
     });
     bot.conversation(id2, (convo2) => {
-        console.log("proc2 started");
         const writeStream = (convo2) => {
             convo2.ask(() => {
             }, (payload, convo2) => {
@@ -39,7 +38,7 @@ module.exports = (id1, id2, bot) => {
                 switch (payload.message.text) {
                     case 'end':
                         convo2.say("Exiting...").then(() => {
-                            bot.say(id1, "Người chat" + id2 + "đã thoát phòng").then(() => {
+                            bot.say(id1, "Người chat " + id2 + " đã thoát phòng").then(() => {
                                 User.findOneAndUpdate({id: id2}, {$set: {roomId: null}}, {"new": true}, (err, result) => {
                                     if (err || !result) console.log("err "+ err);
                                 });
@@ -56,7 +55,7 @@ module.exports = (id1, id2, bot) => {
             });
         };
         const intro = (convo2) => {
-            convo2.say("[2] You\'re chatting with " + id1).then(() => {
+            convo2.say("[2] Bạn bắt đầu chat với UID: " + id1).then(() => {
                 writeStream(convo2);
             });
         };
