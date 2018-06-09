@@ -4,7 +4,10 @@ module.exports = (id1, id2, bot) => {
     bot.conversation(id1, (convo1) => {
         const writeStream = (convo1) => {
             convo1.ask(() => {}, (payload, convo1) => {
-                if (payload.message.attachment || !payload.message.text) writeStream(convo1);
+                if (payload.message.attachment || !payload.message.text) {
+                    convo1.say("Attachment không được hỗ trợ :/");
+                    writeStream(convo1);
+                }
                 else {
                     switch (payload.message.text) {
                         case 'end':
@@ -12,8 +15,8 @@ module.exports = (id1, id2, bot) => {
                                 bot.say(id2, "Người chat " + id1 + " đã thoát phòng").then(() => {
                                     User.findOneAndUpdate({id: id1}, {$set: {roomId: null}}, {"new": true}, (err, result) => {
                                         if (err || !result) console.log("err " + err);
+                                        else convo1.end();
                                     });
-                                    convo1.end();
                                 });
                             });
                             break;
@@ -36,7 +39,10 @@ module.exports = (id1, id2, bot) => {
         const writeStream = (convo2) => {
             convo2.ask(() => {
             }, (payload, convo2) => {
-                if (payload.message.attachment || !payload.message.text) writeStream(convo2);
+                if (payload.message.attachment || !payload.message.text) {
+                    convo2.say("Attachment không được hỗ trợ :/");
+                    writeStream(convo2);
+                }
                 else {
                     switch (payload.message.text) {
                         case 'end':
@@ -44,8 +50,8 @@ module.exports = (id1, id2, bot) => {
                                 bot.say(id1, "Người chat " + id2 + " đã thoát phòng").then(() => {
                                     User.findOneAndUpdate({id: id2}, {$set: {roomId: null}}, {"new": true}, (err, result) => {
                                         if (err || !result) console.log("err " + err);
+                                        else convo2.end();
                                     });
-                                    convo2.end();
                                 });
                             });
                             break;

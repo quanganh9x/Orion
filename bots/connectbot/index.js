@@ -1,5 +1,6 @@
 const random = require('./random');
 const meetups = require('./meetups');
+const advisory = require('./advisory');
 
 module.exports = (bot) => {
     bot.hear(['chat', 'connect'], (payload, chat) => {
@@ -15,7 +16,7 @@ module.exports = (bot) => {
                 }).then(() => connectbot(convo));
             };
             const connectbot = (convo) => {
-                convo.ask(() => { }, (payload, convo) => {
+                convo.ask(() => {}, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Random':
                             random.start(convo, bot);
@@ -26,7 +27,7 @@ module.exports = (bot) => {
                             // 1 di khong tro lai
                             break;
                         case 'Advisory':
-                            connectbot(convo);
+                            advisory.start(convo, bot, preconnectbot);
                             break;
                         case 'Connect':
                             break;
@@ -45,6 +46,7 @@ module.exports = (bot) => {
                             convo.say("Main > ConnectBOT").then(() => preconnectbot(convo));
                             break;
                         default:
+                            if (payload.message.text.length === 16 && !isNaN(payload.message.text)) advisory.trigger(payload.message.text, convo);
                             break;
                     }
                 });

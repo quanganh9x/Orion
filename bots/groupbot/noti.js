@@ -8,6 +8,7 @@ module.exports = (convo, groupbot, bot) => {
                 const users = result.id;
                 for (let i = 0; i < users.length; i++) {
                     bot.say(users[i], convo.get('noti'));
+                    if (i === users.length - 1) convo.say("Hoàn tất!").then(() => groupbot(convo));
                 }
             })
         })
