@@ -12,10 +12,11 @@ module.exports = (name, convo, searchbot) => {
             'x-nct-version': '6.1.5'
         },
         form: {
-            'access_token': 'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Mjk2NjkyMjQsIm5iZiI6MTUyNzA3NzIyNCwiZGV2aWNlaW5mbyI6IntcIkRldmljZUlEXCI6XCI3QjdFMzE5RDkwODg0MUVDOThGNjUxRjBBNzVBNDk2Q1wiLFwiT3NOYW1lXCI6XCJpT1NcIixcIk9zVmVyc2lvblwiOlwiMTEuMS4yXCIsXCJBcHBOYW1lXCI6XCJOQ1RWNlwiLFwiQXBwVmVyc2lvblwiOlwiNi4xLjVcIixcIlVzZXJOYW1lXCI6XCJhbmhkYW5nMjE5OVwiLFwiUHJvdmlkZXJcIjpcIk5DVENvcnBcIixcIkRldmljZU5hbWVcIjpcImlQaG9uZSA2IFBsdXNcIixcIlF1YWxpdHlQbGF5XCI6XCIxMjhcIixcIlF1YWxpdHlEb3dubG9hZFwiOlwiMTI4XCIsXCJRdWFsaXR5Q2xvdWRcIjpcIjEyOFwiLFwiTmV0d29ya1wiOlwiV0lGSVwiLFwiUGhvbmVOdW1iZXJcIjpcIjE2M3h4eHgzNjNcIixcIkxhbmd1YWdlXCI6XCJWTlwiLFwiQWRJRFwiOlwiN0QyNUY3N0QtMERERS00QkMwLUI2QkItNkIxQjcxMjhBQUM0XCJ9IiwiaWF0IjoxNTI3MDc3MjI0fQ.c9hNdw7hMCEHRWxQPGX_DGJTpRnMpKSF54SbF5Wsyy4',
-            'key': name.replace(' ', '+'),
-            'typeSearch': 0
-        }
+            access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Mjk2NjkyMjQsIm5iZiI6MTUyNzA3NzIyNCwiZGV2aWNlaW5mbyI6IntcIkRldmljZUlEXCI6XCI3QjdFMzE5RDkwODg0MUVDOThGNjUxRjBBNzVBNDk2Q1wiLFwiT3NOYW1lXCI6XCJpT1NcIixcIk9zVmVyc2lvblwiOlwiMTEuMS4yXCIsXCJBcHBOYW1lXCI6XCJOQ1RWNlwiLFwiQXBwVmVyc2lvblwiOlwiNi4xLjVcIixcIlVzZXJOYW1lXCI6XCJhbmhkYW5nMjE5OVwiLFwiUHJvdmlkZXJcIjpcIk5DVENvcnBcIixcIkRldmljZU5hbWVcIjpcImlQaG9uZSA2IFBsdXNcIixcIlF1YWxpdHlQbGF5XCI6XCIxMjhcIixcIlF1YWxpdHlEb3dubG9hZFwiOlwiMTI4XCIsXCJRdWFsaXR5Q2xvdWRcIjpcIjEyOFwiLFwiTmV0d29ya1wiOlwiV0lGSVwiLFwiUGhvbmVOdW1iZXJcIjpcIjE2M3h4eHgzNjNcIixcIkxhbmd1YWdlXCI6XCJWTlwiLFwiQWRJRFwiOlwiN0QyNUY3N0QtMERERS00QkMwLUI2QkItNkIxQjcxMjhBQUM0XCJ9IiwiaWF0IjoxNTI3MDc3MjI0fQ.c9hNdw7hMCEHRWxQPGX_DGJTpRnMpKSF54SbF5Wsyy4',
+            key: name.replace(' ', '+'),
+            typeSearch: 0
+        },
+        method: 'POST'
     }, (err, response, body) => {
         console.log(body);
         body = JSON.parse(body);
