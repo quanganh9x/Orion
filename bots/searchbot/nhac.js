@@ -2,7 +2,6 @@ const request = require('request');
 const NCT_API = 'https://graph.nhaccuatui.com/v4/';
 
 module.exports = (name, convo, searchbot) => {
-    console.log(name.replace(' ', '+'));
     request.post({
         url: NCT_API + 'searchs/search',
         headers: {
@@ -18,6 +17,7 @@ module.exports = (name, convo, searchbot) => {
             'typeSearch': 0
         }
     }, (err, response, body) => {
+        console.log(body);
         body = JSON.parse(body);
         if (body.data.lstSong && body.data.lstSong.length !== 0) {
             let songKey = [];
