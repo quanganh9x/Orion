@@ -40,7 +40,7 @@ const custom = (lat, long, convo, locationbot) => {
 const nearby = (lat, long, convo, locationbot) => {
     convo.ask({
         text: "Bạn muốn tìm địa điểm gì ?",
-        quickReplies: [ 'bank', 'bar', 'cafe', 'doctor', 'gym', 'hospital', 'library', 'park', 'restaurant', 'shopping_mall', 'spa']
+        quickReplies: [ 'bank', 'bar', 'cafe', 'doctor', 'gym', 'hospital', 'library', 'park', 'restaurant', 'shopping_mall']
     }, (payload, convo) => {
         googleMapsClient.placesNearby({
             type: payload.message.text,

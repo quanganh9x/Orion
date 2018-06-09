@@ -4,7 +4,7 @@ module.exports = (id1, id2, bot) => {
     bot.conversation(id1, (convo1) => {
         const writeStream = (convo1) => {
             convo1.ask(() => {}, (payload, convo1) => {
-                if (payload.message.attachment || !payload.message.text) convo1.say("Gửi att không được hỗ trợ!");
+                if (payload.message.attachment || !payload.message.text) writeStream(convo1);
                 else {
                     switch (payload.message.text) {
                         case 'end':
@@ -36,7 +36,7 @@ module.exports = (id1, id2, bot) => {
         const writeStream = (convo2) => {
             convo2.ask(() => {
             }, (payload, convo2) => {
-                if (payload.message.attachment || !payload.message.text) convo2.say("Gửi att không được hỗ trợ!");
+                if (payload.message.attachment || !payload.message.text) writeStream(convo2);
                 else {
                     switch (payload.message.text) {
                         case 'end':

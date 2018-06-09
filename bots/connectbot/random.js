@@ -27,6 +27,7 @@ exports.start = (convo, bot) => {
                         });
                         randomQueue.length = await 0;
                         factory(result.uid1, result.uid2, bot);
+                        convo.end();
                     })();
                 }
             });
