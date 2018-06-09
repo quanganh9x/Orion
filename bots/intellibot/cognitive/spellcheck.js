@@ -11,7 +11,6 @@ module.exports = (convo, intellibot) => {
                 const parameters = await {
                     "text": payload.message.text
                 };
-                console.log(parameters);
                 const headers = {};
                 spellCheckClient.spellCheck({
                     parameters,
@@ -25,7 +24,7 @@ module.exports = (convo, intellibot) => {
                                     const offset = await response.flaggedTokens[i].offset;
                                     const wrong = await response.flaggedTokens[i].token;
                                     const right = await response.flaggedTokens[i].suggestions[0].suggestion;
-                                    await convo.say('Phát hiện lỗi ở vị trí thứ ' + offset + ', chữ: "' + wrong + '" nên thay bằng "' + right);
+                                    await convo.say('Phát hiện lỗi ở vị trí thứ ' + offset + ', chữ: "' + wrong + '" nên thay bằng "' + right + '"');
                                     if (response.flaggedTokens[i].suggestions.length > 1) {
                                         let orText = '...hoặc thay bằng: ';
                                         for (let y = 1; y < response.flaggedTokens[i].suggestions.length; y++) {
