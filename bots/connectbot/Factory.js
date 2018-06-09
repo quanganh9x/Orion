@@ -36,7 +36,7 @@ module.exports = (id1, id2, bot, convo) => {
         const writeStream = (convo2) => {
             convo2.ask(() => {
             }, (payload, convo2) => {
-                if (payload.message.attachment || !payload.message.text) convo1.say("Gửi att không được hỗ trợ!");
+                if (payload.message.attachment || !payload.message.text) convo2.say("Gửi att không được hỗ trợ!");
                 else {
                     switch (payload.message.text) {
                         case 'end':
