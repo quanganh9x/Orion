@@ -45,7 +45,6 @@ module.exports = (bot) => {
                             convo.say("Main > ConnectBOT").then(() => preconnectbot(convo));
                             break;
                         default:
-                            convo.say("Không có tuỳ chọn này :( Ý bạn là \'Random\', \'Meetups\' hoặc \'Advisory\' ?").then(() => preconnectbot(convo));
                             break;
                     }
                 });
