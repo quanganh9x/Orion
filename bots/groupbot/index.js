@@ -44,7 +44,7 @@ module.exports = function (bot) {
                     }
                 });
             };
-            preintellibot(convo);
+            pregroupbot(convo);
         });
     });
 };
