@@ -27,7 +27,7 @@ module.exports = (bot) => {
                             // 1 di khong tro lai
                             break;
                         case 'Advisory':
-                            advisory.start(convo, bot, preconnectbot);
+                            advisory.start(convo, bot, connectbot, preconnectbot);
                             break;
                         case 'Connect':
                             break;

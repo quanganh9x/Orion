@@ -2,13 +2,13 @@ const Room = require('../../models/room');
 const User = require('../../models/user');
 const factory = require('./Factory');
 
-exports.start = (convo, bot, connectbot) => {
+exports.start = (convo, bot, connectbot, preconnectbot) => {
     User.find({privilege: 1, roomId: null}, ['first_name', 'last_name', 'id'], (err, result) => {
         if (err) {
             console.log(err);
-            connectbot(convo);
+            preconnectbot(convo);
         }
-        if (!result || result.length === 0) convo.say("Không có tư vấn viên nào rảnh tay lúc này. Bạn vui lòng quay lại sau").then(() => connectbot(convo));
+        if (!result || result.length === 0) convo.say("Không có tư vấn viên nào rảnh tay lúc này. Bạn vui lòng quay lại sau").then(() => preconnectbot(convo));
         if (result && result.length !== 0) {
             let advisories = [];
             for (let i = 0; i < result.length; i++) {
