@@ -12,7 +12,7 @@ module.exports = function (bot) {
                 }).then(() => cryptobot(convo));
             };
             const cryptobot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Encode':
                             encode(convo, cryptobot);
@@ -24,7 +24,7 @@ module.exports = function (bot) {
                             }, (payload, convo) => {
                                 switch (payload.message.text) {
                                     case "Decode QR":
-                                        convo.ask("Hãy upload ảnh của bạn lên (1 ảnh)", (payload, convo) => {
+                                        convo.ask("Hãy upload ảnh của bạn lên (1 ảnh có kích thước lớn hơn 228x228 px)", (payload, convo) => {
                                             if (payload.message.attachments && payload.message.attachments[0].type === "image") {
                                                 qrBar.qrReader(payload.message.attachments[0].payload.url, convo, cryptobot);
                                             } else {
@@ -59,6 +59,7 @@ module.exports = function (bot) {
                             break;
                         case 'end':
                         case 'End':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             convo.end();
                             break;
                         case 'whereami':

@@ -14,7 +14,7 @@ module.exports = function (bot) {
                 intellibot(convo);
             };
             const intellibot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Vision':
                             vision(convo, intellibot);
@@ -30,6 +30,7 @@ module.exports = function (bot) {
                             break;
                         case 'End':
                         case 'end':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             convo.end();
                             break;
                         case 'whereami':

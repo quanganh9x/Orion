@@ -8,13 +8,14 @@ module.exports = (bot) => {
                 convo.say({
                     text: 'Bạn muốn gặp gỡ những người mới ? Hãy để ConnectBOT giúp bạn nào!',
                     buttons: [
-                        {type: 'postback', title: 'Random', payload: 'CONNECT_RANDOM'},
-                        {type: 'postback', title: 'Meetups', payload: 'CONNECT_MEETUPS'},
-                        {type: 'postback', title: 'Advisory', payload: 'CONNECT_ADVISORY'}
-                    ]}).then(() => connectbot(convo));
+                        { type: 'postback', title: 'Random', payload: 'CONNECT_RANDOM' },
+                        { type: 'postback', title: 'Meetups', payload: 'CONNECT_MEETUPS' },
+                        { type: 'postback', title: 'Advisory', payload: 'CONNECT_ADVISORY' }
+                    ]
+                }).then(() => connectbot(convo));
             };
             const connectbot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Random':
                             random.start(convo, bot);
@@ -31,6 +32,7 @@ module.exports = (bot) => {
                             break;
                         case 'End':
                         case 'end':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             random.optout(convo);
                             meetups.optout(convo);
                             connectbot(convo);
