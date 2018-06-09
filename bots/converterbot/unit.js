@@ -5,8 +5,8 @@ module.exports = (convo, converterbot) => {
         text: "Bạn muốn đổi loại nào?",
         buttons: [
             {type: 'postback', title: 'Độ dài', 'payload': 'length'},
-            {type: 'postback', title: 'Cân nặng', 'payload': 'mass'},
-            {type: 'postback', title: 'Độ dài', 'payload': 'volume'},
+            {type: 'postback', title: 'Khối lượng', 'payload': 'mass'},
+            {type: 'postback', title: 'Thể tích', 'payload': 'volume'},
         ]
     }, (payload, convo) => {
         if (payload.message.event && (payload.message.event === 'length' || 'mass' || 'volume'))

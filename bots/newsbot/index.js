@@ -13,7 +13,7 @@ module.exports = function (bot) {
                 newsbot(convo);
             };
             const newsbot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Tin mới':
                             convo.ask({
@@ -67,6 +67,7 @@ module.exports = function (bot) {
                             break;
                         case 'end':
                         case 'End':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             convo.end();
                             break;
                         default:

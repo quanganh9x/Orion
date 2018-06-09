@@ -12,7 +12,7 @@ module.exports = function (bot) {
                 learnbot(convo);
             };
             const learnbot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Từ điển':
                             tudien(convo, learnbot);
@@ -22,6 +22,7 @@ module.exports = function (bot) {
                             break;
                         case 'end':
                         case 'End':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             convo.end();
                             break;
                         case 'whereami':

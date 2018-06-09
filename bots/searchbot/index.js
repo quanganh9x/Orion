@@ -8,13 +8,13 @@ module.exports = function (bot) {
                 convo.say({
                     text: "[SearchBOT] v2.0 xin chào mừng!",
                     buttons: [
-                        {type: 'postback', title: 'Phim', payload: 'SB_PHIM'},
-                        {type: 'postback', title: 'Nhạc', payload: 'SB_NHAC'},
+                        { type: 'postback', title: 'Phim', payload: 'SB_PHIM' },
+                        { type: 'postback', title: 'Nhạc', payload: 'SB_NHAC' },
                     ]
                 }).then(() => searchbot(convo));
             };
             const searchbot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Phim':
                             convo.ask("Bạn muốn tìm phim gì ?", (payload, convo) => {
@@ -34,6 +34,7 @@ module.exports = function (bot) {
                             break;
                         case 'end':
                         case 'End':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             convo.end();
                             break;
                         default:

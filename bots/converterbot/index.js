@@ -13,7 +13,7 @@ module.exports = function (bot) {
                 converterbot(convo);
             };
             const converterbot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Đổi unit':
                             unit(convo, converterbot);
@@ -29,6 +29,7 @@ module.exports = function (bot) {
                             break;
                         case 'end':
                         case 'End':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             convo.end();
                             break;
                         case 'whereami':

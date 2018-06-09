@@ -12,7 +12,7 @@ module.exports = function (bot) {
                 }).then(() => cryptobot(convo));
             };
             const cryptobot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Encode':
                             encode(convo, cryptobot);
@@ -59,6 +59,7 @@ module.exports = function (bot) {
                             break;
                         case 'end':
                         case 'End':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             convo.end();
                             break;
                         case 'whereami':

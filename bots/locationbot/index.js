@@ -11,7 +11,7 @@ module.exports = function (bot) {
                 }).then(() => locationbot(convo));
             };
             const locationbot = (convo) => {
-                convo.ask(() => {}, (payload, convo) => {
+                convo.ask(() => { }, (payload, convo) => {
                     switch (payload.message.text) {
                         case 'Thời tiết':
                             weather(convo.get('lat'), convo.get('long'), convo, locationbot);
@@ -20,8 +20,8 @@ module.exports = function (bot) {
                             convo.ask({
                                 text: "Lựa chọn kiểu tìm kiếm",
                                 buttons: [
-                                    {type: 'postback', title: 'Địa điểm chỉ định', payload: 'SB_FIXED'},
-                                    {type: 'postback', title: 'Địa điểm tùy chỉnh', payload: 'SB_CUSTOM'}
+                                    { type: 'postback', title: 'Địa điểm chỉ định', payload: 'SB_FIXED' },
+                                    { type: 'postback', title: 'Địa điểm tùy chỉnh', payload: 'SB_CUSTOM' }
                                 ]
                             }, (payload, convo) => {
                                 switch (payload.message.event) {
@@ -45,6 +45,7 @@ module.exports = function (bot) {
                             break;
                         case 'end':
                         case 'End':
+                            convo.say("Bạn đã thoát khỏi tính năng");
                             convo.end();
                             break;
                         default:
