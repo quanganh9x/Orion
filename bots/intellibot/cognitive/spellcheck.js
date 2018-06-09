@@ -11,6 +11,7 @@ module.exports = (convo, intellibot) => {
                 const parameters = await {
                     text: payload.message.text.replace('\n', ' ')
                 };
+                console.log(parameters);
                 const headers = {};
                 spellCheckClient.spellCheck({
                     parameters,
