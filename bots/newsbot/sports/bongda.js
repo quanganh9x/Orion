@@ -11,7 +11,7 @@ module.exports = (type, competition, convo, newsbot) => {
     const lastDate = moment(first).add(6, 'days');
     switch (competition) {
         case 'EPL':
-            if (!leagues.epl) {
+            if (leagues.epl == null) {
                 convo.say("Hết giải rồi nên không có thông tin");
             }
             competition = leagues.epl;
