@@ -34,7 +34,6 @@ module.exports = (id1, id2, bot) => {
         const writeStream = (convo2) => {
             convo2.ask(() => {
             }, (payload, convo2) => {
-                console.log(payload.message.text);
                 switch (payload.message.text) {
                     case 'end':
                         convo2.say("Exiting...").then(() => {
