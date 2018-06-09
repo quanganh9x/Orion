@@ -19,11 +19,11 @@ module.exports = (bot) => {
                     switch (payload.message.text) {
                         case 'Random':
                             random.start(convo, bot);
-                            connectbot(convo);
+                            // 1 di khong tro lai
                             break;
                         case 'Meetups':
                             meetups.start(convo, bot);
-                            connectbot(convo);
+                            // 1 di khong tro lai
                             break;
                         case 'Advisory':
                             connectbot(convo);
@@ -33,9 +33,11 @@ module.exports = (bot) => {
                         case 'End':
                         case 'end':
                             convo.say("Bạn đã thoát khỏi tính năng");
+                            connectbot(convo);
+                            break;
+                        case 'Stop':
                             random.optout(convo);
                             meetups.optout(convo);
-                            connectbot(convo);
                             break;
                         case 'whereami':
                         case 'Whereami':

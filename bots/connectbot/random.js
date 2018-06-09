@@ -27,6 +27,7 @@ exports.start = (convo, bot) => {
                         });
                         randomQueue.length = await 0;
                         factory(result.uid1, result.uid2, bot);
+                        convo.end();
                     })();
                 }
             });
@@ -42,9 +43,6 @@ exports.optout = (convo) => {
                 if (result.roomId) convo.say("Bạn đã tham gia chat! Hãy dùng lệnh thoát phòng trước");
                 else {
                     if (randomQueue.includes(result.id)) randomQueue.length = 0;
-                    convo.say("Bạn đã thoát khỏi hàng chờ").then(() => {
-                        convo.end();
-                    });
                 }
             }
         });
