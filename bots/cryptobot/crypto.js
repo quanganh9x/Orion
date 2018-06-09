@@ -52,7 +52,7 @@ const aes = (data, key, convo, cryptobot) => {
 
 const base64 = (data, mode, convo, cryptobot) => {
     if (mode === "decrypt") convo.say("UTF-8: " + cryptoJS.enc.Base64.parse(data).toString(cryptoJS.enc.Utf8)).then(() => cryptobot(convo));
-    else convo.say("Base64: " + CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data))).then(() => cryptobot(convo));
+    else convo.say("Base64: " + cryptoJS.enc.Base64.stringify(cryptoJS.enc.Utf8.parse(data))).then(() => cryptobot(convo));
 };
 
 module.exports = {
