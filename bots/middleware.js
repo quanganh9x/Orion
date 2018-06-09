@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
                 }
             } // postback converter
             if (req.body.entry[0].messaging[0].message && req.body.entry[0].messaging[0].message.nlp && req.body.entry[0].messaging[0].message.nlp.entities && req.body.entry[0].messaging[0].message.text) {
-                if (req.body.entry[0].messaging[0].message.nlp.entities.bots && req.body.entry[0].messaging[0].message.nlp.entities.bots.length !== 0)
+                if (req.body.entry[0].messaging[0].message.nlp.entities.bots && req.body.entry[0].messaging[0].message.nlp.entities.bots.length !== 0 && req.body.entry[0].messaging[0].message.nlp.entities.bots[0].confidence === 1)
                     req.body.entry[0].messaging[0].message.text = req.body.entry[0].messaging[0].message.nlp.entities.bots[0].value;
             }
         }
