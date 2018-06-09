@@ -25,6 +25,7 @@ exports.start = (convo, bot) => {
                                 });
                                 femaleQueue.splice(0, 1);
                                 factory(result.uid1, result.uid2, bot);
+                                convo.end();
                             })();
                         }
                     });
@@ -49,6 +50,7 @@ exports.start = (convo, bot) => {
                                 });
                                 maleQueue.splice(0, 1);
                                 factory(result.uid1, result.uid2, bot);
+                                convo.end();
                             })();
                         }
                     });
