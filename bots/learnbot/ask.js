@@ -18,6 +18,7 @@ module.exports = (convo, learnbot) => {
                         body = JSON.parse(body);
                         for (var i = body.queryresult.pods.length - 1; i >= 0; i--) {
                             pod = body.queryresult.pods[i];
+                            if (pod.markup) continue;
                             if(!pod.subpods || pod.async){
                                 request(pod.async, (error, response, body) => {
                                     await translate.translate(body.pods[0].title, 'vi').then(response => {
