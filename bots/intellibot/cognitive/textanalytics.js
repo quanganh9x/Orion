@@ -30,10 +30,9 @@ module.exports = (convo, intellibot) => {
                         await convo.say("Các từ khóa chính\n");
                         let keyWord;
                         for (let i = 0; i < responses.entities.length; i++) {
-                            keyWord += (i + 1) + ". " + responses.entities[i].name + "\n Độ ảnh hưởng " + responses.entities[i].salience + "\n";
+                            keyWord += (i + 1) + ". " + responses.entities[i].name + "\n Độ ảnh hưởng " + Math.ceil(responses.entities[i].salience) + "\n";
                         }
-                        await convo.say(keyWord);
-                        convo.say("Chủ đề của bài\n" + responses.topic).then(() => intellibot(convo));
+                        convo.say(keyWord);
                     }
                 })();
             });
@@ -42,7 +41,7 @@ module.exports = (convo, intellibot) => {
             .then(responses => {
                 (async () => {
                     const response = responses[0];
-                    //entities                   
+                    console.log(JSON.stringify(response));
                     const sentiment = await responses[0].documentSentiment;
                     await convo.say("Đánh giá bài viết : " + (sentiment.score > 0.25 ? "Tích cực" : sentiment.score > -0.25 ? "Trung lập" : "Tiêu cực"));
                     await convo.say("Độ giàu cảm xúc (từ -1 -> 1) : " + sentiment.magnitude);
