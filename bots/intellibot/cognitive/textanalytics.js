@@ -24,7 +24,7 @@ module.exports = (convo, intellibot) => {
             .annotateText(request)
             .then(responses => {
                 (async () => {
-                    responses = responses[0];
+                    responses = await responses[0];
                     if (responses.entities) {
                         let keyWord = "Các từ khóa chính\n";
                         for (let i = 0; i < responses.entities.length; i++) {
@@ -50,6 +50,7 @@ module.exports = (convo, intellibot) => {
             .analyzeSentiment(request)
             .then(responses => {
                 (async () => {
+                    responses = await responses[0];
                     const sentiment = await responses.documentSentiment;
                     await convo.say("Đánh giá bài viết : " + (sentiment.score > 0.25 ? "Tích cực" : sentiment.score > -0.25 ? "Trung lập" : "Tiêu cực"));
                     await convo.say("Cảm xúc: " + sentiment.magnitude);
