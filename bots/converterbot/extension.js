@@ -1,3 +1,6 @@
+const request = require('request');
+
+
 module.exports = (convo, converterbot) => {
     convo.ask("Bạn muốn đổi từ định dạng file nào?", (payload, convo) => {
         convo.set("from", payload.message.text);
@@ -14,7 +17,9 @@ module.exports = (convo, converterbot) => {
                                     'Accept': 'application/json'
                                 }
                             }, (err, response, body) => {
-                                answer += body.Files[0].Url + "\n";
+                                if (body && body.Files) {
+                                    answer += body.Files[0].Url + "\n";
+                                } else answer += "T_T\n";
                             });
                             if (i === payload.message.attachments.length - 1) convo.say(answer).then(() => converterbot(convo));
                         })();

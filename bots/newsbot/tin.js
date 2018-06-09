@@ -9,7 +9,7 @@ module.exports = function (source, convo, newsbot, isPin) {
         if (source === "Tự chọn") {
             convo.ask("Nhập đường dẫn đến RSS (chúng tôi không đảm bảo có thể đọc được, nhưng cứ thử xem sao :D)", (payload, convo) => {
                 convo.set('pinpoint', payload.message.text);
-                parser(payload.message.text, convo, newsbot);
+                parser(payload.message.text, convo, newsbot, true);
             });
         } else {
             let url;

@@ -3,10 +3,10 @@ const Event = require('../../models/event');
 module.exports = (convo, newsbot) => {
     convo.ask({
         text: "Chọn bản tin bạn muốn đăng ký thông báo ?",
-        quickReplies: ['Tin mới', 'Biến động tiền tệ', 'Hủy đăng ký']
+        quickReplies: ['Tin hay daily', 'Biến động tiền tệ']
     }, (payload, convo) => {
         switch (payload.message.text) {
-            case 'Tin hay mỗi ngày':
+            case 'Tin hay daily':
                 convo.ask({
                     text: "Chọn thời gian trả tin về:",
                     buttons: [

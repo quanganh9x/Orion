@@ -7,9 +7,10 @@ const translate = new Translate({
 module.exports = (convo, learnbot) => {
     convo.ask("Nhập câu hỏi bạn muốn ?", (payload, convo) => {
         translate.translate(payload.message.text, 'en').then(results => {
-            results = results[1];
-            if (results.data.translations && results.data.translations[0].translatedText) {
-                request("http://api.wolframalpha.com/v2/query?appid="+process.env.WOLFRAM_API_KEY+"&input="+encodeURIComponent(results.data.translations[0].translatedText)+"&output=json&podindex=2", (err, response, body) => {
+            (async () => {
+                results = await results[0];
+                if (results === undefined) results = await payload.message.text;
+                request("http://api.wolframalpha.com/v2/query?appid="+process.env.WOLFRAM_API_KEY+"&input="+encodeURIComponent(results)+"&output=json&podindex=2", (err, response, body) => {
                     if (err || response.statusCode !== 200) {
                         console.log(err);
                         convo.say("???").then(() => learnbot(convo));
@@ -31,7 +32,7 @@ module.exports = (convo, learnbot) => {
                         }
                     }
                 });
-            } else convo.say("???").then(() => learnbot(convo));
+            })();
         }).catch(err => {
             console.log(err);
             convo.say("???").then(() => learnbot(convo));

@@ -25,7 +25,7 @@ const custom = (lat, long, convo, locationbot) => {
                             elements.push({title: name, subtitle: address, image_url: image});
                         } else elements.push({title: name, subtitle: address});
                         if (i === len - 1) {
-                            convo.sendListTemplate(elements, undefined);
+                            convo.sendListTemplate(elements, undefined, {topElementStyle: "compact"});
                             locationbot(convo);
                         }
                     }
@@ -61,7 +61,7 @@ const nearby = (lat, long, convo, locationbot) => {
                             elements.push({title: name, subtitle: address, image_url: image});
                         } else elements.push({title: name, subtitle: address});
                         if (i === len - 1) {
-                            convo.sendListTemplate(elements, undefined);
+                            convo.sendListTemplate(elements, undefined, {topElementStyle: "compact"});
                             locationbot(convo);
                         }
                     }
