@@ -23,12 +23,7 @@ module.exports = function (bot) {
                     callback: () => {
                         (async () => {
                             await convo.say(':( phải chăng bạn đã có 1 ngày không mấy vui vẻ nhỉ').then(() => {
-                                request.get(GIPHY_API + 'fun', (err, response, body) => {
-                                    if (response && response.statusCode === 200) {
-                                        convo.say('1 tấm meme xin tặng bạn!');
-                                        convo.sendAttachment('image', body.data[0].images.fixed_height.url);
-                                    } else convo.say("Chuyện rồi sẽ qua thôi. Đừng buồn nhé :P");
-                                });
+                                convo.say("Chuyện rồi sẽ qua thôi. Đừng buồn nhé :P");
                             });
                             convo.end();
                         })();
