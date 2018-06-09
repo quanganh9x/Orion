@@ -24,6 +24,7 @@ module.exports = (convo, intellibot) => {
             .annotateText(request)
             .then(responses => {
                 (async () => {
+                    responses = responses[0];
                     if (responses.entities) {
                         let keyWord = "Các từ khóa chính\n";
                         for (let i = 0; i < responses.entities.length; i++) {
