@@ -24,7 +24,7 @@ exports.start = (convo, bot) => {
                                     if (err || !result) console.log("err "+ err);
                                 });
                                 femaleQueue.splice(0, 1);
-                                factory(result.uid1, result.uid2, bot, convo);
+                                factory(result.uid1, result.uid2, bot);
                             })();
                         }
                     });

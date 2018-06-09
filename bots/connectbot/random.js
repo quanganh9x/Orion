@@ -26,7 +26,7 @@ exports.start = (convo, bot) => {
                             if (err || !result) console.log("err "+ err);
                         });
                         randomQueue.length = await 0;
-                        factory(result.uid1, result.uid2, bot, convo);
+                        factory(result.uid1, result.uid2, bot);
                     })();
                 }
             });
