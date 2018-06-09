@@ -52,8 +52,8 @@ module.exports = (convo, intellibot) => {
                 (async () => {
                     responses = await responses[0];
                     const sentiment = await responses.documentSentiment;
-                    await convo.say("Đánh giá bài viết : " + (sentiment.score > 0.25 ? "Tích cực" : sentiment.score > -0.25 ? "Trung lập" : "Tiêu cực"));
-                    await convo.say("Cảm xúc: " + sentiment.magnitude);
+                    await convo.say("Đánh giá bài viết (từ -1 đến 1): " + (sentiment.score > 0.25 ? "Tích cực" : sentiment.score > -0.25 ? "Trung lập" : "Tiêu cực"));
+                    await convo.say("Cảm xúc (từ 0 -> ∞): " + sentiment.magnitude);
                 })();
 
             })
