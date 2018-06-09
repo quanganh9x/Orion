@@ -1,4 +1,4 @@
-const money = require('./money/money');
+const money = require('./money');
 const unit = require('./unit');
 const extension = require('./extension');
 

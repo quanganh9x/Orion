@@ -24,7 +24,7 @@ module.exports = function (bot) {
                             }, (payload, convo) => {
                                 switch (payload.message.text) {
                                     case "Decode QR":
-                                        convo.ask("Hãy upload ảnh của bạn lên (1 ảnh)", (payload, convo) => {
+                                        convo.ask("Hãy upload ảnh của bạn lên (1 ảnh có kích thước lớn hơn 228x228 px)", (payload, convo) => {
                                             if (payload.message.attachments && payload.message.attachments[0].type === "image") {
                                                 qrBar.qrReader(payload.message.attachments[0].payload.url, convo, cryptobot);
                                             } else {
