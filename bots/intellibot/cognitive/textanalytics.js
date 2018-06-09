@@ -25,19 +25,17 @@ module.exports = (convo, intellibot) => {
             .then(responses => {
                 (async () => {
                     responses = await responses[0];
-                    if (responses.entities) {
+                    if (responses.entities && responses.entities.length !== 0) {
                         let keyWord = "Các từ khóa chính\n";
                         for (let i = 0; i < responses.entities.length; i++) {
                             keyWord += (i + 1) + ". " + responses.entities[i].name + "\n Độ ảnh hưởng: " + Math.ceil(responses.entities[i].salience*100) + "%\n";
                         }
                         convo.say(keyWord);
                     }
-                    if (responses.categories) {
-                        let topic = "";
+                    if (responses.categories && responses.categories.length !== 0) {
+                        let topic = "Chủ đề bài viết\n";
                         for (let i = 0; i < responses.categories.length; i++) {
-                            if (responses.categories[i].confidence > 0.4) {
-                                topic += (i + 1) + responses.categories[i].name + "\n";
-                            }
+                            topic += (i + 1) + responses.categories[i].name + "\n";
                         }
                         convo.say(topic);
                     }
