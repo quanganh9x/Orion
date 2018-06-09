@@ -25,6 +25,7 @@ exports.start = (convo, bot) => {
                                 });
                                 femaleQueue.splice(0, 1);
                                 factory(result.uid1, result.uid2, bot);
+                                convo.end();
                             })();
                         }
                     });
@@ -49,6 +50,7 @@ exports.start = (convo, bot) => {
                                 });
                                 maleQueue.splice(0, 1);
                                 factory(result.uid1, result.uid2, bot);
+                                convo.end();
                             })();
                         }
                     });
@@ -67,9 +69,6 @@ exports.optout = (convo) => {
                 else {
                     if (maleQueue.includes(result.id)) maleQueue.splice(maleQueue.indexOf(result.id), 1);
                     else if (femaleQueue.includes(result.id)) femaleQueue.splice(femaleQueue.indexOf(result.id), 1);
-                    convo.say("Bạn đã thoát khỏi hàng chờ").then(() => {
-                        convo.end();
-                    });
                 }
             }
         });

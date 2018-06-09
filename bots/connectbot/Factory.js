@@ -16,9 +16,8 @@ module.exports = (id1, id2, bot) => {
                         });
                         break;
                     default:
-                        bot.say(id2, payload.message.text).then(() => {
+                        bot.say(id2, payload.message.text);
                             writeStream(convo1);
-                        });
                         break;
                 }
             });
@@ -46,9 +45,8 @@ module.exports = (id1, id2, bot) => {
                         });
                         break;
                     default:
-                        bot.say(id1, payload.message.text).then(() => {
+                        bot.say(id1, payload.message.text);
                             writeStream(convo2);
-                        });
                         break;
                 }
             });
