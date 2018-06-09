@@ -13,12 +13,12 @@ module.exports = (convo, intellibot) => {
                     "mkt": "en-US",
                     "text": payload.message.text
                 };
-                const headers = await {};
+                const headers = {};
                 spellCheckClient.spellCheck({
                     parameters,
                     headers
                 }).then(response => {
-                    if (response.flaggedTokens && typeof response.flaggedTokens === "array") {
+                    if (response.flaggedTokens) {
                         for (let i = 0; i < response.flaggedTokens.length; i++) {
                             (async () => {
                                 const offset = await response.flaggedTokens[i].offset;
