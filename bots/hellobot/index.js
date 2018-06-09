@@ -1,5 +1,4 @@
 const request = require('request');
-const GIPHY_API = 'https://api.giphy.com/v1/gifs/search?api_key=vOJDsEvveDFS07zqBiV3oq5m5jj9vvUN&limit=1&offset=0&rating=G&lang=en&q=';
 
 module.exports = function (bot) {
     bot.hear(['chào', 'xin chào', 'hello', 'hi', /hey( there)?/i], (payload, chat) => {

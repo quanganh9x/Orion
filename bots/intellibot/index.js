@@ -36,11 +36,10 @@ module.exports = function (bot) {
                         case 'whereami':
                         case 'Whereami':
                         case 'Wai':
-                            convo.say("Main > IntelliBOT");
-                            intellibot(convo);
+                            convo.say("Main > IntelliBOT").then(() => preintellibot(convo));
                             break;
                         default:
-                            convo.say("????").then(() => preintellibot(convo));
+                            convo.say("Tuỳ chọn không khả dụng :(").then(() => preintellibot(convo));
                             break;
                     }
                 });

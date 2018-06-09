@@ -9,7 +9,7 @@ const GroupSchema = new Schema({
         unique: true
     },
     id: [String],
-    subscribed: [Number]
+    admin: String
 });
 
 GroupSchema.plugin(autoIncrement, {model: "Group", field: "gid", startAt: 1, incrementBy: 1});

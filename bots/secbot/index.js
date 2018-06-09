@@ -2,7 +2,7 @@ const check = require('./check');
 const router = require('./router');
 
 module.exports = function (bot) {
-    bot.hear(['security'], (payload, chat) => {
+    bot.hear(['security', 'sec'], (payload, chat) => {
         chat.conversation((convo) => {
             const presecbot = (convo) => {
                 convo.say({
