@@ -25,7 +25,7 @@ module.exports = function (bot) {
                                 switch (payload.message.text) {
                                     case "Decode QR":
                                         convo.ask("Hãy upload ảnh của bạn lên (1 ảnh)", (payload, convo) => {
-                                            if (payload.message.attachments && payload.message.attachments[0].payload.type === "image") {
+                                            if (payload.message.attachments && payload.message.attachments[0].type === "image") {
                                                 qrBar.qrReader(payload.message.attachments[0].payload.url, convo, cryptobot);
                                             } else {
                                                 convo.say("???");
