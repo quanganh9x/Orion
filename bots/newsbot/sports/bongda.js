@@ -8,15 +8,15 @@ const bhawlone = "https://myanmarunicorn-bhawlone-v1.p.mashape.com/competitions/
 module.exports = (type, competition, convo, newsbot) => {
     const first = moment().startOf('week');
     const firstDate = first.format("YYYY-MM-DD");
-    const lastDate = moment(first).add(5, 'days');
+    const lastDate = moment(first).add(6, 'days');
     switch (competition) {
-        case 'EPL':
+        case 'EPL':           
             competition = leagues.epl;
             break;
-        case 'La Liga':
+        case 'La Liga':           
             competition = leagues.laliga;
             break;
-        case 'Serie A':
+        case 'Serie A':            
             competition = leagues.seriea;
             break;
         case 'Ligue 1':
@@ -51,7 +51,7 @@ function weeklyCalendar(competition, first, last, convo, newsbot) {
             'Accept': 'application/json'
         }
     }, (err, response, body) => {
-        body = JSON.parse(body);
+        console.log(body);
         if (body.length === 0) convo.say("Không có trận nào trong tuần này :(").then(() => newsbot(convo));
         else {
             for (let i = 0; i < body.length; i++) {
@@ -75,7 +75,6 @@ function weeklyResult(competition, first, last, convo, newsbot) {
             'Accept': 'application/json'
         }
     }, (err, response, body) => {
-        body = JSON.parse(body);
         if (body.length === 0) convo.say("Không có trận nào trong tuần này hoặc chưa đấu trận nào :(").then(() => newsbot(convo));
         else {
             console.log(body);
