@@ -16,12 +16,12 @@ require('./bots/eventbot/startup')(); // startup events
 // mongodb
 const options = {
     ssl: true,
-    sslCert: fs.readFileSync('/home/anhdqd00646/.ssl/mongodb/mongo.pem'),
-    sslCA: fs.readFileSync('/home/anhdqd00646/.ssl/mongodb/ca.pem'),
+    sslCert: fs.readFileSync('/Users/quanganh9x/quanganh9x/mongo.pem'),
+    sslCA: fs.readFileSync('/Users/quanganh9x/quanganh9x/ca.pem'),
     user: process.env.MONGODB_AUTHORIZATION,
     pass: process.env.MONGODB_AUTHORIZATION
 };
-mongoose.connect('mongodb://localhost:10001/quanganh9x', options, (error) => {
+mongoose.connect('mongodb://quanganh9x.ga:10001/quanganh9x', options, (error) => {
     if (error) console.log("Cant connect to MongoDB: " + error);
     else console.log("Connect successfully");
 });
@@ -45,7 +45,7 @@ bot.app.use((req, res, next) => {
     botConditions(req, res, next);
 });
 botRoutes(bot);
-bot.start(9000, 9001); // triển thôi nhỉ :D
+bot.start(9000); // triển thôi nhỉ :D
 //////////////////////////////////////////////////////////////
 
 /// routes cho web ///

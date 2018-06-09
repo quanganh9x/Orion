@@ -38,12 +38,8 @@ module.exports = (convo, newsbot) => {
                     }
                 });
                 break;
-            case 'Biến động tiền tệ':
-                register(6, id).then(() => convo.say("Thành công").then(newsbot(convo)));
-                break;
             default:
-                convo.say("???");
-                newsbot(convo);
+                convo.say("Không có tuỳ chọn này :(").then(() => newsbot(convo));
                 break;
         }
     });
