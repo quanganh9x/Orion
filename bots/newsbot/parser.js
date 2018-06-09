@@ -26,14 +26,15 @@ function getElements(feed, first, last, convo, isTuchon) {
     }
     for (let i = first; i < last; i++) {
         if (feed.items[i].title !== undefined && feed.items[i].title !== "" && feed.items[i].link !== "") {
+            let action;
             if (!isTuchon) {
-                let action = {
+                action = {
                     "type": "web_url",
                     "url": feed.items[i].link.replace('http://', 'https://'),
                     "messenger_extensions": true,
                     "webview_height_ratio": "FULL"
                 };
-            } else let action = {
+            } else action = {
                 "type": "web_url",
                 "url": feed.items[i].link.replace('http://', 'https://'),
                 "messenger_extensions": false
