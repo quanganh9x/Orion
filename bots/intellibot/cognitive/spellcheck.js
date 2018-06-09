@@ -1,6 +1,6 @@
 const cognitiveServices = require('cognitive-services');
 const spellCheckClient = new cognitiveServices.bingSpellCheckV7({
-    apiKey: "2ff21eaca8a94c1da719c24e54289d19"
+    apiKey: "6a66938141944a289dc084312c5abc9e"
 });
 
 module.exports = (convo, intellibot) => {
