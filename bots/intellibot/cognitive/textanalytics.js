@@ -24,10 +24,8 @@ module.exports = (convo, intellibot) => {
             .annotateText(request)
             .then(responses => {
                 (async () => {
-                    responses = responses[0];
                     if (responses.entities) {
-                        await convo.say("Các từ khóa chính\n");
-                        let keyWord;
+                        let keyWord = "Các từ khóa chính\n";
                         for (let i = 0; i < responses.entities.length; i++) {
                             keyWord += (i + 1) + ". " + responses.entities[i].name + "\n Độ ảnh hưởng: " + Math.ceil(responses.entities[i].salience*100) + "%\n";
                         }
@@ -35,15 +33,18 @@ module.exports = (convo, intellibot) => {
                     }
                     if (responses.categories) {
                         let topic = "";
-                        for (let i = 0; i < response.categories.length; i++) {
-                            if (response.categories[i].confidence > 0.4) {
-                                topic += (i + 1) + response.categories[i].name + "\n";
+                        for (let i = 0; i < responses.categories.length; i++) {
+                            if (responses.categories[i].confidence > 0.4) {
+                                topic += (i + 1) + responses.categories[i].name + "\n";
                             }
                         }
                         convo.say(topic);
                     }
                 })();
-            });
+            }).catch(err => {
+                console.log(err);
+                intellibot(convo);
+        });
         client
             .analyzeSentiment(request)
             .then(responses => {
