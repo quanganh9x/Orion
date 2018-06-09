@@ -77,6 +77,7 @@ module.exports = function (bot) {
     if (process.env.DEBUG) {
         bot.on('message', (payload, chat) => {
             let text = payload.message.text;
+            console.log(JSON.stringify(payload.message.entities));
             chat.getUserProfile().then((user) => {
                 console.log(`[DEBUG] Người dùng ${user.first_name} vừa nhắn: ${text}`);
             });
