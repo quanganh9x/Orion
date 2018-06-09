@@ -51,7 +51,7 @@ function weeklyCalendar(competition, first, last, convo, newsbot) {
             'Accept': 'application/json'
         }
     }, (err, response, body) => {
-        console.log(body);
+        body = JSON.parse(body);
         if (body.length === 0) convo.say("Không có trận nào trong tuần này :(").then(() => newsbot(convo));
         else {
             for (let i = 0; i < body.length; i++) {
@@ -75,6 +75,7 @@ function weeklyResult(competition, first, last, convo, newsbot) {
             'Accept': 'application/json'
         }
     }, (err, response, body) => {
+        body = JSON.parse(body);
         if (body.length === 0) convo.say("Không có trận nào trong tuần này hoặc chưa đấu trận nào :(").then(() => newsbot(convo));
         else {
             console.log(body);
