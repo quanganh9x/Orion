@@ -10,7 +10,7 @@ module.exports = (convo, intellibot) => {
             (async () => {
                 const parameters = await {
                     "mode": "proof",
-                    "mkt": "en-us",
+                    "mkt": "en-US",
                     "text": payload.message.text
                 };
                 const headers = await {};
@@ -18,9 +18,7 @@ module.exports = (convo, intellibot) => {
                     parameters,
                     headers
                 }).then(response => {
-                    if (response.errors) {
-                        convo.say('Không check được lỗi ><').then(() => intellibot(convo));
-                    } else {
+                    if (response.flaggedTokens && typeof response.flaggedTokens === "array") {
                         for (let i = 0; i < response.flaggedTokens.length; i++) {
                             (async () => {
                                 const offset = await response.flaggedTokens[i].offset;
@@ -45,7 +43,7 @@ module.exports = (convo, intellibot) => {
                                 if (i === response.flaggedTokens.length - 1) intellibot(convo);
                             })();
                         }
-                    }
+                    } else convo.say('Không check được lỗi ><').then(() => intellibot(convo));
                 });
             })();
         });

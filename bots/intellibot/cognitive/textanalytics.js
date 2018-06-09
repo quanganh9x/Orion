@@ -30,35 +30,35 @@ module.exports = (convo, intellibot) => {
                         for (let i = 0; i < responses.entities.length; i++) {
                             keyWord += (i + 1) + ". " + responses.entities[i].name + "\n Độ ảnh hưởng: " + Math.ceil(responses.entities[i].salience*100) + "%\n";
                         }
-                        convo.say(keyWord);
+                        await convo.say(keyWord);
                     }
                     if (responses.categories && responses.categories.length !== 0) {
                         let topic = "Chủ đề bài viết\n";
                         for (let i = 0; i < responses.categories.length; i++) {
                             topic += (i + 1) + responses.categories[i].name + "\n";
                         }
-                        convo.say(topic);
+                        await convo.say(topic);
                     }
+                    client
+                        .analyzeSentiment(request)
+                        .then(responses => {
+                            (async () => {
+                                responses = await responses[0];
+                                const sentiment = await responses.documentSentiment;
+                                await convo.say("Đánh giá bài viết (từ -1 đến 1): " + (sentiment.score > 0.25 ? "Tích cực" : sentiment.score > -0.25 ? "Trung lập" : "Tiêu cực"));
+                                await convo.say("Cảm xúc (từ 0 -> ∞): " + sentiment.magnitude);
+                            })();
+
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            intellibot(convo)
+                        });
                 })();
             }).catch(err => {
-                console.log(err);
-                intellibot(convo);
+            console.log(err);
+            intellibot(convo);
         });
-        client
-            .analyzeSentiment(request)
-            .then(responses => {
-                (async () => {
-                    responses = await responses[0];
-                    const sentiment = await responses.documentSentiment;
-                    await convo.say("Đánh giá bài viết (từ -1 đến 1): " + (sentiment.score > 0.25 ? "Tích cực" : sentiment.score > -0.25 ? "Trung lập" : "Tiêu cực"));
-                    await convo.say("Cảm xúc (từ 0 -> ∞): " + sentiment.magnitude);
-                })();
-
-            })
-            .catch(err => {
-                console.error(err);
-                intellibot(convo)
-            });
     });
 };
 
