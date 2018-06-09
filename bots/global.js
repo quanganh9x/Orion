@@ -11,11 +11,13 @@ let secBot = require('./secbot/index');
 let converterBot = require('./converterbot/index');
 let cryptoBot = require('./cryptobot/index');
 let helpBot = require('./helpbot/index');
+let groupBot = require('./groupbot/index');
 ////////////////////////
 
 module.exports = (bot) => {
     bot.module(config);
     bot.module(helpBot);
+    bot.module(groupBot);
     bot.module(helloBot);
     bot.module(searchBot);
     bot.module(newsBot);
