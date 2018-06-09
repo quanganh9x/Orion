@@ -9,7 +9,7 @@ module.exports = (convo, intellibot) => {
         convo.ask('Gửi đoạn văn bản tiếng Anh cần check lên cho mình nhé :x', (payload, convo) => {
             (async () => {
                 const parameters = await {
-                    "text": payload.message.text
+                    text: payload.message.text.replace('\n', ' ')
                 };
                 const headers = {};
                 spellCheckClient.spellCheck({
