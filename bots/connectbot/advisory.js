@@ -8,7 +8,7 @@ exports.start = (convo, bot, connectbot) => {
             console.log(err);
             connectbot(convo);
         }
-        if (!result) convo.say("Không có tư vấn viên nào rảnh tay lúc này. Bạn vui lòng quay lại sau").then(() => connectbot(convo));
+        if (!result || result.length === 0) convo.say("Không có tư vấn viên nào rảnh tay lúc này. Bạn vui lòng quay lại sau").then(() => connectbot(convo));
         if (result && result.length !== 0) {
             let advisories = [];
             for (let i = 0; i < result.length; i++) {
