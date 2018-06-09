@@ -24,9 +24,6 @@ module.exports = function (bot) {
                         case 'Đổi định dạng file':
                             extension(convo, converterbot);
                             break;
-                        case 'File mirror':
-                            upload(convo, converterbot);
-                            break;
                         case 'end':
                         case 'End':
                             convo.say("Bạn đã thoát khỏi tính năng");
@@ -39,8 +36,7 @@ module.exports = function (bot) {
                             converterbot(convo);
                             break;
                         default:
-                            convo.say("????");
-                            preconverterbot(convo);
+                            convo.say("Sai cú pháp :(").then(() => preconverterbot(convo));
                             break;
                     }
                 });

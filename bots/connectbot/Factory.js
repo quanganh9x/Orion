@@ -1,6 +1,6 @@
 const User = require('../../models/user');
 
-module.exports = (id1, id2, bot, convo) => {
+module.exports = (id1, id2, bot) => {
     bot.conversation(id1, (convo1) => {
         const writeStream = (convo1) => {
             convo1.ask(() => {}, (payload, convo1) => {
@@ -64,5 +64,4 @@ module.exports = (id1, id2, bot, convo) => {
         };
         intro(convo2);
     });
-    convo.end();
 };
