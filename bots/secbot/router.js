@@ -6,8 +6,7 @@ module.exports = (convo, secbot) => {
             "default_action": {
                 "type": "web_url",
                 "url": "https://quanganh9x.ga:8001/api/secbot/router?id=" + user.id,
-                "messenger_extensions": true,
-                "webview_height_ratio": "FULL"
+                "messenger_extensions": false
             }
         }]).then(() => {
             secbot(convo);
