@@ -24,22 +24,24 @@ module.exports = (convo, intellibot) => {
             .annotateText(request)
             .then(responses => {
                 (async () => {
-                    var response = responses[0];
-                    //entities
-                    await convo.say("Các từ khóa chính");
-                    let keyWord;
-                    for (let i = 0; i < response.entities.length; i++) {
-                        keyWord += (i + 1) + ". " + response.entities[i].name + "\n Độ ảnh hưởng " + response.entities[i].salience + "\n";
+                    responses = responses[0];
+                    console.log(JSON.stringify(responses));
+                    if (responses.entities) {
+                        await convo.say("Các từ khóa chính\n");
+                        let keyWord;
+                        for (let i = 0; i < responses.entities.length; i++) {
+                            keyWord += (i + 1) + ". " + responses.entities[i].name + "\n Độ ảnh hưởng " + responses.entities[i].salience + "\n";
+                        }
+                        await convo.say(keyWord);
+                        convo.say("Chủ đề của bài\n" + responses.topic).then(() => intellibot(convo));
                     }
-                    await convo.say(keyWord);
-                    await convo.say("Chủ đề của bài\n" + topic).then(() => intellibot(convo));
                 })();
-            })
+            });
         client
             .analyzeSentiment(request)
             .then(responses => {
                 (async () => {
-                    var response = responses[0];
+                    const response = responses[0];
                     //entities                   
                     const sentiment = await responses[0].documentSentiment;
                     await convo.say("Đánh giá bài viết : " + (sentiment.score > 0.25 ? "Tích cực" : sentiment.score > -0.25 ? "Trung lập" : "Tiêu cực"));

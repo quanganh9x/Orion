@@ -8,7 +8,7 @@ const bhawlone = "https://myanmarunicorn-bhawlone-v1.p.mashape.com/competitions/
 module.exports = (type, competition, convo, newsbot) => {
     const first = moment().startOf('week');
     const firstDate = first.format("YYYY-MM-DD");
-    const lastDate = moment(first).add(6, 'days');
+    const lastDate = moment(first).add(5, 'days');
     switch (competition) {
         case 'EPL':           
             competition = leagues.epl;
