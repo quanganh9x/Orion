@@ -32,7 +32,7 @@ module.exports = function (bot) {
                             learnbot(convo);
                             break;
                         default:
-                            convo.say("????");
+                            convo.say("Không có tuỳ chọn này :( Ý bạn là \'Từ điển\', \'Bách khoa toàn thư\ ?");
                             prelearnbot(convo);
                             break;
                     }

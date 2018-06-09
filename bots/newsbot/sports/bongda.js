@@ -11,18 +11,33 @@ module.exports = (type, competition, convo, newsbot) => {
     const lastDate = moment(first).add(6, 'days');
     switch (competition) {
         case 'EPL':
+            if (!leagues.epl) {
+                convo.say("Hết giải rồi nên không có thông tin");
+            }
             competition = leagues.epl;
             break;
         case 'La Liga':
+            if (!leagues.laliga) {
+                convo.say("Hết giải rồi nên không có thông tin");
+            }
             competition = leagues.laliga;
             break;
         case 'Serie A':
+            if (!leagues.seriea) {
+                convo.say("Hết giải rồi nên không có thông tin");
+            }
             competition = leagues.seriea;
             break;
         case 'Ligue 1':
+            if (!leagues.ligue1) {
+                convo.say("Hết giải rồi nên không có thông tin");
+            }
             competition = leagues.ligue1;
             break;
         case 'Bundesliga':
+            if (!leagues.bundesliga) {
+                convo.say("Hết giải rồi nên không có thông tin");
+            }
             competition = leagues.bundesliga;
             break;
         default:
@@ -106,9 +121,9 @@ function currentStanding(competition, convo, newsbot) {
                 let stand = body[i];
                 let name = stand.team.name + " - " + stand.points + " điểm";
                 let info = stand.wins + "W, " + stand.draws + "D, " + stand.losses + "L - " + stand.goalsFor + "GF, " + stand.goalsAgainst + "GA, " + ((stand.goalsFor - stand.goalsAgainst) >= 0 ? "+" : "-") + (stand.goalsFor - stand.goalsAgainst) + "GD";
-                elements.push({title: name, subtitle: info});
+                elements.push({ title: name, subtitle: info });
                 if (i === 3) {
-                    convo.sendListTemplate(elements, undefined, {topElementStyle: "compact"});
+                    convo.sendListTemplate(elements, undefined, { topElementStyle: "compact" });
                     newsbot(convo);
                 }
             }

@@ -12,7 +12,7 @@ module.exports = (convo, learnbot) => {
                 if (results.data.translations.length !== 0) {
                     let answer = "Có thể dịch thành: ";
                     for (let i = 0; i < results.data.translations.length; i++) {
-                        answer += results.data.translations[i].translatedText + ", ";
+                        answer += results.data.translations[i].translatedText;
                         if (i === results.data.translations.length - 1) convo.say(answer).then(() => learnbot(convo));
                     }
                 } else convo.say(":( Không dịch được").then(() => learnbot(convo));
