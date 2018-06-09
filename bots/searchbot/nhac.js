@@ -1,5 +1,4 @@
 const request = require('request');
-const querystring =
 const NCT_API = 'https://graph.nhaccuatui.com/v4/';
 
 module.exports = (name, convo, searchbot) => {

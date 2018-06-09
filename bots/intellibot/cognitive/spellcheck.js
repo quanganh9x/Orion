@@ -16,7 +16,6 @@ module.exports = (convo, intellibot) => {
                     parameters,
                     headers
                 }).then(response => {
-                    console.log(response);
                     if (response.flaggedTokens) {
                         if (response.flaggedTokens.length !== 0) {
                             for (let i = 0; i < response.flaggedTokens.length; i++) {
