@@ -3,7 +3,7 @@ const verify = require('./verify');
 
 module.exports = (convo, intellibot) => {
     convo.ask({
-        text: "Face - Chức năng nhận diện khuôn mặt của Microsoft\n",
+        text: "Face - Cognitive services by Microsoft\n",
         quickReplies: ['Detect', 'Verify']
     }, (payload, convo) => {
         switch (payload.message.text) {
@@ -18,7 +18,7 @@ module.exports = (convo, intellibot) => {
                     });
                 break;
             case 'Verify':
-                    convo.ask("Kiểm tra nếu 2 bức ảnh có phải cùng một người. Gửi lên 2 bức ảnh chỉ có 1 người trong đó (chưa hỗ trợ ảnh có nhiều người)", (payload, convo) => {
+                    convo.ask("Kiểm tra nếu 2 bức ảnh có giống hệt nhau. Gửi lên 2 bức ảnh chỉ có 1 người trong đó (chưa hỗ trợ ảnh có nhiều người)", (payload, convo) => {
                         if (payload.message.attachments && payload.message.attachments.length === 2) {
                             verify(detect(payload.message.attachments, false, convo), convo, intellibot);
                         } else {
