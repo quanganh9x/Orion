@@ -18,8 +18,6 @@ module.exports = (convo, converterbot) => {
                                     'Accept': 'application/json'
                                 }
                             }, (err, response, body) => {
-                                console.log(body);
-                                body = JSON.parse(body);
                                 if (body && body.Files) {
                                     answer += body.Files[0].Url + "\n";
                                 } else answer += "T_T\n";
