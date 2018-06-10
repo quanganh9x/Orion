@@ -10,6 +10,7 @@ module.exports = (convo, converterbot) => {
                 if (payload.message.attachments && payload.message.attachments[0].type) {
                     for (let i = 0; i < payload.message.attachments.length; i++) {
                         (async () => {
+                            console.log(JSON.stringify(payload.message.attachments));
                             let answer = "";
                             await request.get({
                                 url: 'https://v2.convertapi.com' + convo.get('from') + '/to/' + convo.get('to') + '?Secret='+ process.env.CONVERT_API_KEY +'&File=' + payload.message.attachments[i].payload.url + '&StoreFile=true',
