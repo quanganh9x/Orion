@@ -9,6 +9,7 @@ module.exports = (type, competition, convo, newsbot) => {
     const first = moment().startOf('week');
     const firstDate = first.format("YYYY-MM-DD");
     const lastDate = moment(first).add(5, 'days');
+    console.log(firstDate + " " + lastDate);
     switch (competition) {
         case 'EPL':           
             competition = leagues.epl;
