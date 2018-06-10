@@ -28,12 +28,10 @@ module.exports = function (bot) {
                         case 'whereami':
                         case 'Whereami':
                         case 'Wai':
-                            convo.say("Main > SecBOT");
-                            secbot(convo);
+                            convo.say("Main > SecBOT").then(() => presecbot(convo));
                             break;
                         default:
-                            convo.say("????");
-                            presecbot(convo);
+                            convo.say("Không có tuỳ chọn này :( ").then(() =>  presecbot(convo));
                             break;
                     }
                 });
