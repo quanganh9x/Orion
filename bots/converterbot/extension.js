@@ -6,6 +6,7 @@ module.exports = (convo, converterbot) => {
         convo.ask("Và sang định dạng ...? (chưa hỗ trợ đổi từ pdf sang doc, xlsx,...", (payload, convo) => {
             convo.set("to", payload.message.text);
             convo.ask("Bạn gửi URL file lên cho mình nhé ?", (payload, convo) => {
+                console.log('https://v2.convertapi.com' + convo.get('from') + '/to/' + convo.get('to') + '?Secret='+ process.env.CONVERT_API_KEY +'&File=' + payload.message.text + '&StoreFile=true');
                 request.get({
                     url: 'https://v2.convertapi.com' + convo.get('from') + '/to/' + convo.get('to') + '?Secret='+ process.env.CONVERT_API_KEY +'&File=' + payload.message.text + '&StoreFile=true',
                     method: 'GET'
