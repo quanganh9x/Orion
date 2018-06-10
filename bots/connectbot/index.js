@@ -17,37 +17,39 @@ module.exports = (bot) => {
             };
             const connectbot = (convo) => {
                 convo.ask(() => {}, (payload, convo) => {
-                    switch (payload.message.text) {
-                        case 'Random':
-                            random.start(convo, bot);
-                            // 1 di khong tro lai
-                            break;
-                        case 'Meetups':
-                            meetups.start(convo, bot);
-                            // 1 di khong tro lai
-                            break;
-                        case 'Advisory':
-                            advisory.start(convo, bot, connectbot, preconnectbot);
-                            break;
-                        case 'Connect':
-                            break;
-                        case 'End':
-                        case 'end':
-                            convo.say("Bạn đã thoát khỏi tính năng");
-                            connectbot(convo);
-                            break;
-                        case 'Stop':
-                            random.optout(convo);
-                            meetups.optout(convo);
-                            break;
-                        case 'whereami':
-                        case 'Whereami':
-                        case 'Wai':
-                            convo.say("Main > ConnectBOT").then(() => preconnectbot(convo));
-                            break;
-                        default:
-                            if (payload.message.text.length === 16 && !isNaN(payload.message.text)) advisory.trigger(payload.message.text, convo);
-                            break;
+                    if (payload.message.event.length === 16) advisory.trigger(payload.message.text, convo);
+                    else {
+                        switch (payload.message.text) {
+                            case 'Random':
+                                random.start(convo, bot);
+                                // 1 di khong tro lai
+                                break;
+                            case 'Meetups':
+                                meetups.start(convo, bot);
+                                // 1 di khong tro lai
+                                break;
+                            case 'Advisory':
+                                advisory.start(convo, bot, connectbot, preconnectbot);
+                                break;
+                            case 'Connect':
+                                break;
+                            case 'End':
+                            case 'end':
+                                convo.say("Bạn đã thoát khỏi tính năng");
+                                connectbot(convo);
+                                break;
+                            case 'Stop':
+                                random.optout(convo);
+                                meetups.optout(convo);
+                                break;
+                            case 'whereami':
+                            case 'Whereami':
+                            case 'Wai':
+                                convo.say("Main > ConnectBOT").then(() => preconnectbot(convo));
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 });
             };
