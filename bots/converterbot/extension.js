@@ -12,7 +12,7 @@ module.exports = (convo, converterbot) => {
                         'Accept': 'application/json'
                     }
                 }, (err, response, body) => {
-                    body = JSON.parse(body);
+                    console.log(body);
                     if (body && body.Files) {
                         convo.say("Đã chuyển: " + body.Files[0].Url).then(() => converterbot(convo));
                     } else convo.say("Không chuyển được. Sai định dạng hoặc không hỗ trợ :(").then(() => converterbot(convo));
