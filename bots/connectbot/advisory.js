@@ -23,7 +23,7 @@ exports.start = (convo, bot, connectbot, preconnectbot) => {
     });
 };
 
-exports.trigger = (id, convo) => {
+exports.trigger = (id, convo, bot) => {
     convo.getUserProfile().then((user) => {
         new Room({
             type: 'advisory',
