@@ -51,8 +51,7 @@ module.exports = function (bot) {
                                 quickReplies: ['Mã hóa', 'Giải mã']
                             }, (payload, convo) => {
                                 if (payload.message.text === "Giải mã") convo.set('type', 'decrypt');
-                                else if (payload.message.text === "Mã hoá") convo.set('type', 'encrypt');
-                                else convo.say("Không hiểu nổi thím muốn gì ?").then(() => precryptobot(convo));
+                                else convo.set('type', 'encrypt');
                                 convo.ask("Chuỗi muốn mã hóa / giải mã ?", (payload, convo) => {
                                     crypto.base64(payload.message.text, convo.get('type'), convo, cryptobot);
                                 });
