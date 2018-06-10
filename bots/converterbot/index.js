@@ -1,6 +1,7 @@
 const money = require('./money');
 const unit = require('./unit');
 const extension = require('./extension');
+const shorten = require('./shorten');
 
 module.exports = function (bot) {
     bot.hear(['converter'], (payload, chat) => {
@@ -8,7 +9,7 @@ module.exports = function (bot) {
             const preconverterbot = (convo) => {
                 convo.say({
                     text: "[ConverterBOT] v1.0. Xử lý số liệu nhanh gọn lẹ",
-                    quickReplies: ['Đổi unit', 'Đổi $', 'Đổi định dạng file', 'File mirror']
+                    quickReplies: ['Đổi unit', 'Đổi $', 'Đổi định dạng file', 'Rút gọn URL']
                 });
                 converterbot(convo);
             };
@@ -23,6 +24,9 @@ module.exports = function (bot) {
                             break;
                         case 'Đổi định dạng file':
                             extension(convo, converterbot);
+                            break;
+                        case 'Rút gọn URL':
+                            shorten(convo, converterbot);
                             break;
                         case 'end':
                         case 'End':

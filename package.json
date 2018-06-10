@@ -11,6 +11,7 @@
     "@google-cloud/vision": "^0.19.0",
     "@google/maps": "^0.4.6",
     "base64-img": "^1.0.4",
+    "bitly": "^5.0.12",
     "bootbot": "^1.0.15",
     "cognitive-services": "^1.1.0",
     "convert-units": "^2.3.4",
