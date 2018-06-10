@@ -9,7 +9,6 @@ module.exports = (type, competition, convo, newsbot) => {
     const first = moment().startOf('week');
     const firstDate = first.format("YYYY-MM-DD");
     const lastDate = moment(first).add(6, 'days').format("YYYY-MM-DD");
-    console.log(firstDate + " " + lastDate);
     switch (competition) {
         case 'EPL':           
             competition = leagues.epl;
@@ -52,7 +51,6 @@ function weeklyCalendar(competition, first, last, convo, newsbot) {
             'Accept': 'application/json'
         }
     }, (err, response, body) => {
-        console.log(body);
         body = JSON.parse(body);
         if (body.length === 0) convo.say("Không có trận nào trong tuần này :(").then(() => newsbot(convo));
         else {
@@ -77,7 +75,6 @@ function weeklyResult(competition, first, last, convo, newsbot) {
             'Accept': 'application/json'
         }
     }, (err, response, body) => {
-        console.log(body);
         body = JSON.parse(body);
         if (body.length === 0) convo.say("Không có trận nào trong tuần này hoặc chưa đấu trận nào :(").then(() => newsbot(convo));
         else {

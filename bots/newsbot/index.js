@@ -34,21 +34,23 @@ module.exports = function (bot) {
                             }, (payload, convo) => {
                                 switch (payload.message.text) {
                                     case 'Bóng đá':
-                                        convo.ask({
-                                            text: "Chọn một trong các tuỳ chọn sau:",
-                                            quickReplies: ['Lịch thi đấu tuần', 'Kết quả theo tuần', 'Top 4']
-                                        }, (payload, convo) => {
-                                            convo.set('type', payload.message.text);
+                                        convo.say("World Cup 2018 sắp diễn ra!").then(() => {
                                             convo.ask({
-                                                text: "Giải đấu bạn mong muốn ?",
-                                                quickReplies: ['EPL', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1']
+                                                text: "Chọn một trong các tuỳ chọn sau:",
+                                                quickReplies: ['Lịch thi đấu tuần', 'Kết quả theo tuần', 'Top 4']
                                             }, (payload, convo) => {
-                                                bongda(convo.get('type'), payload.message.text, convo, newsbot);
+                                                convo.set('type', payload.message.text);
+                                                convo.ask({
+                                                    text: "Giải đấu bạn mong muốn ?",
+                                                    quickReplies: ['EPL', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1']
+                                                }, (payload, convo) => {
+                                                    bongda(convo.get('type'), payload.message.text, convo, newsbot);
+                                                });
                                             });
                                         });
                                         break;
                                     default:
-                                        convo.say("???");
+                                        convo.say("Không có tuỳ chọn này :(");
                                         prenewsbot(convo);
                                         break;
                                 }
