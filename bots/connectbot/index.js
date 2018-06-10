@@ -17,7 +17,7 @@ module.exports = (bot) => {
             };
             const connectbot = (convo) => {
                 convo.ask(() => {}, (payload, convo) => {
-                    if (payload.message.event.length === 16) advisory.trigger(payload.message.text, convo);
+                    if (payload.message.event && payload.message.event.length === 16) advisory.trigger(payload.message.event, convo);
                     else {
                         switch (payload.message.text) {
                             case 'Random':
