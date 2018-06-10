@@ -7,10 +7,8 @@ module.exports = (convo, converterbot) => {
             convo.set("to", payload.message.text);
             convo.ask("Bạn gửi URL file lên cho mình nhé ?", (payload, convo) => {
                 request.get({
-                    url: 'https://v2.convertapi.com' + convo.get('from') + '/to/' + convo.get('to') + '?Secret='+ process.env.CONVERT_API_KEY +'&File=' + payload.message.text,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    url: 'https://v2.convertapi.com' + convo.get('from') + '/to/' + convo.get('to') + '?Secret='+ process.env.CONVERT_API_KEY +'&File=' + payload.message.text + '&StoreFile=true',
+                    method: 'GET'
                 }, (err, response, body) => {
                     console.log(body);
                     if (body && body.Files) {
