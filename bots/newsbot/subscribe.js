@@ -59,8 +59,7 @@ module.exports = (convo, newsbot) => {
                                     User.findOneAndUpdate({id: user.id}, {$set: {location: loc}}, {new: true}, (err, res) => {
                                         if (err) convo.say("Có lỗi xảy ra :(").then(() => newsbot(convo));
                                         else {
-                                            register(6, user.id);
-                                            convo.say("Thành công. Thông tin thời tiết sẽ gửi tới bạn 6h/lần").then(() => newsbot(convo));
+                                            register(6, user.id).then(() => convo.say("Thành công. Thông tin thời tiết sẽ gửi tới bạn 6h/lần").then(() => newsbot(convo)));
                                         }
                                     });
                                 }
@@ -80,12 +79,14 @@ module.exports = (convo, newsbot) => {
 
 function register(idEvent, id) {
     return new Promise((resolve, reject) => {
-            Event.findOne({id: idEvent}, 'subscribers', (err, result) => {
+        Event.findOne({id: idEvent}, 'subscribers', (err, result) => {
+            if (!result.subscribers.contains(id)) {
                 result.subscribers.push(id);
                 Event.findOneAndUpdate({id: idEvent}, {$set: {subscribers: result.subscribers}}, {new: true}, (err, res) => {
                     if (err) reject(err);
                     else resolve();
                 });
-            });
+            } else resolve();
         });
+    });
 }
