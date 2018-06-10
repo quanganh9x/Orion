@@ -10,8 +10,7 @@ module.exports = function (bot) {
                 convo.say({
                     text: "[IntelliBOT] v1.0. Your own AI accessing system",
                     quickReplies: ['Vision', 'Face', 'TextAnalytics', 'SpellChecking']
-                });
-                intellibot(convo);
+                }).then(() => intellibot(convo));
             };
             const intellibot = (convo) => {
                 convo.ask(() => { }, (payload, convo) => {
@@ -36,6 +35,7 @@ module.exports = function (bot) {
                         case 'whereami':
                         case 'Whereami':
                         case 'Wai':
+                        case 'wai':
                             convo.say("Main > IntelliBOT").then(() => preintellibot(convo));
                             break;
                         default:

@@ -36,8 +36,7 @@ module.exports = function (bot) {
                         case 'whereami':
                         case 'Whereami':
                         case 'Wai':
-                            convo.say("Main > ConverterBOT");
-                            converterbot(convo);
+                            convo.say("Main > ConverterBOT").then(() => preconverterbot(convo));
                             break;
                         default:
                             convo.say("Sai cú pháp :(").then(() => preconverterbot(convo));
