@@ -80,7 +80,7 @@ module.exports = (convo, newsbot) => {
 function register(idEvent, id) {
     return new Promise((resolve, reject) => {
         Event.findOne({id: idEvent}, 'subscribers', (err, result) => {
-            if (!result.subscribers.contains(id)) {
+            if (!result.subscribers.includes(id)) {
                 result.subscribers.push(id);
                 Event.findOneAndUpdate({id: idEvent}, {$set: {subscribers: result.subscribers}}, {new: true}, (err, res) => {
                     if (err) reject(err);
