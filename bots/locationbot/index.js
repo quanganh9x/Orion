@@ -68,7 +68,7 @@ module.exports = function (bot) {
                         convo.say("Thành công!").then(() => prelocationbot(convo));
                     } else {
                         convo.say(":( Mình chưa tìm được vị trí");
-                        convo.end();
+                        prelocationbot(convo);
                     }
                 });
             };

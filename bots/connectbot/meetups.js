@@ -65,7 +65,7 @@ exports.optout = (convo) => {
         User.findOne({id: user.id}, (err, result) => {
             if (err || !result) console.log("err connectbot: " + err);
             if (result) {
-                if (result.roomId) convo.say("Bạn đã tham gia chat! Hãy dùng lệnh thoát phòng trước");
+                if (result.roomId && result.roomId !== null) convo.say("Bạn đã tham gia chat! Hãy dùng lệnh thoát phòng trước");
                 else {
                     if (maleQueue.includes(result.id)) maleQueue.splice(maleQueue.indexOf(result.id), 1);
                     else if (femaleQueue.includes(result.id)) femaleQueue.splice(femaleQueue.indexOf(result.id), 1);

@@ -2,6 +2,7 @@ const schedule = require('node-schedule');
 
 const moneybase = require('../converterbot/money/money-base');
 const dailyNews = require('./jobs/news');
+const dailyWeather = require('./jobs/weather');
 const remove = require('./jobs/core/removeTemp');
 
 const scheduledCrons = [];
@@ -12,7 +13,7 @@ const prepare = (bot) => {
 };
 
 const fire = (event) => {
-    if (functions[event.job]) if (typeof functions[event.job] === 'function') {
+    if (functions[event.job] && typeof functions[event.job] === 'function') {
         if (event.subscribers.length !== 0) scheduledCrons.push(schedule.scheduleJob(event.cron, () => functions[event.job](event.subscribers)));
         else scheduledCrons.push(schedule.scheduleJob(event.cron, () => functions[event.job]()));
         console.log("[schedule] scheduled event: " + event.job);
@@ -51,5 +52,13 @@ Handler.prototype.sendNewsDaily = (subscribers) => {
     for (let i = 0; i < subscribers.length; i++) {
         dailyNews(subscribers[i], this.bot);
     }
+    else console.log("0 subscribers. Ignored event");
+};
+
+Handler.prototype.sendWeatherDaily = (subscribers) => {
+    if (subscribers !== undefined)
+        for (let i = 0; i < subscribers.length; i++) {
+            dailyWeather(subscribers[i], this.bot);
+        }
     else console.log("0 subscribers. Ignored event");
 };
