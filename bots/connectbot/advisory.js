@@ -11,10 +11,10 @@ exports.start = (convo, bot, connectbot, preconnectbot) => {
         if (!result || result.length === 0) convo.say("Không có tư vấn viên nào rảnh tay lúc này. Bạn vui lòng quay lại sau").then(() => preconnectbot(convo));
         if (result && result.length !== 0) {
             let advisories = [];
-            for (let i = 0; i < result.length; i++) {
+            for (let i = 0; i < 3; i++) {
                 let name = result[i].first_name + " " + result[i].last_name;
                 advisories.push({type: 'postback', title: name, payload: result[i].id});
-                if (i === result.length - 1) convo.say({
+                if (i === 2) convo.say({
                     text: "Đây là danh sách các tư vấn viên chúng tôi gợi ý cho bạn!",
                     buttons: advisories
                 }).then(() => connectbot(convo));
