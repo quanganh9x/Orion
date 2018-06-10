@@ -5,6 +5,7 @@ module.exports = (convo, converterbot) => {
     convo.ask("Bạn muốn rut gon link nao ?", (payload, convo) => {
             bitly.shorten(payload.message.text)
                 .then(function(result) {
+                    console.log(result);
                     convo.say(result).then(() => converterbot(convo));
                 })
                 .catch(function(error) {
