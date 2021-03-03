@@ -16,7 +16,7 @@
     "mongoose-plugin-autoinc": "^1.1.9",
     "node-wit": "^5.0.0",
     "npm": "^6.0.1",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "request": "^2.86.0",
     "rss-parser": "^3.1.2"
   }
